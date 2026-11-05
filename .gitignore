@@ -1,0 +1,12 @@
+# Dependencias y archivos del sistema
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno privados (NUNCA subir service_role keys)
+.env
+.env.local
+.env.*.local
+
+# Carpeta interna de Vercel CLI
+.vercel
