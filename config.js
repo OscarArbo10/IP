@@ -17,7 +17,7 @@ const SITE_DEFAULTS = {
   site_name: 'ILUSION PERFUMERY',
   site_subtitle: 'HIGH PERFUMERY FOR MEN',
   logo_url: '',
-  logo_height: 48,
+  logo_height: 58,
   primary_color: '#f5c518', // Amarillo / Dorado insignia
 
   // Control Global de Precios
