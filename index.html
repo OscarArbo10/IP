@@ -2087,9 +2087,8 @@
       color: var(--accent);
     }
 
-    /* ── 10. BANNER DE ASESORÍA, TESTIMONIOS Y FOOTER ──────────── */
-    .promo-section,
-    .testimonials-section {
+    /* ── 10. BANNER DE ASESORÍA Y FOOTER ───────────────────────── */
+    .promo-section {
       max-width: 1320px;
       width: 100%;
       margin: 0 auto 42px;
@@ -2097,8 +2096,7 @@
     }
 
     @media (min-width: 768px) {
-      .promo-section,
-      .testimonials-section {
+      .promo-section {
         padding: 0 24px;
       }
     }
@@ -2146,75 +2144,6 @@
       color: var(--text-muted);
       font-size: 0.84rem;
       line-height: 1.55;
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 16px;
-      width: 100%;
-    }
-
-    @media (min-width: 768px) {
-      .testimonials-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-      }
-    }
-
-    .testimonial-card {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .testimonial-stars {
-      color: var(--accent);
-      font-size: 0.85rem;
-    }
-
-    .testimonial-text {
-      color: #d1d5db;
-      font-size: 0.82rem;
-      line-height: 1.55;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: auto;
-      padding-top: 10px;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .author-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--accent-soft);
-      border: 1px solid var(--accent-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .author-name {
-      font-weight: 700;
-      font-size: 0.84rem;
-      color: #fff;
-    }
-
-    .author-role {
-      font-size: 0.7rem;
-      color: var(--accent);
     }
 
     .site-footer {
@@ -2868,16 +2797,7 @@
     </div>
   </section>
 
-  <!-- 10. TESTIMONIOS DE CLIENTES -->
-  <section class="testimonials-section" id="testimonios">
-    <div class="section-title-wrap">
-      <h2 id="testimonialsTitle">Hombres que ya dejan huella</h2>
-      <p id="testimonialsSubtitle">Experiencias reales de clientes con Ilusion Perfumery</p>
-    </div>
-    <div class="testimonials-grid" id="testimonialsGrid"></div>
-  </section>
-
-  <!-- 11. FOOTER -->
+  <!-- 10. FOOTER -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-col">
@@ -3270,9 +3190,6 @@
       document.getElementById('promoText').textContent = SITE.promo_text || '';
       document.getElementById('promoCtaText').textContent = SITE.promo_cta || 'Hablar con un Asesor Ahora';
 
-      document.getElementById('testimonialsTitle').textContent = SITE.testimonials_title || '';
-      renderTestimonials();
-
       document.getElementById('footerBrandTitle').textContent = SITE.site_name || 'ILUSION PERFUMERY';
       document.getElementById('footerCopyrightName').textContent = SITE.site_name || 'Ilusion Perfumery';
       document.getElementById('footerSlogan').textContent = SITE.footer_slogan || '';
@@ -3288,24 +3205,6 @@
       const tkLink = document.getElementById('tiktokLink');
       tkLink.textContent = `🎵 TikTok: @${tkHandle}`;
       tkLink.href = `https://tiktok.com/@${tkHandle}`;
-    }
-
-    function renderTestimonials() {
-      const grid = document.getElementById('testimonialsGrid');
-      const list = Array.isArray(SITE.testimonials) && SITE.testimonials.length ? SITE.testimonials : SITE_DEFAULTS.testimonials;
-      grid.innerHTML = list.map(t => `
-        <article class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"${esc(t.text)}"</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">${esc(t.avatar || '👑')}</div>
-            <div>
-              <div class="author-name">${esc(t.name)}</div>
-              <div class="author-role">${esc(t.role || 'Cliente Verificado')}</div>
-            </div>
-          </div>
-        </article>
-      `).join('');
     }
 
     let wordTimer = null;
