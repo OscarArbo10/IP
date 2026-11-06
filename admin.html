@@ -1093,6 +1093,13 @@
       }
     }
 
+    const MAIN_FOUR_CATEGORIES = [
+      { name: 'Caballero', slug: 'caballero', emoji: '🕴️', active: true },
+      { name: 'Dama', slug: 'dama', emoji: '👑', active: true },
+      { name: 'Nicho', slug: 'nicho', emoji: '💎', active: true },
+      { name: 'Splash', slug: 'splash', emoji: '🌸', active: true }
+    ];
+
     // Cargar todos los datos en el Admin
     async function loadAdminData() {
       if (!supabaseClient) return;
@@ -1106,7 +1113,24 @@
       if (setRes.data && setRes.data.settings) {
         SITE = { ...SITE_DEFAULTS, ...setRes.data.settings };
       }
-      categories = catRes.data || [];
+
+      let dbCats = catRes.data || [];
+      // Asegurar que Caballero, Dama, Nicho y Splash existan siempre
+      const missingMain = MAIN_FOUR_CATEGORIES.filter(mc => !dbCats.some(c => (c.slug || '').toLowerCase() === mc.slug));
+      if (missingMain.length > 0) {
+        try {
+          const { data: insertedCats } = await supabaseClient.from('categories').insert(missingMain).select();
+          if (insertedCats && insertedCats.length) {
+            dbCats = [...insertedCats, ...dbCats];
+          } else {
+            dbCats = [...missingMain, ...dbCats];
+          }
+        } catch (e) {
+          dbCats = [...missingMain, ...dbCats];
+        }
+      }
+
+      categories = dbCats;
       products = prodRes.data || [];
 
       updateStats();

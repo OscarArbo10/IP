@@ -191,9 +191,12 @@ CREATE POLICY "Admin elimina imagenes"
 
 -- 7. CATEGORÍAS INICIALES PARA ILUSION PERFUMERY
 INSERT INTO categories (name, slug, emoji) VALUES
+  ('Caballero',           'caballero',   '🕴️'),
+  ('Dama',                'dama',        '👑'),
+  ('Nicho',               'nicho',       '💎'),
+  ('Splash',              'splash',      '🌸'),
   ('Perfumería Árabe',    'arabes',      '🕌'),
   ('Diseñador',           'disenador',   '👔'),
-  ('Alta Gama & Nicho',   'nicho',       '👑'),
   ('Nocturnos & Citas',   'nocturnos',   '🔥'),
   ('Frescos & Versátiles','frescos',     '🌊'),
   ('Decants & Sets',      'decants',     '🧪')
