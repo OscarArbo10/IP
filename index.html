@@ -162,21 +162,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle, rgba(245, 197, 24, 0.22) 0%, rgba(16, 16, 22, 0.95) 100%);
-      border: 1.5px solid var(--accent);
-      border-radius: 14px;
-      padding: 5px 10px;
-      box-shadow: 0 0 22px rgba(245, 197, 24, 0.3);
+      background: transparent;
+      border: none;
+      padding: 0;
       flex-shrink: 0;
     }
 
     .brand-logo-img {
       height: 50px;
-      max-width: 135px;
+      max-width: 150px;
       width: auto;
       object-fit: contain;
       display: none;
-      filter: drop-shadow(0 2px 10px rgba(245, 197, 24, 0.4));
+      filter: drop-shadow(0 2px 12px rgba(245, 197, 24, 0.35));
     }
 
     @media (min-width: 768px) {
@@ -436,23 +434,15 @@
     }
 
     .hero-container {
-      max-width: 1320px;
+      max-width: 960px;
       width: 100%;
       margin: 0 auto;
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 26px;
-    }
-
-    @media (min-width: 960px) {
-      .hero-container {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-        gap: 48px;
-        align-items: center;
-      }
+      align-items: center;
+      gap: 20px;
     }
 
     .hero-left {
@@ -464,39 +454,30 @@
       text-align: center;
     }
 
-    @media (min-width: 960px) {
-      .hero-left {
-        align-items: flex-start;
-        text-align: left;
-      }
-    }
-
-    /* Medallón de Logo Oficial con Aura Dorada */
+    /* Logo Oficial sin recuadro */
     .hero-logo-spotlight {
       display: none;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle, rgba(245, 197, 24, 0.26) 0%, rgba(15, 15, 22, 0.94) 75%);
-      border: 2px solid var(--accent);
-      border-radius: 22px;
-      padding: 14px 28px;
+      background: transparent;
+      border: none;
+      padding: 0;
       margin-bottom: 16px;
-      box-shadow: 0 12px 40px rgba(245, 197, 24, 0.3);
       max-width: 100%;
     }
 
     .hero-logo-spotlight img {
-      max-height: 84px;
-      max-width: 230px;
+      max-height: 92px;
+      max-width: 240px;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 4px 14px rgba(245, 197, 24, 0.45));
+      filter: drop-shadow(0 4px 18px rgba(245, 197, 24, 0.4));
     }
 
     @media (min-width: 768px) {
       .hero-logo-spotlight img {
-        max-height: 105px;
-        max-width: 290px;
+        max-height: 118px;
+        max-width: 310px;
       }
     }
 
@@ -551,7 +532,7 @@
 
     @media (min-width: 960px) {
       .hero-dynamic-line {
-        justify-content: flex-start;
+        justify-content: center;
         font-size: 1.22rem;
         margin-bottom: 16px;
       }
@@ -601,6 +582,7 @@
       .hero-cta-group {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         max-width: none;
         gap: 14px;
         margin-bottom: 26px;
@@ -707,57 +689,6 @@
       min-width: 0;
     }
 
-    /* Tarjeta Fragancia Destacada en el Hero */
-    .hero-showcase-card {
-      width: 100%;
-      min-width: 0;
-      background: linear-gradient(160deg, #181822 0%, #0d0d13 100%);
-      border: 1.5px solid var(--accent-border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 197, 24, 0.12);
-    }
-
-    @media (min-width: 768px) {
-      .hero-showcase-card {
-        padding: 22px;
-        border-radius: var(--radius-lg);
-      }
-    }
-
-    .showcase-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      gap: 8px;
-    }
-
-    .showcase-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: inline-block;
-      animation: pulseDot 1.8s infinite;
-    }
-
-    .showcase-controls {
-      display: flex;
-      gap: 6px;
-    }
-
     .showcase-nav-btn {
       width: 32px;
       height: 32px;
@@ -770,90 +701,6 @@
       align-items: center;
       justify-content: center;
       font-size: 1.1rem;
-    }
-
-    .showcase-body-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .showcase-media {
-      position: relative;
-      width: 100%;
-      height: 210px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: radial-gradient(circle at 50% 50%, rgba(245, 197, 24, 0.25) 0%, #0d0d11 75%);
-      cursor: pointer;
-    }
-
-    @media (min-width: 768px) {
-      .showcase-media {
-        height: 260px;
-        border-radius: 16px;
-      }
-    }
-
-    .showcase-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .showcase-media:hover img {
-      transform: scale(1.05);
-    }
-
-    .showcase-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: var(--gold-gradient);
-      color: #070709;
-      font-size: 0.66rem;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 999px;
-      text-transform: uppercase;
-    }
-
-    .showcase-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
-
-    .showcase-title {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-
-    .showcase-notes {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      line-height: 1.45;
-    }
-
-    .showcase-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border-subtle);
-      flex-wrap: wrap;
     }
 
     /* ── 4. CINTA INFINITA DE LUJO (LUXURY MARQUEE) ────────────── */
@@ -1276,77 +1123,125 @@
       background: linear-gradient(145deg, #1b1b26 0%, #101016 100%);
       border: 1.5px solid var(--border-subtle);
       border-radius: 18px;
-      padding: 20px 12px;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
       text-align: center;
-      gap: 8px;
       cursor: pointer;
       transition: all 0.25s ease;
-      min-height: 145px;
-    }
-
-    @media (min-width: 768px) {
-      .quad-cat-card {
-        padding: 26px 18px;
-        min-height: 175px;
-      }
     }
 
     .quad-cat-card:hover,
     .quad-cat-card.active {
       border-color: var(--accent);
       background:
-        radial-gradient(circle at 50% 30%, rgba(245, 197, 24, 0.24) 0%, #15151f 80%);
+        radial-gradient(circle at 50% 30%, rgba(245, 197, 24, 0.22) 0%, #15151f 80%);
       transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(245, 197, 24, 0.22);
+      box-shadow: 0 12px 30px rgba(245, 197, 24, 0.25);
     }
 
-    .quad-cat-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: var(--accent-soft);
-      border: 1.5px solid var(--accent-border);
+    .quad-cat-media {
+      position: relative;
+      width: 100%;
+      height: 125px;
+      overflow: hidden;
+      background: #0b0b10;
+    }
+
+    @media (min-width: 768px) {
+      .quad-cat-media {
+        height: 165px;
+      }
+    }
+
+    .quad-cat-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+      display: block;
+    }
+
+    .quad-cat-card:hover .quad-cat-media img,
+    .quad-cat-card.active .quad-cat-media img {
+      transform: scale(1.07);
+    }
+
+    .quad-cat-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 7, 9, 0.1) 0%, rgba(16, 16, 22, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    .quad-cat-body {
+      padding: 12px 10px 14px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      box-shadow: 0 0 18px rgba(245, 197, 24, 0.2);
-      transition: transform 0.25s ease;
-    }
-
-    .quad-cat-card:hover .quad-cat-icon,
-    .quad-cat-card.active .quad-cat-icon {
-      background: var(--gold-gradient);
-      color: #070709;
-      transform: scale(1.08);
+      gap: 4px;
+      flex: 1;
     }
 
     .quad-cat-name {
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
-    .quad-cat-desc {
-      font-size: 0.72rem;
+    .quad-cat-sub {
+      font-size: 0.7rem;
       color: var(--text-muted);
       line-height: 1.35;
     }
 
-    .quad-cat-badge {
-      font-size: 0.62rem;
+    .quad-cat-cta {
+      font-size: 0.64rem;
       font-weight: 800;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-top: 2px;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .active-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid var(--accent-border);
+      color: var(--accent-light);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .active-filter-chip button {
+      background: var(--gold-gradient);
+      color: #070709;
+      border: none;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .catalog-load-more-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+      padding-top: 10px;
     }
 
     /* ── 8. CATÁLOGO DE PERFUMES CON TARJETAS DE LUJO ──────────── */
@@ -2539,40 +2434,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Tarjeta Interactiva de Perfume Destacado -->
-      <div class="hero-showcase-card" id="heroShowcaseCard">
-        <div class="showcase-top-bar">
-          <span class="showcase-label"><span class="live-dot"></span> FRAGANCIA DESTACADA</span>
-          <div class="showcase-controls">
-            <button class="showcase-nav-btn" id="prevShowcaseBtn" aria-label="Anterior">‹</button>
-            <button class="showcase-nav-btn" id="nextShowcaseBtn" aria-label="Siguiente">›</button>
-          </div>
-        </div>
-
-        <div class="showcase-body-layout">
-          <div class="showcase-media" id="showcaseMedia">
-            <span class="showcase-badge" id="showcaseBadge">Top Ventas</span>
-            <img id="showcaseImg" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80" alt="Perfume Destacado" />
-          </div>
-
-          <div style="min-width: 0; width: 100%;">
-            <div class="showcase-meta">
-              <span id="showcaseBrand">DIOR</span>
-              <span id="showcaseConc">⚡ Duración 14h+ · 100 ml</span>
-            </div>
-            <h3 class="showcase-title" id="showcaseTitle">Sauvage Elixir</h3>
-            <p class="showcase-notes" id="showcaseNotes">Notas: Canela, Nuez Moscada, Cardamomo, Lavanda y Sándalo.</p>
-          </div>
-        </div>
-
-        <div class="showcase-footer">
-          <div id="showcasePriceBox"></div>
-          <button class="btn-primary-gold" id="showcaseActionBtn" style="padding: 10px 16px; font-size: 0.8rem;">
-            Consultar por WhatsApp 💬
-          </button>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -2584,37 +2445,7 @@
     </div>
   </div>
 
-  <!-- 5. HISTORIAS VIP / COLECCIONES RÁPIDAS CON ANILLO DORADO -->
-  <section class="stories-section">
-    <div class="stories-track" id="storiesTrack">
-      <button type="button" class="story-bubble active" data-story="all">
-        <div class="story-ring"><div class="story-ring-inner">👑</div></div>
-        <span class="story-label">Colección Completa</span>
-      </button>
-      <button type="button" class="story-bubble" data-story="arabes">
-        <div class="story-ring"><div class="story-ring-inner">🕌</div></div>
-        <span class="story-label">Árabes Exclusivos</span>
-      </button>
-      <button type="button" class="story-bubble" data-story="Noche & Citas">
-        <div class="story-ring"><div class="story-ring-inner">🔥</div></div>
-        <span class="story-label">Rompecuellos Noche</span>
-      </button>
-      <button type="button" class="story-bubble" data-story="nicho">
-        <div class="story-ring"><div class="story-ring-inner">💎</div></div>
-        <span class="story-label">Alta Gama & Nicho</span>
-      </button>
-      <button type="button" class="story-bubble" data-story="Oficina & Poder">
-        <div class="story-ring"><div class="story-ring-inner">👔</div></div>
-        <span class="story-label">Oficina & Poder</span>
-      </button>
-      <button type="button" class="story-bubble" data-story="frescos">
-        <div class="story-ring"><div class="story-ring-inner">🌊</div></div>
-        <span class="story-label">Frescos Diario</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- 6. ASESOR OLFATIVO INTERACTIVO (SCENT QUIZ EN 15 SEGUNDOS) -->
+  <!-- 5. ASESOR OLFATIVO INTERACTIVO (SCENT QUIZ EN 15 SEGUNDOS) -->
   <section class="quiz-section" id="asesor">
     <div class="quiz-card">
       <div class="quiz-header">
@@ -2712,31 +2543,47 @@
 
       <div class="four-categories-grid" id="fourCategoriesGrid">
         <button type="button" class="quad-cat-card" data-maincat="caballero">
-          <div class="quad-cat-icon">🕴️</div>
-          <div class="quad-cat-name">Caballero</div>
-          <div class="quad-cat-sub">Fragancias masculinas de carácter y seducción</div>
-          <span class="quad-cat-cta">Explorar ➔</span>
+          <div class="quad-cat-media">
+            <img id="quadCatImgCaballero" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80" alt="Perfumes para Caballero" loading="lazy" />
+          </div>
+          <div class="quad-cat-body">
+            <div class="quad-cat-name">Caballero</div>
+            <div class="quad-cat-sub">Fragancias masculinas de carácter y seducción</div>
+            <span class="quad-cat-cta">Explorar ➔</span>
+          </div>
         </button>
 
         <button type="button" class="quad-cat-card" data-maincat="dama">
-          <div class="quad-cat-icon">👑</div>
-          <div class="quad-cat-name">Dama</div>
-          <div class="quad-cat-sub">Aromas femeninos elegantes, dulces y envolventes</div>
-          <span class="quad-cat-cta">Explorar ➔</span>
+          <div class="quad-cat-media">
+            <img id="quadCatImgDama" src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=80" alt="Perfumes para Dama" loading="lazy" />
+          </div>
+          <div class="quad-cat-body">
+            <div class="quad-cat-name">Dama</div>
+            <div class="quad-cat-sub">Aromas femeninos elegantes, dulces y envolventes</div>
+            <span class="quad-cat-cta">Explorar ➔</span>
+          </div>
         </button>
 
         <button type="button" class="quad-cat-card" data-maincat="nicho">
-          <div class="quad-cat-icon">💎</div>
-          <div class="quad-cat-name">Nicho</div>
-          <div class="quad-cat-sub">Alta perfumería de autor y lujo exclusivo</div>
-          <span class="quad-cat-cta">Explorar ➔</span>
+          <div class="quad-cat-media">
+            <img id="quadCatImgNicho" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=700&q=80" alt="Perfumería Nicho" loading="lazy" />
+          </div>
+          <div class="quad-cat-body">
+            <div class="quad-cat-name">Nicho</div>
+            <div class="quad-cat-sub">Alta perfumería de autor y lujo exclusivo</div>
+            <span class="quad-cat-cta">Explorar ➔</span>
+          </div>
         </button>
 
         <button type="button" class="quad-cat-card" data-maincat="splash">
-          <div class="quad-cat-icon">🌸</div>
-          <div class="quad-cat-name">Splash</div>
-          <div class="quad-cat-sub">Body mists frescos, ligeros e irresistibles</div>
-          <span class="quad-cat-cta">Explorar ➔</span>
+          <div class="quad-cat-media">
+            <img id="quadCatImgSplash" src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80" alt="Body Splash" loading="lazy" />
+          </div>
+          <div class="quad-cat-body">
+            <div class="quad-cat-name">Splash</div>
+            <div class="quad-cat-sub">Body mists frescos, ligeros e irresistibles</div>
+            <span class="quad-cat-cta">Explorar ➔</span>
+          </div>
         </button>
       </div>
     </div>
@@ -2756,8 +2603,8 @@
     </div>
 
     <div class="catalog-controls">
-      <div class="categories-bar" id="categoriesBar">
-        <button class="cat-pill active" data-category="all">👑 Todos</button>
+      <div id="activeFilterBar" style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+        <!-- Indicador dinámico de categoría seleccionada -->
       </div>
 
       <div class="controls-right-row">
@@ -2777,8 +2624,10 @@
     </div>
 
     <div class="products-grid" id="productsGrid">
-      <!-- Renderizado dinámico -->
+      <!-- Renderizado dinámico en tandas de 12 -->
     </div>
+
+    <div class="catalog-load-more-wrap" id="catalogLoadMoreWrap"></div>
   </main>
 
   <!-- 9. BANNER DE ASESORÍA PERSONALIZADA -->
@@ -2918,7 +2767,8 @@
     let activeOccasion = 'all';
     let searchQuery = '';
     let sortMode = 'featured';
-    let showcaseIndex = 0;
+    const PRODUCTS_PER_BATCH = 12;
+    let visibleProductsLimit = PRODUCTS_PER_BATCH;
     let bag = JSON.parse(localStorage.getItem('ilusion_bag') || '[]');
 
     const MAIN_FOUR_CATEGORIES = [
@@ -3205,6 +3055,19 @@
       const tkLink = document.getElementById('tiktokLink');
       tkLink.textContent = `🎵 TikTok: @${tkHandle}`;
       tkLink.href = `https://tiktok.com/@${tkHandle}`;
+
+      // Fotos editables de las 4 categorías principales
+      const catImgMap = [
+        ['quadCatImgCaballero', 'cat_img_caballero'],
+        ['quadCatImgDama', 'cat_img_dama'],
+        ['quadCatImgNicho', 'cat_img_nicho'],
+        ['quadCatImgSplash', 'cat_img_splash']
+      ];
+      catImgMap.forEach(([elId, key]) => {
+        const imgEl = document.getElementById(elId);
+        const url = (SITE[key] && String(SITE[key]).trim()) || SITE_DEFAULTS[key];
+        if (imgEl && url) imgEl.src = url;
+      });
     }
 
     let wordTimer = null;
@@ -3226,63 +3089,38 @@
       }, 2600);
     }
 
-    function renderShowcase() {
-      const featuredList = allProducts.filter(p => p.featured);
-      const pool = featuredList.length ? featuredList : allProducts;
-      if (!pool.length) return;
-
-      if (showcaseIndex >= pool.length) showcaseIndex = 0;
-      if (showcaseIndex < 0) showcaseIndex = pool.length - 1;
-
-      const p = pool[showcaseIndex];
-      const imgs = getProductImages(p);
-      document.getElementById('showcaseBadge').textContent = p.badge || 'Exclusivo';
-      document.getElementById('showcaseImg').src = imgs[0] || 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80';
-      document.getElementById('showcaseBrand').textContent = p.brand || 'ILUSION';
-      document.getElementById('showcaseConc').textContent = `⚡ 12h+ · ${p.size_ml || '100 ml'}`;
-      document.getElementById('showcaseTitle').textContent = p.name;
-      document.getElementById('showcaseNotes').textContent = p.notes ? `Notas: ${p.notes}` : (p.description || '');
-
-      const priceBox = document.getElementById('showcasePriceBox');
-      const actionBtn = document.getElementById('showcaseActionBtn');
-
-      if (shouldShowPrice(p)) {
-        priceBox.innerHTML = `<span class="price-current">${formatCOP(p.price)}</span>`;
-        actionBtn.textContent = `Pedir por WhatsApp 💬`;
-      } else {
-        priceBox.innerHTML = `<span style="font-size:0.78rem; color:var(--accent); font-weight:700;">💬 ${esc(SITE.no_price_label || 'Precio bajo consulta')}</span>`;
-        actionBtn.textContent = `Consultar WhatsApp 💬`;
-      }
-
-      document.getElementById('showcaseMedia').onclick = () => openProductModal(p.id);
-      actionBtn.onclick = () => openProductModal(p.id);
-    }
-
     function renderCategories() {
-      const bar = document.getElementById('categoriesBar');
-      bar.innerHTML = [
-        `<button class="cat-pill ${activeCategory === 'all' && activeOccasion === 'all' ? 'active' : ''}" data-category="all">👑 Todos</button>`,
-        ...allCategories.map(c => `
-          <button class="cat-pill ${activeCategory === c.slug ? 'active' : ''}" data-category="${esc(c.slug)}">
-            <span>${esc(c.emoji || '🖤')}</span>
-            <span>${esc(c.name)}</span>
-          </button>
-        `)
-      ].join('');
-
-      bar.querySelectorAll('.cat-pill').forEach(btn => {
-        btn.addEventListener('click', () => {
-          activeCategory = btn.dataset.category;
-          activeOccasion = 'all';
-          renderCategories();
-          renderProducts();
-        });
-      });
-
       // Sincronizar el estado activo del Cuadro de 4 Categorías (Caballero, Dama, Nicho, Splash)
       document.querySelectorAll('#fourCategoriesGrid .quad-cat-card').forEach(card => {
         card.classList.toggle('active', card.dataset.maincat === activeCategory);
       });
+
+      const filterBar = document.getElementById('activeFilterBar');
+      if (!filterBar) return;
+
+      if (activeCategory === 'all' && activeOccasion === 'all') {
+        filterBar.innerHTML = `<span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">✨ Mostrando todas las categorías</span>`;
+      } else {
+        const matchedCat = MAIN_FOUR_CATEGORIES.find(c => c.slug === activeCategory)
+          || allCategories.find(c => c.slug === activeCategory);
+        const label = matchedCat ? `${matchedCat.emoji || '👑'} ${matchedCat.name}` : activeCategory;
+        filterBar.innerHTML = `
+          <div class="active-filter-chip">
+            <span>Categoría: <strong>${esc(label)}</strong></span>
+            <button type="button" id="clearActiveFilterBtn">✕ Ver Todas</button>
+          </div>
+        `;
+        const clearBtn = document.getElementById('clearActiveFilterBtn');
+        if (clearBtn) {
+          clearBtn.addEventListener('click', () => {
+            activeCategory = 'all';
+            activeOccasion = 'all';
+            visibleProductsLimit = PRODUCTS_PER_BATCH;
+            renderCategories();
+            renderProducts();
+          });
+        }
+      }
     }
 
     function renderProducts() {
@@ -3317,23 +3155,32 @@
         return 0;
       });
 
-      document.getElementById('resultsCountText').textContent = `${filtered.length} ${filtered.length === 1 ? 'fragancia' : 'fragancias'}`;
+      const totalFiltered = filtered.length;
+      const visibleList = filtered.slice(0, visibleProductsLimit);
+      const loadMoreWrap = document.getElementById('catalogLoadMoreWrap');
 
-      if (!filtered.length) {
+      if (totalFiltered > visibleList.length) {
+        document.getElementById('resultsCountText').textContent = `Mostrando ${visibleList.length} de ${totalFiltered} fragancias`;
+      } else {
+        document.getElementById('resultsCountText').textContent = `${totalFiltered} ${totalFiltered === 1 ? 'fragancia' : 'fragancias'}`;
+      }
+
+      if (!totalFiltered) {
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 38px 16px; background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border-subtle);">
             <div style="font-size: 2.2rem; margin-bottom: 8px;">🖤</div>
             <h3 style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 6px;">No encontramos ese perfume en este filtro</h3>
             <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px;">Pregúntanos directo por WhatsApp si buscas una referencia especial.</p>
-            <a href="${buildWhatsAppUrl(`¡Hola ${SITE.site_name}! Busco un perfume masculino en especial, ¿me ayudan?`)}" target="_blank" rel="noopener" class="btn-primary-gold">
+            <a href="${buildWhatsAppUrl(`¡Hola ${SITE.site_name}! Busco un perfume en especial, ¿me ayudan?`)}" target="_blank" rel="noopener" class="btn-primary-gold">
               💬 Preguntar por WhatsApp
             </a>
           </div>
         `;
+        if (loadMoreWrap) loadMoreWrap.innerHTML = '';
         return;
       }
 
-      grid.innerHTML = filtered.map(p => {
+      grid.innerHTML = visibleList.map(p => {
         const imgs = getProductImages(p);
         const mainImg = imgs[0];
         const showP = shouldShowPrice(p);
@@ -3401,6 +3248,36 @@
           </article>
         `;
       }).join('');
+
+      if (loadMoreWrap) {
+        const remaining = totalFiltered - visibleList.length;
+        if (remaining > 0) {
+          const nextBatch = Math.min(PRODUCTS_PER_BATCH, remaining);
+          loadMoreWrap.innerHTML = `
+            <span style="font-size:0.78rem; color:var(--text-muted);">
+              Mostrando <strong style="color:var(--accent);">${visibleList.length}</strong> de <strong>${totalFiltered}</strong> fragancias
+            </span>
+            <button type="button" class="btn-primary-gold" id="loadMoreProductsBtn" style="min-width: 240px;">
+              ✨ Ver ${nextBatch} fragancias más (${remaining} disponibles)
+            </button>
+          `;
+          const loadBtn = document.getElementById('loadMoreProductsBtn');
+          if (loadBtn) {
+            loadBtn.addEventListener('click', () => {
+              visibleProductsLimit += PRODUCTS_PER_BATCH;
+              renderProducts();
+            });
+          }
+        } else if (totalFiltered > PRODUCTS_PER_BATCH) {
+          loadMoreWrap.innerHTML = `
+            <span style="font-size:0.78rem; color:var(--text-muted);">
+              Has visto las <strong style="color:var(--accent);">${totalFiltered}</strong> fragancias de esta selección
+            </span>
+          `;
+        } else {
+          loadMoreWrap.innerHTML = '';
+        }
+      }
     }
 
     // Modal con Barras de Modo Bestia y Pirámide Olfativa de 3 niveles
@@ -3690,7 +3567,6 @@
         applySiteSettings();
         startHeroWordRotation();
         renderCategories();
-        renderShowcase();
         renderProducts();
         renderBag();
         return;
@@ -3718,7 +3594,6 @@
       applySiteSettings();
       startHeroWordRotation();
       renderCategories();
-      renderShowcase();
       renderProducts();
       renderBag();
     }
@@ -3774,6 +3649,7 @@
 
       const onSearch = (val) => {
         searchQuery = val;
+        visibleProductsLimit = PRODUCTS_PER_BATCH;
         renderProducts();
       };
       document.getElementById('desktopSearchInput').addEventListener('input', e => onSearch(e.target.value));
@@ -3784,6 +3660,7 @@
         card.addEventListener('click', () => {
           activeCategory = card.dataset.maincat;
           activeOccasion = 'all';
+          visibleProductsLimit = PRODUCTS_PER_BATCH;
           renderCategories();
           renderProducts();
           document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
@@ -3795,33 +3672,12 @@
         resetQuadBtn.addEventListener('click', () => {
           activeCategory = 'all';
           activeOccasion = 'all';
+          visibleProductsLimit = PRODUCTS_PER_BATCH;
           renderCategories();
           renderProducts();
           document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
         });
       }
-
-      // Historias VIP / Colecciones Rápidas
-      document.querySelectorAll('#storiesTrack .story-bubble').forEach(bubble => {
-        bubble.addEventListener('click', () => {
-          document.querySelectorAll('#storiesTrack .story-bubble').forEach(b => b.classList.remove('active'));
-          bubble.classList.add('active');
-          const val = bubble.dataset.story;
-          if (val === 'all') {
-            activeCategory = 'all';
-            activeOccasion = 'all';
-          } else if (val === 'Noche & Citas' || val === 'Oficina & Poder') {
-            activeCategory = 'all';
-            activeOccasion = val;
-          } else {
-            activeCategory = val;
-            activeOccasion = 'all';
-          }
-          renderCategories();
-          renderProducts();
-          document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
-        });
-      });
 
       // Asesor Olfativo Virtual (Scent Quiz)
       document.getElementById('runQuizBtn').addEventListener('click', () => {
@@ -3885,11 +3741,9 @@
 
       document.getElementById('sortSelect').addEventListener('change', e => {
         sortMode = e.target.value;
+        visibleProductsLimit = PRODUCTS_PER_BATCH;
         renderProducts();
       });
-
-      document.getElementById('prevShowcaseBtn').addEventListener('click', () => { showcaseIndex--; renderShowcase(); });
-      document.getElementById('nextShowcaseBtn').addEventListener('click', () => { showcaseIndex++; renderShowcase(); });
 
       document.getElementById('closeModalBtn').addEventListener('click', closeProductModal);
       document.getElementById('productModalBackdrop').addEventListener('click', e => {

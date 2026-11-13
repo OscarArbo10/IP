@@ -894,6 +894,90 @@
             <input type="text" id="set_footer_location" class="input-field" />
           </div>
         </div>
+
+        <!-- 5. FOTOS DE LAS 4 CATEGORÍAS PRINCIPALES -->
+        <div class="settings-box" style="grid-column: 1 / -1;">
+          <h3>🖼️ Fotos de las 4 Categorías Principales (Caballero, Dama, Nicho, Splash)</h3>
+          <p class="desc">Sube una imagen desde tu dispositivo o pega una URL para cada recuadro de categoría en la tienda. Luego haz clic en "Guardar Todos los Cambios".</p>
+
+          <div class="form-grid-2">
+            <!-- Caballero -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_cat_img_caballero" src="" alt="Caballero" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:#fff; font-size:0.95rem;">Caballero</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Caballero</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_caballero" data-preview="prev_cat_img_caballero" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_cat_img_caballero" class="input-field cat-img-url" data-preview="prev_cat_img_caballero" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Dama -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_cat_img_dama" src="" alt="Dama" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:#fff; font-size:0.95rem;">Dama</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Dama</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_dama" data-preview="prev_cat_img_dama" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_cat_img_dama" class="input-field cat-img-url" data-preview="prev_cat_img_dama" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Nicho -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_cat_img_nicho" src="" alt="Nicho" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:#fff; font-size:0.95rem;">Nicho</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Nicho</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_nicho" data-preview="prev_cat_img_nicho" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_cat_img_nicho" class="input-field cat-img-url" data-preview="prev_cat_img_nicho" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Splash -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_cat_img_splash" src="" alt="Splash" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:#fff; font-size:0.95rem;">Splash</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Splash</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_splash" data-preview="prev_cat_img_splash" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_cat_img_splash" class="input-field cat-img-url" data-preview="prev_cat_img_splash" placeholder="https://..." />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1406,6 +1490,15 @@
       document.getElementById('set_instagram_handle').value = SITE.instagram_handle || '';
       document.getElementById('set_tiktok_handle').value = SITE.tiktok_handle || '';
       document.getElementById('set_footer_location').value = SITE.footer_location || '';
+
+      ['caballero', 'dama', 'nicho', 'splash'].forEach(slug => {
+        const key = `cat_img_${slug}`;
+        const url = SITE[key] || SITE_DEFAULTS[key] || '';
+        const inp = document.getElementById(`set_${key}`);
+        const prev = document.getElementById(`prev_${key}`);
+        if (inp) inp.value = url;
+        if (prev && url) prev.src = url;
+      });
     }
 
     function updateLogoPreview(url) {
@@ -1614,6 +1707,35 @@
         updateLogoPreview('');
       });
 
+      // Subir o editar fotos de las 4 categorías principales
+      document.querySelectorAll('.cat-img-file').forEach(fileInp => {
+        fileInp.addEventListener('change', async (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          showToast('Subiendo foto de categoría...');
+          try {
+            const publicUrl = await uploadFileToStorage(file, 'categories');
+            const targetInp = document.getElementById(fileInp.dataset.target);
+            const prevImg = document.getElementById(fileInp.dataset.preview);
+            if (targetInp) targetInp.value = publicUrl;
+            if (prevImg) prevImg.src = publicUrl;
+            showToast('✅ Foto lista. Haz clic en "Guardar Todos los Cambios"');
+          } catch (err) {
+            alert('Error al subir foto: ' + err.message);
+          }
+          e.target.value = '';
+        });
+      });
+
+      document.querySelectorAll('.cat-img-url').forEach(urlInp => {
+        urlInp.addEventListener('input', () => {
+          const prevImg = document.getElementById(urlInp.dataset.preview);
+          if (prevImg && urlInp.value.trim()) {
+            prevImg.src = urlInp.value.trim();
+          }
+        });
+      });
+
       // Sincronizar selector de color amarillo/dorado
       document.getElementById('set_primary_color_picker').addEventListener('input', e => {
         document.getElementById('set_primary_color').value = e.target.value;
@@ -1654,7 +1776,11 @@
           hero_subtitle: document.getElementById('set_hero_subtitle').value.trim(),
           instagram_handle: document.getElementById('set_instagram_handle').value.trim(),
           tiktok_handle: document.getElementById('set_tiktok_handle').value.trim(),
-          footer_location: document.getElementById('set_footer_location').value.trim()
+          footer_location: document.getElementById('set_footer_location').value.trim(),
+          cat_img_caballero: document.getElementById('set_cat_img_caballero').value.trim() || SITE_DEFAULTS.cat_img_caballero,
+          cat_img_dama: document.getElementById('set_cat_img_dama').value.trim() || SITE_DEFAULTS.cat_img_dama,
+          cat_img_nicho: document.getElementById('set_cat_img_nicho').value.trim() || SITE_DEFAULTS.cat_img_nicho,
+          cat_img_splash: document.getElementById('set_cat_img_splash').value.trim() || SITE_DEFAULTS.cat_img_splash
         };
 
         SITE = updatedSettings;
