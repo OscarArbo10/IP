@@ -880,6 +880,22 @@
 
           <div class="form-grid-2">
             <div class="field-group">
+              <label>Insignia Hero 1</label>
+              <input type="text" id="set_hero_badge_1" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Insignia Hero 2</label>
+              <input type="text" id="set_hero_badge_2" class="input-field" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Insignia Hero 3</label>
+            <input type="text" id="set_hero_badge_3" class="input-field" />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
               <label>Instagram (usuario sin @)</label>
               <input type="text" id="set_instagram_handle" class="input-field" />
             </div>
@@ -1457,7 +1473,7 @@
     // Poblar formulario de Ajustes del Sitio y Logo
     function populateSiteSettingsForm() {
       document.getElementById('set_logo_url').value = SITE.logo_url || '';
-      document.getElementById('set_logo_height').value = SITE.logo_height || 48;
+      document.getElementById('set_logo_height').value = SITE.logo_height || 58;
       updateLogoPreview(SITE.logo_url);
 
       document.getElementById('set_site_name').value = SITE.site_name || 'ILUSION PERFUMERY';
@@ -1487,6 +1503,9 @@
       document.getElementById('set_hero_accent').value = SITE.hero_accent || '';
       document.getElementById('set_hero_words').value = SITE.hero_words || '';
       document.getElementById('set_hero_subtitle').value = SITE.hero_subtitle || '';
+      document.getElementById('set_hero_badge_1').value = SITE.hero_badge_1 || '';
+      document.getElementById('set_hero_badge_2').value = SITE.hero_badge_2 || '';
+      document.getElementById('set_hero_badge_3').value = SITE.hero_badge_3 || '';
       document.getElementById('set_instagram_handle').value = SITE.instagram_handle || '';
       document.getElementById('set_tiktok_handle').value = SITE.tiktok_handle || '';
       document.getElementById('set_footer_location').value = SITE.footer_location || '';
@@ -1521,7 +1540,9 @@
       prodCatSelect.innerHTML = categories.map(c => `<option value="${esc(c.slug)}">${esc(c.emoji)} ${esc(c.name)}</option>`).join('');
 
       const listEl = document.getElementById('adminCategoriesList');
-      listEl.innerHTML = categories.map(c => `
+      listEl.innerHTML = categories.map(c => {
+        const isMain = MAIN_FOUR_CATEGORIES.some(mc => mc.slug === (c.slug || '').toLowerCase());
+        return `
         <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-sec); padding:12px 16px; border-radius:10px; border:1px solid var(--border);">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:1.3rem;">${esc(c.emoji)}</span>
@@ -1530,12 +1551,21 @@
               <span style="display:block; font-size:0.72rem; color:var(--muted);">slug: ${esc(c.slug)}</span>
             </div>
           </div>
-          <button class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">Eliminar</button>
+          ${isMain
+            ? `<span style="font-size:0.72rem; color:var(--accent); font-weight:700; padding:4px 10px; border:1px solid var(--accent-border); border-radius:999px;">Principal</span>`
+            : `<button class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">Eliminar</button>`
+          }
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     window.deleteCategory = async function(id) {
+      const cat = categories.find(c => Number(c.id) === Number(id));
+      if (cat && MAIN_FOUR_CATEGORIES.some(mc => mc.slug === (cat.slug || '').toLowerCase())) {
+        showToast('Las 4 categorías principales no se pueden eliminar');
+        return;
+      }
       if (!confirm('¿Eliminar esta categoría?')) return;
       if (supabaseClient) {
         await supabaseClient.from('categories').delete().eq('id', id);
@@ -1751,7 +1781,7 @@
         const updatedSettings = {
           ...SITE,
           logo_url: document.getElementById('set_logo_url').value.trim(),
-          logo_height: Number(document.getElementById('set_logo_height').value) || 48,
+          logo_height: Number(document.getElementById('set_logo_height').value) || 58,
           site_name: document.getElementById('set_site_name').value.trim(),
           site_subtitle: document.getElementById('set_site_subtitle').value.trim(),
           primary_color: document.getElementById('set_primary_color').value.trim() || '#f5c518',
@@ -1774,6 +1804,9 @@
           hero_accent: document.getElementById('set_hero_accent').value.trim(),
           hero_words: document.getElementById('set_hero_words').value.trim(),
           hero_subtitle: document.getElementById('set_hero_subtitle').value.trim(),
+          hero_badge_1: document.getElementById('set_hero_badge_1').value.trim(),
+          hero_badge_2: document.getElementById('set_hero_badge_2').value.trim(),
+          hero_badge_3: document.getElementById('set_hero_badge_3').value.trim(),
           instagram_handle: document.getElementById('set_instagram_handle').value.trim(),
           tiktok_handle: document.getElementById('set_tiktok_handle').value.trim(),
           footer_location: document.getElementById('set_footer_location').value.trim(),

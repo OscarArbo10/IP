@@ -42,17 +42,29 @@ CREATE TABLE IF NOT EXISTS products (
   updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Asegurar columnas nuevas si la tabla ya existía
+-- Asegurar todas las columnas nuevas si la tabla ya existía con un esquema anterior
+ALTER TABLE products ADD COLUMN IF NOT EXISTS brand TEXT NOT NULL DEFAULT 'Ilusion Perfumery';
+ALTER TABLE products ADD COLUMN IF NOT EXISTS price INTEGER DEFAULT 0;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS old_price INTEGER DEFAULT NULL;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS show_price BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS discount_percent INTEGER DEFAULT NULL;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'arabes';
 ALTER TABLE products ADD COLUMN IF NOT EXISTS concentration TEXT DEFAULT 'Eau de Parfum (EDP)';
 ALTER TABLE products ADD COLUMN IF NOT EXISTS size_ml TEXT DEFAULT '100 ml';
 ALTER TABLE products ADD COLUMN IF NOT EXISTS notes TEXT DEFAULT NULL;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS occasion TEXT DEFAULT 'Noche & Citas';
+ALTER TABLE products ADD COLUMN IF NOT EXISTS emoji TEXT NOT NULL DEFAULT '🖤';
+ALTER TABLE products ADD COLUMN IF NOT EXISTS badge TEXT DEFAULT NULL;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS stars INTEGER NOT NULL DEFAULT 5;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS reviews INTEGER NOT NULL DEFAULT 24;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS description TEXT DEFAULT NULL;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url TEXT DEFAULT NULL;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS variants JSONB DEFAULT '[]'::jsonb;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS featured BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE products ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
 
 -- Índices para alto rendimiento
 CREATE INDEX IF NOT EXISTS idx_products_category ON products (category);
@@ -72,25 +84,31 @@ VALUES (1, '{}'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 -- 4. TRIGGER AUTOMÁTICO DE UPDATED_AT
-CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION public.update_updated_at()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = ''
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 DROP TRIGGER IF EXISTS trg_products_updated_at ON products;
 CREATE TRIGGER trg_products_updated_at
   BEFORE UPDATE ON products
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
 
 DROP TRIGGER IF EXISTS trg_site_settings_updated_at ON site_settings;
 CREATE TRIGGER trg_site_settings_updated_at
   BEFORE UPDATE ON site_settings
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
 
 -- 5. SEGURIDAD: ROW LEVEL SECURITY (RLS)
+-- ⚠️ IMPORTANTE: En Supabase Dashboard → Authentication → Providers → Email,
+-- desactiva "Allow new users to sign up" para que solo los usuarios administradores
+-- creados manualmente puedan autenticarse.
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
@@ -99,58 +117,73 @@ ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lectura publica de categorias" ON categories;
 CREATE POLICY "Lectura publica de categorias"
   ON categories FOR SELECT
-  USING (active = TRUE OR auth.role() = 'authenticated');
+  TO anon
+  USING (active = TRUE);
+
+DROP POLICY IF EXISTS "Lectura admin de categorias" ON categories;
+CREATE POLICY "Lectura admin de categorias"
+  ON categories FOR SELECT
+  TO authenticated
+  USING ((SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Admin gestiona categorias" ON categories;
 CREATE POLICY "Admin gestiona categorias"
   ON categories FOR ALL
   TO authenticated
-  USING (TRUE)
-  WITH CHECK (TRUE);
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 -- Políticas de Productos
 DROP POLICY IF EXISTS "Lectura publica de productos" ON products;
 CREATE POLICY "Lectura publica de productos"
   ON products FOR SELECT
-  USING (active = TRUE OR auth.role() = 'authenticated');
+  TO anon
+  USING (active = TRUE);
+
+DROP POLICY IF EXISTS "Lectura admin de productos" ON products;
+CREATE POLICY "Lectura admin de productos"
+  ON products FOR SELECT
+  TO authenticated
+  USING ((SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Solo admin puede insertar" ON products;
 CREATE POLICY "Solo admin puede insertar"
   ON products FOR INSERT
   TO authenticated
-  WITH CHECK (TRUE);
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Solo admin puede actualizar" ON products;
 CREATE POLICY "Solo admin puede actualizar"
   ON products FOR UPDATE
   TO authenticated
-  USING (TRUE)
-  WITH CHECK (TRUE);
+  USING ((SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK ((SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Solo admin puede eliminar" ON products;
 CREATE POLICY "Solo admin puede eliminar"
   ON products FOR DELETE
   TO authenticated
-  USING (TRUE);
+  USING ((SELECT auth.uid()) IS NOT NULL);
 
 -- Políticas de Ajustes del Sitio (Logo, Textos, Configuración)
 DROP POLICY IF EXISTS "Lectura publica de ajustes" ON site_settings;
 CREATE POLICY "Lectura publica de ajustes"
   ON site_settings FOR SELECT
+  TO anon, authenticated
   USING (TRUE);
 
 DROP POLICY IF EXISTS "Admin inserta ajustes" ON site_settings;
 CREATE POLICY "Admin inserta ajustes"
   ON site_settings FOR INSERT
   TO authenticated
-  WITH CHECK (id = 1);
+  WITH CHECK (id = 1 AND (SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Admin actualiza ajustes" ON site_settings;
 CREATE POLICY "Admin actualiza ajustes"
   ON site_settings FOR UPDATE
   TO authenticated
-  USING (id = 1)
-  WITH CHECK (id = 1);
+  USING (id = 1 AND (SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK (id = 1 AND (SELECT auth.uid()) IS NOT NULL);
 
 -- 6. STORAGE BUCKET PARA FOTOS DE PERFUMES Y LOGO DEL SITIO
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -169,25 +202,27 @@ ON CONFLICT (id) DO UPDATE SET
 DROP POLICY IF EXISTS "Lectura publica de imagenes" ON storage.objects;
 CREATE POLICY "Lectura publica de imagenes"
   ON storage.objects FOR SELECT
+  TO anon, authenticated
   USING (bucket_id = 'products');
 
 DROP POLICY IF EXISTS "Admin sube imagenes" ON storage.objects;
 CREATE POLICY "Admin sube imagenes"
   ON storage.objects FOR INSERT
   TO authenticated
-  WITH CHECK (bucket_id = 'products');
+  WITH CHECK (bucket_id = 'products' AND (SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Admin actualiza imagenes" ON storage.objects;
 CREATE POLICY "Admin actualiza imagenes"
   ON storage.objects FOR UPDATE
   TO authenticated
-  USING (bucket_id = 'products');
+  USING (bucket_id = 'products' AND (SELECT auth.uid()) IS NOT NULL)
+  WITH CHECK (bucket_id = 'products' AND (SELECT auth.uid()) IS NOT NULL);
 
 DROP POLICY IF EXISTS "Admin elimina imagenes" ON storage.objects;
 CREATE POLICY "Admin elimina imagenes"
   ON storage.objects FOR DELETE
   TO authenticated
-  USING (bucket_id = 'products');
+  USING (bucket_id = 'products' AND (SELECT auth.uid()) IS NOT NULL);
 
 -- 7. CATEGORÍAS INICIALES PARA ILUSION PERFUMERY
 INSERT INTO categories (name, slug, emoji) VALUES
@@ -300,9 +335,189 @@ SELECT * FROM (VALUES
     'Limón, Piña, Bergamota, Abedul, Jazmín, Almizcle y Ámbar Gris',
     'Oficina & Poder', '🖤', 'Edición Limitada', 5, 610,
     'La versión Parfum más refinada y potente de Armaf. Estela imponente de cítricos ahumados y maderas nobles.',
-    'https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=900&q=80',
+    'assets/perfumes/cdn-intense-man.jpg',
     '[{"name": "105 ml Parfum"}]'::jsonb,
     TRUE
+  ),
+  (
+    'Club de Nuit Blue Iconic',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'caballero', 'Eau de Parfum (EDP)', '105 ml',
+    'Pomelo, Menta, Limón, Jengibre, Incienso, Cedro y Sándalo',
+    'Oficina & Poder', '💎', 'Elegancia Azul', 5, 320,
+    'Fresco, cítrico e inciensado. Sofisticación versátil para el día a día y negocios.',
+    'assets/perfumes/cdn-iconic.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Club de Nuit Sillage',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'caballero', 'Eau de Parfum (EDP)', '105 ml',
+    'Bergamota, Grosella Negra, Hojas de Violeta, Iris, Ambroxan y Almizcle',
+    'Fresco Diario', '🌊', 'Fresco Metálico', 5, 275,
+    'Frescura limpia, ozónica y magnética de altísima fijación para destacar en cualquier clima.',
+    'assets/perfumes/cdn-sillage.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Club de Nuit Untold',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'nicho', 'Eau de Parfum (EDP)', '105 ml',
+    'Azafrán, Jazmín, Amberwood, Ámbar Gris, Resina de Abeto y Cedro',
+    'Eventos VIP', '🔥', 'Estela Bestia', 5, 410,
+    'Acorde lujoso de azafrán y ámbar cristalino con una proyección envolvente e inolvidable.',
+    'assets/perfumes/cdn-untold.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Royal Amber',
+    'Orientica',
+    0, NULL::integer, FALSE,
+    'nicho', 'Luxury Collection EDP', '80 ml / 150 ml',
+    'Bergamota, Notas Dulces, Melón, Ámbar, Vainilla y Maderas Preciosas',
+    'Eventos VIP', '👑', 'Alta Perfumería', 5, 390,
+    'Joya de alta perfumería árabe nicho con duración extrema de más de 14 horas en piel.',
+    'assets/perfumes/orientica-royal-amber.jpg',
+    '[{"name": "80 ml Sellado"}, {"name": "150 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Amber Rouge',
+    'Orientica',
+    0, NULL::integer, FALSE,
+    'nicho', 'Luxury Collection EDP', '80 ml',
+    'Azafrán, Jazmín, Madera de Ámbar, Cedro y Resina de Abeto',
+    'Noche & Citas', '💎', 'Lujo Árabe', 5, 280,
+    'Cálido, seductor y opulento. Un elixir de azafrán y maderas ambaradas para ocasiones especiales.',
+    'assets/perfumes/orientica-amber-rouge.jpg',
+    '[{"name": "80 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Oud Saffron',
+    'Orientica',
+    0, NULL::integer, FALSE,
+    'nicho', 'Luxury Collection EDP', '80 ml',
+    'Notas Orientales, Vainilla, Azafrán, Madera de Oud, Pachulí y Almizcle',
+    'Noche & Citas', '🎩', 'Oud Imperial', 5, 245,
+    'Imponente fusión de madera de Oud y azafrán especiado con fondo avainillado magnético.',
+    'assets/perfumes/orientica-oud-saffron.png',
+    '[{"name": "80 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Yara Tous',
+    'Lattafa',
+    0, NULL::integer, FALSE,
+    'dama', 'Eau de Parfum (EDP)', '100 ml',
+    'Mango, Coco, Maracuyá, Jazmín, Flor de Azahar, Vainilla y Almizcle',
+    'Fresco Diario', '👑', 'Favorito Dama', 5, 460,
+    'Aroma tropical, cremoso y luminoso con notas de mango, flores blancas y vainilla suave.',
+    'assets/perfumes/lattafa-yara-tous.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Yara Elixir',
+    'Lattafa',
+    0, NULL::integer, FALSE,
+    'dama', 'Elixir EDP', '100 ml',
+    'Frutos Rojos, Orquídea, Vainilla Cremosa, Sándalo y Almizcle Dulce',
+    'Noche & Citas', '🌸', 'Dulce Seductor', 5, 385,
+    'Dulce, envolvente y femenino. Una estela adictiva y elegante que roba miradas.',
+    'assets/perfumes/lattafa-yara-elixir.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Club de Nuit Woman',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'dama', 'Eau de Parfum (EDP)', '105 ml',
+    'Bergamota, Pomelo, Durazno, Rosa, Jazmín, Pachulí, Vainilla y Almizcle',
+    'Eventos VIP', '👑', 'Elegancia Dama', 5, 340,
+    'Sofisticación floral-frutal con fondo de pachulí y vainilla de gran proyección.',
+    'assets/perfumes/cdn-woman.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Club de Nuit Urban Man Elixir',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'caballero', 'Eau de Parfum Elixir', '105 ml',
+    'Bergamota, Pimienta Rosa, Lavanda, Ambroxan, Pachulí y Vetiver',
+    'Noche & Citas', '🔥', 'Modo Bestia', 5, 395,
+    'Fusión explosiva de frescura especiada y ambroxan magnético con duración extrema.',
+    'assets/perfumes/cdn-elite.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Club de Nuit Overdose',
+    'Armaf',
+    0, NULL::integer, FALSE,
+    'nicho', 'Parfum Intense', '105 ml',
+    'Especias Cálidas, Notas Amaderadas, Ámbar Oscuro, Cuero y Resinas',
+    'Noche & Citas', '🖤', 'Edición Exclusiva', 5, 260,
+    'Aroma intenso, seductor y misterioso diseñado para dominar la noche.',
+    'assets/perfumes/cdn-overdose.jpg',
+    '[{"name": "105 ml Sellado"}]'::jsonb,
+    FALSE
+  ),
+  (
+    'Hawas Diva',
+    'Rasasi',
+    0, NULL::integer, FALSE,
+    'dama', 'Eau de Parfum (EDP)', '100 ml',
+    'Frutas Exóticas, Flores Blancas, Vainilla Ámbar y Almizcle Sensual',
+    'Noche & Citas', '👑', 'Novedad VIP', 5, 310,
+    'Femenino, audaz y envolvente con una estela dulce-floral de larga duración.',
+    'assets/perfumes/hawas-diva.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Afeef',
+    'Lattafa',
+    0, NULL::integer, FALSE,
+    'arabes', 'Eau de Parfum (EDP)', '100 ml',
+    'Bergamota, Durazno, Pimienta Rosa, Jazmín, Flor de Azahar, Sándalo y Praliné',
+    'Eventos VIP', '🕌', 'Joya Árabe', 5, 290,
+    'Presentación de lujo con un aroma exquisito que combina notas frutales, florales y fondo cremoso de praliné.',
+    'assets/perfumes/lattafa-afeef.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Victoria',
+    'Lattafa',
+    0, NULL::integer, FALSE,
+    'dama', 'Eau de Parfum (EDP)', '100 ml',
+    'Limón Confitado, Flor de Azahar, Vainilla Real y Almizcle Blanco',
+    'Eventos VIP', '💎', 'Realeza Árabe', 5, 330,
+    'Elegancia imperial con acordes cítricos dulces, flores blancas y vainilla adictiva.',
+    'assets/perfumes/lattafa-victoria.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    TRUE
+  ),
+  (
+    'Rave Now Women',
+    'Lattafa',
+    0, NULL::integer, FALSE,
+    'dama', 'Eau de Parfum (EDP)', '100 ml',
+    'Frutos Rojos, Fresas, Malvavisco (Marshmallow), Vainilla y Almizcle',
+    'Fresco Diario', '🌸', 'Tendencia', 5, 425,
+    'Delicioso aroma frutal-gourmand de frutos rojos y malvavisco cremoso. Súper juvenil y halagado.',
+    'assets/perfumes/rave-now-women.jpg',
+    '[{"name": "100 ml Sellado"}]'::jsonb,
+    FALSE
   ),
   (
     'Oud Wood',
@@ -329,4 +544,12 @@ SELECT * FROM (VALUES
     FALSE
   )
 ) AS v(name, brand, price, old_price, show_price, category, concentration, size_ml, notes, occasion, emoji, badge, stars, reviews, description, image_url, variants, featured)
-WHERE NOT EXISTS (SELECT 1 FROM products LIMIT 1);
+WHERE NOT EXISTS (
+  SELECT 1 FROM products p WHERE LOWER(TRIM(p.name)) = LOWER(TRIM(v.name))
+);
+
+-- Actualizar foto local si Club de Nuit Intense ya existía con imagen genérica
+UPDATE products
+SET image_url = 'assets/perfumes/cdn-intense-man.jpg'
+WHERE LOWER(name) LIKE 'club de nuit intense%'
+  AND (image_url IS NULL OR image_url LIKE 'https://images.unsplash.com%');
