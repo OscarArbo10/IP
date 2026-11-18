@@ -1702,7 +1702,8 @@
 
       const listEl = document.getElementById('adminCategoriesList');
       listEl.innerHTML = categories.map(c => {
-        const isFeaturedOnIndex = featSlugs.includes(c.slug);
+        const slotIndex = featSlugs.indexOf(c.slug);
+        const isFeaturedOnIndex = slotIndex !== -1;
         return `
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:var(--bg-sec); padding:12px 16px; border-radius:10px; border:1px solid var(--border); ${c.active === false ? 'opacity:0.6;' : ''}">
           <div style="display:flex; align-items:center; gap:10px;">
@@ -1710,13 +1711,20 @@
             <div>
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <strong style="color:#fff; font-size:0.92rem;">${esc(c.name)}</strong>
-                ${isFeaturedOnIndex ? `<span style="font-size:0.66rem; color:#08080a; background:var(--accent); font-weight:800; padding:2px 8px; border-radius:999px;">⭐ En el Index</span>` : ''}
+                ${isFeaturedOnIndex ? `<span style="font-size:0.66rem; color:#08080a; background:var(--accent); font-weight:800; padding:2px 8px; border-radius:999px;">⭐ Recuadro #${slotIndex + 1} del Index</span>` : ''}
                 ${c.active === false ? `<span style="font-size:0.66rem; color:#fca5a5; border:1px solid rgba(239,68,68,0.4); padding:2px 8px; border-radius:999px;">Oculta</span>` : ''}
               </div>
               <span style="display:block; font-size:0.72rem; color:var(--muted);">slug: ${esc(c.slug)}</span>
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <select class="select-field" style="width:auto; padding:6px 10px; font-size:0.75rem;" onchange="assignCategoryToIndexSlot(${Number(c.id)}, this.value)">
+              <option value="">📌 Posición en Index...</option>
+              <option value="0" ${slotIndex === 0 ? 'selected' : ''}>Recuadro #1 del Index</option>
+              <option value="1" ${slotIndex === 1 ? 'selected' : ''}>Recuadro #2 del Index</option>
+              <option value="2" ${slotIndex === 2 ? 'selected' : ''}>Recuadro #3 del Index</option>
+              <option value="3" ${slotIndex === 3 ? 'selected' : ''}>Recuadro #4 del Index</option>
+            </select>
             <button type="button" class="btn btn-outline" style="padding:6px 12px; font-size:0.76rem;" onclick="openEditCategory(${Number(c.id)})">✏️ Editar</button>
             <button type="button" class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">🗑️ Eliminar</button>
           </div>
@@ -1724,6 +1732,24 @@
       `;
       }).join('');
     }
+
+    window.assignCategoryToIndexSlot = async function(catId, slotStr) {
+      if (slotStr === '') return;
+      const slotIdx = Number(slotStr);
+      const cat = categories.find(c => Number(c.id) === Number(catId));
+      if (!cat || slotIdx < 0 || slotIdx > 3) return;
+
+      const selEl = document.getElementById(`set_feat_cat_slug_${slotIdx}`);
+      const titleInp = document.getElementById(`set_feat_cat_title_${slotIdx}`);
+      const subInp = document.getElementById(`set_feat_cat_sub_${slotIdx}`);
+      if (selEl) selEl.value = cat.slug;
+      if (titleInp) titleInp.value = cat.name;
+      if (subInp) subInp.value = `Explora nuestra colección de ${cat.name}`;
+
+      if (typeof window.triggerSaveSiteSettings === 'function') {
+        await window.triggerSaveSiteSettings();
+      }
+    };
 
     window.openEditCategory = function(id) {
       const cat = categories.find(c => Number(c.id) === Number(id));
@@ -1945,15 +1971,20 @@
         });
       });
 
-      // Al cambiar la categoría seleccionada en cualquiera de los 4 cuadros del Index, actualizar sugerencia de título
+      // Al cambiar la categoría seleccionada en cualquiera de los 4 cuadros del Index, actualizar título/subtítulo y guardar automáticamente
       document.querySelectorAll('.feat-cat-slug').forEach(selEl => {
-        selEl.addEventListener('change', () => {
+        selEl.addEventListener('change', async () => {
           const idx = selEl.dataset.idx;
           const chosenCat = categories.find(c => c.slug === selEl.value);
           const titleInp = document.getElementById(`set_feat_cat_title_${idx}`);
+          const subInp = document.getElementById(`set_feat_cat_sub_${idx}`);
           if (chosenCat && titleInp) {
             titleInp.value = chosenCat.name;
           }
+          if (chosenCat && subInp) {
+            subInp.value = `Explora nuestra colección de ${chosenCat.name}`;
+          }
+          await saveAllSiteSettings();
         });
       });
 
@@ -2043,6 +2074,7 @@
         renderAdminCategories();
         showToast('✅ Configuración y 4 Categorías guardadas en vivo');
       }
+      window.triggerSaveSiteSettings = saveAllSiteSettings;
 
       document.getElementById('saveSiteSettingsBtn').addEventListener('click', saveAllSiteSettings);
       const saveFeatQuickBtn = document.getElementById('saveFeaturedCatsQuickBtn');

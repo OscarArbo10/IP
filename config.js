@@ -64,6 +64,38 @@ const SITE_DEFAULTS = {
   products_subtitle: 'Perfumes masculinos diseñados para proyectar poder, elegancia y magnetismo',
   offers_title: '🔥 Destacados de la Semana',
 
+  // Fotos y Configuración de las 4 Categorías Principales del Index (100% escogibles y editables en el Admin)
+  cat_img_caballero: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80',
+  cat_img_dama: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=80',
+  cat_img_nicho: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=700&q=80',
+  cat_img_splash: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80',
+  featured_categories: [
+    {
+      slug: 'caballero',
+      title: 'Caballero',
+      subtitle: 'Fragancias masculinas de carácter y seducción',
+      image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      slug: 'dama',
+      title: 'Dama',
+      subtitle: 'Aromas femeninos elegantes, dulces y envolventes',
+      image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      slug: 'nicho',
+      title: 'Nicho',
+      subtitle: 'Alta perfumería de autor y lujo exclusivo',
+      image: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=700&q=80'
+    },
+    {
+      slug: 'splash',
+      title: 'Splash',
+      subtitle: 'Body mists frescos, ligeros e irresistibles',
+      image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80'
+    }
+  ],
+
   // Banner Promocional
   promo_enabled: true,
   promo_tag: 'EDICIÓN LIMITADA · ENTREGA INMEDIATA',

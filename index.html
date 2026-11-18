@@ -2542,49 +2542,7 @@
       </div>
 
       <div class="four-categories-grid" id="fourCategoriesGrid">
-        <button type="button" class="quad-cat-card" data-maincat="caballero">
-          <div class="quad-cat-media">
-            <img id="quadCatImgCaballero" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80" alt="Perfumes para Caballero" loading="lazy" />
-          </div>
-          <div class="quad-cat-body">
-            <div class="quad-cat-name">Caballero</div>
-            <div class="quad-cat-sub">Fragancias masculinas de carácter y seducción</div>
-            <span class="quad-cat-cta">Explorar ➔</span>
-          </div>
-        </button>
-
-        <button type="button" class="quad-cat-card" data-maincat="dama">
-          <div class="quad-cat-media">
-            <img id="quadCatImgDama" src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=80" alt="Perfumes para Dama" loading="lazy" />
-          </div>
-          <div class="quad-cat-body">
-            <div class="quad-cat-name">Dama</div>
-            <div class="quad-cat-sub">Aromas femeninos elegantes, dulces y envolventes</div>
-            <span class="quad-cat-cta">Explorar ➔</span>
-          </div>
-        </button>
-
-        <button type="button" class="quad-cat-card" data-maincat="nicho">
-          <div class="quad-cat-media">
-            <img id="quadCatImgNicho" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=700&q=80" alt="Perfumería Nicho" loading="lazy" />
-          </div>
-          <div class="quad-cat-body">
-            <div class="quad-cat-name">Nicho</div>
-            <div class="quad-cat-sub">Alta perfumería de autor y lujo exclusivo</div>
-            <span class="quad-cat-cta">Explorar ➔</span>
-          </div>
-        </button>
-
-        <button type="button" class="quad-cat-card" data-maincat="splash">
-          <div class="quad-cat-media">
-            <img id="quadCatImgSplash" src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80" alt="Body Splash" loading="lazy" />
-          </div>
-          <div class="quad-cat-body">
-            <div class="quad-cat-name">Splash</div>
-            <div class="quad-cat-sub">Body mists frescos, ligeros e irresistibles</div>
-            <span class="quad-cat-cta">Explorar ➔</span>
-          </div>
-        </button>
+        <!-- Se renderiza dinámicamente desde Supabase (SITE.featured_categories y categories) -->
       </div>
     </div>
   </section>
@@ -3815,17 +3773,82 @@
       tkLink.textContent = `🎵 TikTok: @${tkHandle}`;
       tkLink.href = `https://tiktok.com/@${tkHandle}`;
 
-      // Fotos editables de las 4 categorías principales
-      const catImgMap = [
-        ['quadCatImgCaballero', 'cat_img_caballero'],
-        ['quadCatImgDama', 'cat_img_dama'],
-        ['quadCatImgNicho', 'cat_img_nicho'],
-        ['quadCatImgSplash', 'cat_img_splash']
+      renderFeaturedFourCategories();
+    }
+
+    function getFeaturedFourConfig() {
+      const defaults = [
+        {
+          slug: 'caballero',
+          title: 'Caballero',
+          subtitle: 'Fragancias masculinas de carácter y seducción',
+          image: (SITE.cat_img_caballero && String(SITE.cat_img_caballero).trim()) || SITE_DEFAULTS.cat_img_caballero
+        },
+        {
+          slug: 'dama',
+          title: 'Dama',
+          subtitle: 'Aromas femeninos elegantes, dulces y envolventes',
+          image: (SITE.cat_img_dama && String(SITE.cat_img_dama).trim()) || SITE_DEFAULTS.cat_img_dama
+        },
+        {
+          slug: 'nicho',
+          title: 'Nicho',
+          subtitle: 'Alta perfumería de autor y lujo exclusivo',
+          image: (SITE.cat_img_nicho && String(SITE.cat_img_nicho).trim()) || SITE_DEFAULTS.cat_img_nicho
+        },
+        {
+          slug: 'splash',
+          title: 'Splash',
+          subtitle: 'Body mists frescos, ligeros e irresistibles',
+          image: (SITE.cat_img_splash && String(SITE.cat_img_splash).trim()) || SITE_DEFAULTS.cat_img_splash
+        }
       ];
-      catImgMap.forEach(([elId, key]) => {
-        const imgEl = document.getElementById(elId);
-        const url = (SITE[key] && String(SITE[key]).trim()) || SITE_DEFAULTS[key];
-        if (imgEl && url) imgEl.src = url;
+
+      if (Array.isArray(SITE.featured_categories) && SITE.featured_categories.length === 4) {
+        return SITE.featured_categories.map((fc, i) => {
+          const fallbackSlot = defaults[i];
+          const slug = (fc && fc.slug) || fallbackSlot.slug;
+          const matchedCat = allCategories.find(c => (c.slug || '').toLowerCase() === slug.toLowerCase());
+          const title = (fc && fc.title && String(fc.title).trim())
+            || (matchedCat && matchedCat.name)
+            || fallbackSlot.title;
+          const subtitle = (fc && fc.subtitle !== undefined && String(fc.subtitle).trim() !== '')
+            ? fc.subtitle
+            : `Explora nuestra colección de ${title}`;
+          const image = (fc && fc.image && String(fc.image).trim()) || fallbackSlot.image;
+          return { slug, title, subtitle, image };
+        });
+      }
+      return defaults;
+    }
+
+    function renderFeaturedFourCategories() {
+      const grid = document.getElementById('fourCategoriesGrid');
+      if (!grid) return;
+      const fourSlots = getFeaturedFourConfig();
+
+      grid.innerHTML = fourSlots.map(slot => `
+        <button type="button" class="quad-cat-card ${activeCategory === slot.slug ? 'active' : ''}" data-maincat="${esc(slot.slug)}">
+          <div class="quad-cat-media">
+            <img src="${esc(slot.image)}" alt="${esc(slot.title)}" loading="lazy" />
+          </div>
+          <div class="quad-cat-body">
+            <div class="quad-cat-name">${esc(slot.title)}</div>
+            <div class="quad-cat-sub">${esc(slot.subtitle)}</div>
+            <span class="quad-cat-cta">Explorar ➔</span>
+          </div>
+        </button>
+      `).join('');
+
+      grid.querySelectorAll('.quad-cat-card').forEach(card => {
+        card.addEventListener('click', () => {
+          activeCategory = card.dataset.maincat;
+          activeOccasion = 'all';
+          visibleProductsLimit = PRODUCTS_PER_BATCH;
+          renderCategories();
+          renderProducts();
+          document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+        });
       });
     }
 
@@ -3849,7 +3872,6 @@
     }
 
     function renderCategories() {
-      // Sincronizar el estado activo del Cuadro de 4 Categorías (Caballero, Dama, Nicho, Splash)
       document.querySelectorAll('#fourCategoriesGrid .quad-cat-card').forEach(card => {
         card.classList.toggle('active', card.dataset.maincat === activeCategory);
       });
@@ -3857,29 +3879,30 @@
       const filterBar = document.getElementById('activeFilterBar');
       if (!filterBar) return;
 
-      if (activeCategory === 'all' && activeOccasion === 'all') {
-        filterBar.innerHTML = `<span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">✨ Mostrando todas las categorías</span>`;
-      } else {
-        const matchedCat = MAIN_FOUR_CATEGORIES.find(c => c.slug === activeCategory)
-          || allCategories.find(c => c.slug === activeCategory);
-        const label = matchedCat ? `${matchedCat.emoji || '👑'} ${matchedCat.name}` : activeCategory;
-        filterBar.innerHTML = `
-          <div class="active-filter-chip">
-            <span>Categoría: <strong>${esc(label)}</strong></span>
-            <button type="button" id="clearActiveFilterBtn">✕ Ver Todas</button>
-          </div>
-        `;
-        const clearBtn = document.getElementById('clearActiveFilterBtn');
-        if (clearBtn) {
-          clearBtn.addEventListener('click', () => {
-            activeCategory = 'all';
-            activeOccasion = 'all';
-            visibleProductsLimit = PRODUCTS_PER_BATCH;
-            renderCategories();
-            renderProducts();
-          });
-        }
-      }
+      const pillsHtml = `
+        <div class="categories-bar">
+          <button type="button" class="cat-pill ${activeCategory === 'all' ? 'active' : ''}" data-cat="all">
+            👑 Todas
+          </button>
+          ${allCategories.map(c => `
+            <button type="button" class="cat-pill ${activeCategory === c.slug ? 'active' : ''}" data-cat="${esc(c.slug)}">
+              ${esc(c.emoji || '✨')} ${esc(c.name)}
+            </button>
+          `).join('')}
+        </div>
+      `;
+
+      filterBar.innerHTML = pillsHtml;
+
+      filterBar.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCategory = btn.dataset.cat;
+          activeOccasion = 'all';
+          visibleProductsLimit = PRODUCTS_PER_BATCH;
+          renderCategories();
+          renderProducts();
+        });
+      });
     }
 
     function renderProducts() {
@@ -4344,7 +4367,7 @@
           SITE = { ...SITE_DEFAULTS, ...settingsRes.data.settings };
         }
         allCategories = (catRes.data && catRes.data.length)
-          ? mergeWithMainCategories(catRes.data)
+          ? catRes.data
           : FALLBACK_CATEGORIES;
         allProducts = (prodRes.data && prodRes.data.length) ? prodRes.data : FALLBACK_PRODUCTS;
       } catch (err) {
@@ -4399,6 +4422,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       initHeroParticles();
       loadStoreData();
+
+      // Actualizar automáticamente cuando el usuario vuelve a la pestaña después de editar en el Admin
+      window.addEventListener('focus', () => {
+        loadStoreData();
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          loadStoreData();
+        }
+      });
 
       // Buscador móvil
       const mobSearchBar = document.getElementById('mobileSearchBar');
