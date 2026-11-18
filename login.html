@@ -251,9 +251,9 @@
       }
     })();
 
-    // Protección anti fuerza bruta en cliente
-    let failedAttempts = Number(sessionStorage.getItem('ilusion_login_fails') || '0');
-    let lockUntil = Number(sessionStorage.getItem('ilusion_login_lock') || '0');
+    // Protección anti fuerza bruta en cliente (persistente entre pestañas)
+    let failedAttempts = Number(localStorage.getItem('ilusion_login_fails') || '0');
+    let lockUntil = Number(localStorage.getItem('ilusion_login_lock') || '0');
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -264,6 +264,11 @@
         const waitSec = Math.ceil((lockUntil - now) / 1000);
         showError(`Demasiados intentos fallidos. Espera ${waitSec} segundos.`);
         return;
+      } else if (lockUntil > 0) {
+        failedAttempts = 0;
+        lockUntil = 0;
+        localStorage.removeItem('ilusion_login_fails');
+        localStorage.removeItem('ilusion_login_lock');
       }
 
       if (!supabaseClient) {
@@ -281,10 +286,10 @@
 
       if (error || !data.session) {
         failedAttempts += 1;
-        sessionStorage.setItem('ilusion_login_fails', String(failedAttempts));
+        localStorage.setItem('ilusion_login_fails', String(failedAttempts));
         if (failedAttempts >= 5) {
           lockUntil = Date.now() + 30000; // 30 segundos de bloqueo
-          sessionStorage.setItem('ilusion_login_lock', String(lockUntil));
+          localStorage.setItem('ilusion_login_lock', String(lockUntil));
           showError('Has superado 5 intentos. Acceso bloqueado por 30 segundos.');
         } else {
           showError('Correo o contraseña incorrectos. Verifica tus datos en Supabase Auth.');
@@ -294,8 +299,8 @@
         return;
       }
 
-      sessionStorage.removeItem('ilusion_login_fails');
-      sessionStorage.removeItem('ilusion_login_lock');
+      localStorage.removeItem('ilusion_login_fails');
+      localStorage.removeItem('ilusion_login_lock');
       window.location.href = 'admin.html';
     });
   </script>

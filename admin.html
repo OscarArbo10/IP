@@ -911,85 +911,148 @@
           </div>
         </div>
 
-        <!-- 5. FOTOS DE LAS 4 CATEGORÍAS PRINCIPALES -->
-        <div class="settings-box" style="grid-column: 1 / -1;">
-          <h3>🖼️ Fotos de las 4 Categorías Principales (Caballero, Dama, Nicho, Splash)</h3>
-          <p class="desc">Sube una imagen desde tu dispositivo o pega una URL para cada recuadro de categoría en la tienda. Luego haz clic en "Guardar Todos los Cambios".</p>
+        <!-- 5. SELECCIÓN Y FOTOS DE LAS 4 CATEGORÍAS PRINCIPALES DEL INDEX -->
+        <div class="settings-box" id="featuredCategoriesSettingsBox" style="grid-column: 1 / -1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+            <div>
+              <h3>🖼️ Las 4 Categorías Destacadas del Index (Escogibles y Editables)</h3>
+              <p class="desc" style="margin-bottom:0;">Escoge qué 4 categorías quieres mostrar en los 4 recuadros principales del inicio, personaliza su título, descripción y foto.</p>
+            </div>
+            <button type="button" class="btn btn-gold" id="saveFeaturedCatsQuickBtn">
+              💾 Guardar 4 Categorías del Index
+            </button>
+          </div>
 
-          <div class="form-grid-2">
-            <!-- Caballero -->
+          <div class="form-grid-2" style="margin-top: 14px;">
+            <!-- Cuadro 1 -->
             <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                <img id="prev_cat_img_caballero" src="" alt="Caballero" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <img id="prev_feat_cat_0" src="" alt="Categoría 1" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
                 <div>
-                  <strong style="color:#fff; font-size:0.95rem;">Caballero</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Caballero</div>
+                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #1 del Index</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar al hacer clic</label>
+                <select id="set_feat_cat_slug_0" class="select-field feat-cat-slug" data-idx="0"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_0" class="input-field" placeholder="Ej: Caballero" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_0" class="input-field" placeholder="Fragancias masculinas..." />
                 </div>
               </div>
               <div class="field-group" style="margin-bottom:8px;">
                 <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_caballero" data-preview="prev_cat_img_caballero" />
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_0" data-preview="prev_feat_cat_0" />
               </div>
               <div class="field-group" style="margin-bottom:0;">
                 <label>O pegar URL de la foto</label>
-                <input type="url" id="set_cat_img_caballero" class="input-field cat-img-url" data-preview="prev_cat_img_caballero" placeholder="https://..." />
+                <input type="url" id="set_feat_cat_img_0" class="input-field cat-img-url" data-preview="prev_feat_cat_0" placeholder="https://..." />
               </div>
             </div>
 
-            <!-- Dama -->
+            <!-- Cuadro 2 -->
             <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                <img id="prev_cat_img_dama" src="" alt="Dama" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <img id="prev_feat_cat_1" src="" alt="Categoría 2" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
                 <div>
-                  <strong style="color:#fff; font-size:0.95rem;">Dama</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Dama</div>
+                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #2 del Index</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar al hacer clic</label>
+                <select id="set_feat_cat_slug_1" class="select-field feat-cat-slug" data-idx="1"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_1" class="input-field" placeholder="Ej: Dama" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_1" class="input-field" placeholder="Aromas femeninos..." />
                 </div>
               </div>
               <div class="field-group" style="margin-bottom:8px;">
                 <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_dama" data-preview="prev_cat_img_dama" />
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_1" data-preview="prev_feat_cat_1" />
               </div>
               <div class="field-group" style="margin-bottom:0;">
                 <label>O pegar URL de la foto</label>
-                <input type="url" id="set_cat_img_dama" class="input-field cat-img-url" data-preview="prev_cat_img_dama" placeholder="https://..." />
+                <input type="url" id="set_feat_cat_img_1" class="input-field cat-img-url" data-preview="prev_feat_cat_1" placeholder="https://..." />
               </div>
             </div>
 
-            <!-- Nicho -->
+            <!-- Cuadro 3 -->
             <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                <img id="prev_cat_img_nicho" src="" alt="Nicho" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <img id="prev_feat_cat_2" src="" alt="Categoría 3" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
                 <div>
-                  <strong style="color:#fff; font-size:0.95rem;">Nicho</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Nicho</div>
+                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #3 del Index</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar al hacer clic</label>
+                <select id="set_feat_cat_slug_2" class="select-field feat-cat-slug" data-idx="2"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_2" class="input-field" placeholder="Ej: Nicho" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_2" class="input-field" placeholder="Alta perfumería..." />
                 </div>
               </div>
               <div class="field-group" style="margin-bottom:8px;">
                 <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_nicho" data-preview="prev_cat_img_nicho" />
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_2" data-preview="prev_feat_cat_2" />
               </div>
               <div class="field-group" style="margin-bottom:0;">
                 <label>O pegar URL de la foto</label>
-                <input type="url" id="set_cat_img_nicho" class="input-field cat-img-url" data-preview="prev_cat_img_nicho" placeholder="https://..." />
+                <input type="url" id="set_feat_cat_img_2" class="input-field cat-img-url" data-preview="prev_feat_cat_2" placeholder="https://..." />
               </div>
             </div>
 
-            <!-- Splash -->
+            <!-- Cuadro 4 -->
             <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                <img id="prev_cat_img_splash" src="" alt="Splash" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <img id="prev_feat_cat_3" src="" alt="Categoría 4" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
                 <div>
-                  <strong style="color:#fff; font-size:0.95rem;">Splash</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Recuadro categoría Splash</div>
+                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #4 del Index</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar al hacer clic</label>
+                <select id="set_feat_cat_slug_3" class="select-field feat-cat-slug" data-idx="3"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_3" class="input-field" placeholder="Ej: Splash" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_3" class="input-field" placeholder="Body mists frescos..." />
                 </div>
               </div>
               <div class="field-group" style="margin-bottom:8px;">
                 <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_cat_img_splash" data-preview="prev_cat_img_splash" />
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_3" data-preview="prev_feat_cat_3" />
               </div>
               <div class="field-group" style="margin-bottom:0;">
                 <label>O pegar URL de la foto</label>
-                <input type="url" id="set_cat_img_splash" class="input-field cat-img-url" data-preview="prev_cat_img_splash" placeholder="https://..." />
+                <input type="url" id="set_feat_cat_img_3" class="input-field cat-img-url" data-preview="prev_feat_cat_3" placeholder="https://..." />
               </div>
             </div>
           </div>
@@ -1001,11 +1064,18 @@
          PESTAÑA 3: CATEGORÍAS / FAMILIAS OLFATIVAS
          ========================================================== -->
     <section class="tab-panel" id="tab-categories">
-      <div class="settings-box" style="max-width: 720px;">
-        <h3>🗂️ Categorías y Familias Olfativas</h3>
-        <p class="desc">Crea o administra las categorías que aparecen como botones de filtro en la tienda.</p>
+      <div class="settings-box" style="max-width: 820px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+          <div>
+            <h3>🗂️ Categorías y Familias Olfativas</h3>
+            <p class="desc" style="margin-bottom:0;">Crea, edita o elimina cualquier categoría. También puedes elegir cuáles 4 aparecen destacadas en el inicio.</p>
+          </div>
+          <button type="button" class="btn btn-outline" id="goToFeaturedCatsBtn">
+            🖼️ Escoger las 4 del Index
+          </button>
+        </div>
 
-        <form id="addCategoryForm" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+        <form id="addCategoryForm" style="display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 20px;">
           <input type="text" id="newCatEmoji" class="input-field" style="width: 70px; text-align: center;" placeholder="🕌" value="👑" required />
           <input type="text" id="newCatName" class="input-field" style="flex: 1; min-width: 180px;" placeholder="Nombre (ej. Perfumería Árabe)" required />
           <button type="submit" class="btn btn-gold">+ Crear Categoría</button>
@@ -1015,6 +1085,51 @@
       </div>
     </section>
   </main>
+
+  <!-- ============================================================
+       MODAL EDITAR CATEGORÍA
+       ============================================================ -->
+  <div class="modal-overlay" id="categoryModalOverlay">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 style="font-family: 'Cinzel', serif; color: var(--accent);">✏️ Editar Categoría</h3>
+        <button type="button" class="btn btn-outline" id="closeCatModalBtn" style="padding: 6px 12px;">✕</button>
+      </div>
+      <form id="editCategoryForm">
+        <input type="hidden" id="edit_cat_id" />
+        <input type="hidden" id="edit_cat_old_slug" />
+
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Emoji / Icono *</label>
+            <input type="text" id="edit_cat_emoji" class="input-field" required style="text-align:center; font-size:1.2rem;" />
+          </div>
+          <div class="field-group">
+            <label>Nombre de la Categoría *</label>
+            <input type="text" id="edit_cat_name" class="input-field" required />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Identificador (Slug) *</label>
+          <input type="text" id="edit_cat_slug" class="input-field" required />
+          <small style="color:var(--muted); font-size:0.72rem;">Si cambias el slug, los perfumes de esta categoría se actualizarán automáticamente.</small>
+        </div>
+
+        <div style="margin: 14px 0;">
+          <label class="switch-label">
+            <input type="checkbox" id="edit_cat_active" class="switch-input" checked />
+            <span>✅ Categoría Activa en la Tienda</span>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; padding-top: 14px; border-top: 1px solid var(--border);">
+          <button type="button" class="btn btn-outline" id="cancelCatModalBtn">Cancelar</button>
+          <button type="submit" class="btn btn-gold">💾 Guardar Categoría</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- ============================================================
        MODAL CREAR / EDITAR PERFUME
@@ -1215,18 +1330,12 @@
       }
 
       let dbCats = catRes.data || [];
-      // Asegurar que Caballero, Dama, Nicho y Splash existan siempre
-      const missingMain = MAIN_FOUR_CATEGORIES.filter(mc => !dbCats.some(c => (c.slug || '').toLowerCase() === mc.slug));
-      if (missingMain.length > 0) {
+      if (dbCats.length === 0) {
         try {
-          const { data: insertedCats } = await supabaseClient.from('categories').insert(missingMain).select();
-          if (insertedCats && insertedCats.length) {
-            dbCats = [...insertedCats, ...dbCats];
-          } else {
-            dbCats = [...missingMain, ...dbCats];
-          }
+          const { data: insertedCats } = await supabaseClient.from('categories').insert(MAIN_FOUR_CATEGORIES).select();
+          dbCats = (insertedCats && insertedCats.length) ? insertedCats : [...MAIN_FOUR_CATEGORIES];
         } catch (e) {
-          dbCats = [...missingMain, ...dbCats];
+          dbCats = [...MAIN_FOUR_CATEGORIES];
         }
       }
 
@@ -1234,8 +1343,8 @@
       products = prodRes.data || [];
 
       updateStats();
-      populateSiteSettingsForm();
       renderAdminCategories();
+      populateSiteSettingsForm();
       renderAdminProducts();
     }
 
@@ -1510,14 +1619,62 @@
       document.getElementById('set_tiktok_handle').value = SITE.tiktok_handle || '';
       document.getElementById('set_footer_location').value = SITE.footer_location || '';
 
-      ['caballero', 'dama', 'nicho', 'splash'].forEach(slug => {
-        const key = `cat_img_${slug}`;
-        const url = SITE[key] || SITE_DEFAULTS[key] || '';
-        const inp = document.getElementById(`set_${key}`);
-        const prev = document.getElementById(`prev_${key}`);
-        if (inp) inp.value = url;
-        if (prev && url) prev.src = url;
-      });
+      const defaultFour = [
+        {
+          slug: 'caballero',
+          title: 'Caballero',
+          subtitle: 'Fragancias masculinas de carácter y seducción',
+          image: SITE.cat_img_caballero || SITE_DEFAULTS.cat_img_caballero
+        },
+        {
+          slug: 'dama',
+          title: 'Dama',
+          subtitle: 'Aromas femeninos elegantes, dulces y envolventes',
+          image: SITE.cat_img_dama || SITE_DEFAULTS.cat_img_dama
+        },
+        {
+          slug: 'nicho',
+          title: 'Nicho',
+          subtitle: 'Alta perfumería de autor y lujo exclusivo',
+          image: SITE.cat_img_nicho || SITE_DEFAULTS.cat_img_nicho
+        },
+        {
+          slug: 'splash',
+          title: 'Splash',
+          subtitle: 'Body mists frescos, ligeros e irresistibles',
+          image: SITE.cat_img_splash || SITE_DEFAULTS.cat_img_splash
+        }
+      ];
+
+      const featCats = Array.isArray(SITE.featured_categories) && SITE.featured_categories.length === 4
+        ? SITE.featured_categories
+        : defaultFour;
+
+      const availableCats = categories.length ? categories : MAIN_FOUR_CATEGORIES;
+
+      for (let i = 0; i < 4; i++) {
+        const slot = featCats[i] || defaultFour[i];
+        const selEl = document.getElementById(`set_feat_cat_slug_${i}`);
+        const titleEl = document.getElementById(`set_feat_cat_title_${i}`);
+        const subEl = document.getElementById(`set_feat_cat_sub_${i}`);
+        const imgEl = document.getElementById(`set_feat_cat_img_${i}`);
+        const prevEl = document.getElementById(`prev_feat_cat_${i}`);
+
+        if (selEl) {
+          let optsHtml = availableCats.map(c =>
+            `<option value="${esc(c.slug)}">${esc(c.emoji || '👑')} ${esc(c.name)} (${esc(c.slug)})</option>`
+          ).join('');
+          if (slot.slug && !availableCats.some(c => c.slug === slot.slug)) {
+            optsHtml = `<option value="${esc(slot.slug)}">👑 ${esc(slot.title || slot.slug)} (${esc(slot.slug)})</option>` + optsHtml;
+          }
+          selEl.innerHTML = optsHtml;
+          selEl.value = slot.slug || (availableCats[i] && availableCats[i].slug) || availableCats[0].slug;
+        }
+        if (titleEl) titleEl.value = slot.title || '';
+        if (subEl) subEl.value = slot.subtitle || '';
+        if (imgEl) imgEl.value = slot.image || '';
+        if (prevEl && slot.image) prevEl.src = slot.image;
+      }
     }
 
     function updateLogoPreview(url) {
@@ -1529,7 +1686,7 @@
       }
     }
 
-    // Categorías
+    // Categorías (Creación, Edición y Eliminación de cualquier categoría)
     function renderAdminCategories() {
       const filterSelect = document.getElementById('adminCatFilter');
       const prodCatSelect = document.getElementById('prod_category');
@@ -1539,41 +1696,63 @@
 
       prodCatSelect.innerHTML = categories.map(c => `<option value="${esc(c.slug)}">${esc(c.emoji)} ${esc(c.name)}</option>`).join('');
 
+      const featSlugs = (Array.isArray(SITE.featured_categories) && SITE.featured_categories.length === 4)
+        ? SITE.featured_categories.map(fc => fc.slug)
+        : ['caballero', 'dama', 'nicho', 'splash'];
+
       const listEl = document.getElementById('adminCategoriesList');
       listEl.innerHTML = categories.map(c => {
-        const isMain = MAIN_FOUR_CATEGORIES.some(mc => mc.slug === (c.slug || '').toLowerCase());
+        const isFeaturedOnIndex = featSlugs.includes(c.slug);
         return `
-        <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-sec); padding:12px 16px; border-radius:10px; border:1px solid var(--border);">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:var(--bg-sec); padding:12px 16px; border-radius:10px; border:1px solid var(--border); ${c.active === false ? 'opacity:0.6;' : ''}">
           <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:1.3rem;">${esc(c.emoji)}</span>
+            <span style="font-size:1.35rem;">${esc(c.emoji)}</span>
             <div>
-              <strong style="color:#fff; font-size:0.9rem;">${esc(c.name)}</strong>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <strong style="color:#fff; font-size:0.92rem;">${esc(c.name)}</strong>
+                ${isFeaturedOnIndex ? `<span style="font-size:0.66rem; color:#08080a; background:var(--accent); font-weight:800; padding:2px 8px; border-radius:999px;">⭐ En el Index</span>` : ''}
+                ${c.active === false ? `<span style="font-size:0.66rem; color:#fca5a5; border:1px solid rgba(239,68,68,0.4); padding:2px 8px; border-radius:999px;">Oculta</span>` : ''}
+              </div>
               <span style="display:block; font-size:0.72rem; color:var(--muted);">slug: ${esc(c.slug)}</span>
             </div>
           </div>
-          ${isMain
-            ? `<span style="font-size:0.72rem; color:var(--accent); font-weight:700; padding:4px 10px; border:1px solid var(--accent-border); border-radius:999px;">Principal</span>`
-            : `<button class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">Eliminar</button>`
-          }
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button type="button" class="btn btn-outline" style="padding:6px 12px; font-size:0.76rem;" onclick="openEditCategory(${Number(c.id)})">✏️ Editar</button>
+            <button type="button" class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">🗑️ Eliminar</button>
+          </div>
         </div>
       `;
       }).join('');
     }
 
+    window.openEditCategory = function(id) {
+      const cat = categories.find(c => Number(c.id) === Number(id));
+      if (!cat) return;
+      document.getElementById('edit_cat_id').value = cat.id;
+      document.getElementById('edit_cat_old_slug').value = cat.slug || '';
+      document.getElementById('edit_cat_emoji').value = cat.emoji || '👑';
+      document.getElementById('edit_cat_name').value = cat.name || '';
+      document.getElementById('edit_cat_slug').value = cat.slug || '';
+      document.getElementById('edit_cat_active').checked = cat.active !== false;
+      document.getElementById('categoryModalOverlay').classList.add('open');
+    };
+
     window.deleteCategory = async function(id) {
       const cat = categories.find(c => Number(c.id) === Number(id));
-      if (cat && MAIN_FOUR_CATEGORIES.some(mc => mc.slug === (cat.slug || '').toLowerCase())) {
-        showToast('Las 4 categorías principales no se pueden eliminar');
-        return;
-      }
-      if (!confirm('¿Eliminar esta categoría?')) return;
+      if (!cat) return;
+      if (!confirm(`¿Eliminar la categoría "${cat.name}"?`)) return;
       if (supabaseClient) {
-        await supabaseClient.from('categories').delete().eq('id', id);
+        const { error } = await supabaseClient.from('categories').delete().eq('id', id);
+        if (error) {
+          alert('Error eliminando categoría: ' + error.message);
+          return;
+        }
       }
       categories = categories.filter(c => Number(c.id) !== Number(id));
       renderAdminCategories();
+      populateSiteSettingsForm();
       updateStats();
-      showToast('Categoría eliminada');
+      showToast('🗑️ Categoría eliminada');
     };
 
     // Eventos DOM
@@ -1766,6 +1945,32 @@
         });
       });
 
+      // Al cambiar la categoría seleccionada en cualquiera de los 4 cuadros del Index, actualizar sugerencia de título
+      document.querySelectorAll('.feat-cat-slug').forEach(selEl => {
+        selEl.addEventListener('change', () => {
+          const idx = selEl.dataset.idx;
+          const chosenCat = categories.find(c => c.slug === selEl.value);
+          const titleInp = document.getElementById(`set_feat_cat_title_${idx}`);
+          if (chosenCat && titleInp) {
+            titleInp.value = chosenCat.name;
+          }
+        });
+      });
+
+      // Ir desde la pestaña de Categorías directo al selector de las 4 del Index
+      const goToFeatBtn = document.getElementById('goToFeaturedCatsBtn');
+      if (goToFeatBtn) {
+        goToFeatBtn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+          const siteTabBtn = document.querySelector('.tab-btn[data-tab="tab-site"]');
+          if (siteTabBtn) siteTabBtn.classList.add('active');
+          document.getElementById('tab-site').classList.add('active');
+          const box = document.getElementById('featuredCategoriesSettingsBox');
+          if (box) box.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
       // Sincronizar selector de color amarillo/dorado
       document.getElementById('set_primary_color_picker').addEventListener('input', e => {
         document.getElementById('set_primary_color').value = e.target.value;
@@ -1776,8 +1981,19 @@
         }
       });
 
-      // Guardar Ajustes del Sitio y Logo en Supabase
-      document.getElementById('saveSiteSettingsBtn').addEventListener('click', async () => {
+      // Guardar Ajustes del Sitio, Logo y las 4 Categorías del Index en Supabase
+      async function saveAllSiteSettings() {
+        const featuredCategories = [0, 1, 2, 3].map(i => {
+          const slug = document.getElementById(`set_feat_cat_slug_${i}`).value;
+          const catObj = categories.find(c => c.slug === slug);
+          const title = document.getElementById(`set_feat_cat_title_${i}`).value.trim() || (catObj ? catObj.name : slug);
+          const subtitle = document.getElementById(`set_feat_cat_sub_${i}`).value.trim();
+          const image = document.getElementById(`set_feat_cat_img_${i}`).value.trim()
+            || (SITE_DEFAULTS.featured_categories && SITE_DEFAULTS.featured_categories[i] && SITE_DEFAULTS.featured_categories[i].image)
+            || '';
+          return { slug, title, subtitle, image };
+        });
+
         const updatedSettings = {
           ...SITE,
           logo_url: document.getElementById('set_logo_url').value.trim(),
@@ -1810,10 +2026,7 @@
           instagram_handle: document.getElementById('set_instagram_handle').value.trim(),
           tiktok_handle: document.getElementById('set_tiktok_handle').value.trim(),
           footer_location: document.getElementById('set_footer_location').value.trim(),
-          cat_img_caballero: document.getElementById('set_cat_img_caballero').value.trim() || SITE_DEFAULTS.cat_img_caballero,
-          cat_img_dama: document.getElementById('set_cat_img_dama').value.trim() || SITE_DEFAULTS.cat_img_dama,
-          cat_img_nicho: document.getElementById('set_cat_img_nicho').value.trim() || SITE_DEFAULTS.cat_img_nicho,
-          cat_img_splash: document.getElementById('set_cat_img_splash').value.trim() || SITE_DEFAULTS.cat_img_splash
+          featured_categories: featuredCategories
         };
 
         SITE = updatedSettings;
@@ -1827,8 +2040,15 @@
             return;
           }
         }
-        showToast('✅ Configuración y Logo guardados en vivo');
-      });
+        renderAdminCategories();
+        showToast('✅ Configuración y 4 Categorías guardadas en vivo');
+      }
+
+      document.getElementById('saveSiteSettingsBtn').addEventListener('click', saveAllSiteSettings);
+      const saveFeatQuickBtn = document.getElementById('saveFeaturedCatsQuickBtn');
+      if (saveFeatQuickBtn) {
+        saveFeatQuickBtn.addEventListener('click', saveAllSiteSettings);
+      }
 
       // Crear Categoría
       document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
@@ -1848,6 +2068,59 @@
         }
         document.getElementById('newCatName').value = '';
         showToast('✅ Categoría creada');
+      });
+
+      // Modal Editar Categoría
+      document.getElementById('closeCatModalBtn').addEventListener('click', () => document.getElementById('categoryModalOverlay').classList.remove('open'));
+      document.getElementById('cancelCatModalBtn').addEventListener('click', () => document.getElementById('categoryModalOverlay').classList.remove('open'));
+
+      document.getElementById('editCategoryForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = Number(document.getElementById('edit_cat_id').value);
+        const oldSlug = document.getElementById('edit_cat_old_slug').value.trim();
+        const emoji = document.getElementById('edit_cat_emoji').value.trim() || '👑';
+        const name = document.getElementById('edit_cat_name').value.trim();
+        const rawSlug = document.getElementById('edit_cat_slug').value.trim() || name;
+        const slug = rawSlug.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const active = document.getElementById('edit_cat_active').checked;
+
+        if (!name || !slug) return;
+
+        if (supabaseClient) {
+          const { error } = await supabaseClient
+            .from('categories')
+            .update({ name, emoji, slug, active })
+            .eq('id', id);
+          if (error) {
+            alert('Error actualizando categoría: ' + error.message);
+            return;
+          }
+
+          // Si el slug cambió, actualizar también los perfumes que usaban el slug anterior
+          if (oldSlug && oldSlug !== slug) {
+            await supabaseClient.from('products').update({ category: slug }).eq('category', oldSlug);
+          }
+
+          // Si esa categoría estaba en las 4 destacadas del Index, sincronizar su slug/título
+          if (Array.isArray(SITE.featured_categories)) {
+            let changedFeat = false;
+            SITE.featured_categories.forEach(fc => {
+              if (fc.slug === oldSlug) {
+                fc.slug = slug;
+                fc.title = name;
+                changedFeat = true;
+              }
+            });
+            if (changedFeat) {
+              await supabaseClient.from('site_settings').upsert({ id: 1, settings: SITE });
+            }
+          }
+
+          await loadAdminData();
+        }
+
+        document.getElementById('categoryModalOverlay').classList.remove('open');
+        showToast('✅ Categoría actualizada');
       });
 
       // Cerrar sesión
