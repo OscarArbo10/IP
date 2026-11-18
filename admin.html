@@ -22,7 +22,7 @@
       --accent: #f5c518;
       --accent-hover: #ffd83b;
       --accent-soft: rgba(245, 197, 24, 0.12);
-      --accent-border: rgba(245, 197, 24, 0.3);
+      --accent-border: rgba(245, 197, 24, 0.32);
       --text: #f8fafc;
       --muted: #9ca3af;
       --border: rgba(255, 255, 255, 0.08);
@@ -42,7 +42,7 @@
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
-      padding-bottom: 60px;
+      padding-bottom: 92px;
     }
 
     /* ── TOPBAR ────────────────────────────────────────────────── */
@@ -50,10 +50,10 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(11, 11, 15, 0.92);
+      background: rgba(11, 11, 15, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--accent-border);
-      padding: 14px 20px;
+      padding: 12px 16px;
     }
 
     .topbar-inner {
@@ -63,13 +63,13 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
     .admin-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
 
     .admin-emblem {
@@ -83,19 +83,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .admin-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #08080a;
     }
 
     .admin-brand h1 {
       font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #fff;
     }
 
     .admin-brand span {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--accent);
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       display: block;
     }
@@ -103,7 +112,7 @@
     .topbar-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
@@ -111,16 +120,22 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      padding: 10px 16px;
+      gap: 6px;
+      padding: 9px 14px;
       border-radius: 10px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       border: 1px solid transparent;
       text-decoration: none;
       font-family: inherit;
       transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
 
     .btn-gold {
@@ -128,7 +143,7 @@
       color: #08080a;
     }
 
-    .btn-gold:hover {
+    .btn-gold:hover:not(:disabled) {
       background: var(--accent-hover);
       transform: translateY(-1px);
     }
@@ -139,7 +154,7 @@
       color: var(--text);
     }
 
-    .btn-outline:hover {
+    .btn-outline:hover:not(:disabled) {
       border-color: var(--accent);
       color: var(--accent);
     }
@@ -150,12 +165,12 @@
       color: #fca5a5;
     }
 
-    .btn-danger:hover {
+    .btn-danger:hover:not(:disabled) {
       background: var(--danger);
       color: #fff;
     }
 
-    /* ── CONTENEDOR Y TABS ─────────────────────────────────────── */
+    /* ── CONTENEDOR Y TABS PRINCIPALES ─────────────────────────── */
     .admin-container {
       max-width: 1320px;
       margin: 16px auto;
@@ -164,7 +179,7 @@
 
     @media (min-width: 768px) {
       .admin-container {
-        margin: 24px auto;
+        margin: 22px auto;
         padding: 0 20px;
       }
     }
@@ -180,7 +195,7 @@
       .stats-row {
         grid-template-columns: repeat(4, 1fr);
         gap: 14px;
-        margin-bottom: 24px;
+        margin-bottom: 22px;
       }
     }
 
@@ -209,13 +224,13 @@
 
     @media (min-width: 768px) {
       .stat-card {
-        padding: 16px 18px;
+        padding: 15px 18px;
       }
       .stat-card .label {
-        font-size: 0.76rem;
+        font-size: 0.74rem;
       }
       .stat-card .value {
-        font-size: 1.65rem;
+        font-size: 1.6rem;
       }
     }
 
@@ -224,8 +239,8 @@
       gap: 8px;
       overflow-x: auto;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
-      margin-bottom: 18px;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
       scrollbar-width: none;
     }
 
@@ -237,9 +252,9 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       color: var(--muted);
-      padding: 10px 15px;
+      padding: 10px 16px;
       border-radius: 10px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
@@ -261,36 +276,56 @@
       display: block;
     }
 
-    /* ── PANEL DE PRODUCTOS (PERFUMES) ─────────────────────────── */
-    .toolbar {
-      background: var(--bg-card);
+    /* Sub-navegación limpia para evitar muros largos de formularios */
+    .subtabs-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+
+    .subtabs-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .subtab-btn {
+      background: var(--bg-sec);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 20px;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
     }
 
-    .toolbar-left {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      flex: 1;
+    .subtab-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
+    .subtab-panel {
+      display: none;
+    }
+
+    .subtab-panel.active {
+      display: block;
+    }
+
+    /* ── INPUTS & CONTROLES ────────────────────────────────────── */
     .input-field,
     .select-field,
     .textarea-field {
       background: var(--bg-input);
       border: 1px solid var(--border);
       color: #fff;
-      padding: 10px 14px;
+      padding: 10px 13px;
       border-radius: 10px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-family: inherit;
       width: 100%;
     }
@@ -302,9 +337,60 @@
       border-color: var(--accent);
     }
 
+    /* ── PANEL DE PRODUCTOS ────────────────────────────────────── */
+    .toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 960px) {
+      .toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .toolbar-filters {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      flex: 1;
+    }
+
+    @media (min-width: 640px) {
+      .toolbar-filters {
+        grid-template-columns: 1.4fr 1fr 1fr;
+      }
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .results-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
     .admin-products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 14px;
     }
 
@@ -318,19 +404,20 @@
     }
 
     .adm-prod-card.inactive {
-      opacity: 0.55;
+      opacity: 0.56;
+      border-style: dashed;
     }
 
     .adm-prod-top {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       padding: 14px;
       border-bottom: 1px solid var(--border);
     }
 
     .adm-prod-img {
-      width: 74px;
-      height: 74px;
+      width: 72px;
+      height: 82px;
       border-radius: 10px;
       object-fit: cover;
       background: #0c0c10;
@@ -343,7 +430,7 @@
     }
 
     .adm-prod-brand {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--accent);
       font-weight: 800;
       text-transform: uppercase;
@@ -351,35 +438,66 @@
 
     .adm-prod-name {
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 0.96rem;
       color: #fff;
-      white-space: nowrap;
+      line-height: 1.25;
+      margin: 2px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .adm-prod-meta {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--muted);
-      margin-top: 3px;
+    }
+
+    .adm-quick-cat-row {
+      padding: 9px 14px;
+      background: rgba(255, 255, 255, 0.015);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .adm-quick-cat-row span {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .adm-quick-cat-select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: #e5e7eb;
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-family: inherit;
+      flex: 1;
+      min-width: 0;
     }
 
     .adm-price-row {
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.02);
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.025);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
       border-bottom: 1px solid var(--border);
     }
 
-    /* Switch Toggle para Mostrar/Ocultar Precio */
+    /* Switch Toggle */
     .switch-label {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
+      gap: 7px;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
       user-select: none;
@@ -387,20 +505,21 @@
 
     .switch-input {
       appearance: none;
-      width: 40px;
-      height: 22px;
+      width: 36px;
+      height: 20px;
       background: #2b2b36;
       border-radius: 999px;
       position: relative;
       cursor: pointer;
       transition: background 0.2s;
+      flex-shrink: 0;
     }
 
     .switch-input::after {
       content: '';
       position: absolute;
-      top: 3px;
-      left: 3px;
+      top: 2px;
+      left: 2px;
       width: 16px;
       height: 16px;
       border-radius: 50%;
@@ -414,21 +533,41 @@
 
     .switch-input:checked::after {
       background: #08080a;
-      transform: translateX(18px);
+      transform: translateX(16px);
     }
 
     .adm-prod-actions {
-      padding: 12px 14px;
+      padding: 10px 14px;
       display: flex;
-      gap: 8px;
+      gap: 7px;
       margin-top: auto;
     }
 
-    /* ── SECCIONES DE CONFIGURACIÓN ("MI PÁGINA & LOGO") ───────── */
+    /* ── CAJAS DE CONFIGURACIÓN ────────────────────────────────── */
+    .section-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-header-bar h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: #fff;
+    }
+
+    .section-header-bar p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
     .settings-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 22px;
+      gap: 18px;
     }
 
     @media (min-width: 960px) {
@@ -441,60 +580,82 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px;
+      padding: 20px;
     }
 
     .settings-box h3 {
       font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: var(--accent);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .settings-box p.desc {
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--muted);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .field-group {
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     .field-group label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: #d1d5db;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .logo-preview-stage {
       background: #08080a;
       border: 1px dashed var(--accent-border);
       border-radius: 12px;
-      padding: 18px;
+      padding: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 92px;
-      margin-bottom: 14px;
+      min-height: 88px;
+      margin-bottom: 12px;
     }
 
     .logo-preview-stage img {
-      max-height: 64px;
+      max-height: 62px;
       max-width: 240px;
       object-fit: contain;
     }
 
-    /* ── MODAL DE CREAR / EDITAR PERFUME ───────────────────────── */
+    /* Barra flotante para guardar fácil en móvil */
+    .floating-save-bar {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      display: none;
+      background: rgba(17, 17, 22, 0.96);
+      border: 1px solid var(--accent-border);
+      padding: 8px 12px;
+      border-radius: 999px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .floating-save-bar.visible {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── MODALES ───────────────────────────────────────────────── */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0, 0, 0, 0.84);
       backdrop-filter: blur(6px);
       z-index: 100;
       display: none;
@@ -529,7 +690,7 @@
       .modal-card {
         border: 1px solid var(--accent-border);
         border-radius: 20px;
-        padding: 26px;
+        padding: 24px;
       }
     }
 
@@ -537,15 +698,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 14px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+
+    .modal-step-box {
+      background: var(--bg-sec);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .modal-step-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
     }
 
     .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 12px;
     }
 
     @media (min-width: 640px) {
@@ -563,11 +741,17 @@
 
     .gallery-thumb-item {
       position: relative;
-      width: 72px;
-      height: 72px;
+      width: 82px;
+      height: 88px;
       border-radius: 10px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
+      background: #08080a;
+    }
+
+    .gallery-thumb-item.is-cover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.28);
     }
 
     .gallery-thumb-item img {
@@ -576,37 +760,58 @@
       object-fit: cover;
     }
 
-    .gallery-thumb-item button {
+    .gallery-thumb-remove {
       position: absolute;
-      top: 3px;
-      right: 3px;
+      top: 4px;
+      right: 4px;
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: rgba(239, 68, 68, 0.9);
+      background: rgba(239, 68, 68, 0.92);
       color: #fff;
       border: none;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       cursor: pointer;
+    }
+
+    .gallery-thumb-cover-btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(8, 8, 10, 0.85);
+      color: #d1d5db;
+      border: none;
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 3px 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .gallery-thumb-item.is-cover .gallery-thumb-cover-btn {
+      background: var(--accent);
+      color: #08080a;
     }
 
     .toast-admin {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      top: 76px;
+      right: 20px;
       background: #181822;
       border: 1px solid var(--accent);
       color: #fff;
-      padding: 13px 20px;
+      padding: 12px 18px;
       border-radius: 12px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       z-index: 300;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(-12px);
       pointer-events: none;
       transition: all 0.25s;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      max-width: 90vw;
     }
 
     .toast-admin.show {
@@ -621,15 +826,15 @@
   <header class="admin-topbar">
     <div class="topbar-inner">
       <div class="admin-brand">
-        <div class="admin-emblem">IP</div>
+        <div class="admin-emblem" id="topbarBrandEmblem">IP</div>
         <div>
           <h1>ILUSION PERFUMERY</h1>
-          <span>Panel de Administración Total</span>
+          <span>Panel de Administración</span>
         </div>
       </div>
 
       <div class="topbar-actions">
-        <a href="index.html" target="_blank" class="btn btn-outline">👁️ Ver Tienda en Vivo</a>
+        <a href="index.html" target="_blank" class="btn btn-outline">👁️ Ver Tienda</a>
         <button class="btn btn-gold" id="newProductTopBtn">+ Nuevo Perfume</button>
         <button class="btn btn-danger" id="logoutBtn">Salir</button>
       </div>
@@ -644,7 +849,7 @@
         <div class="value" id="statTotalProducts">0</div>
       </div>
       <div class="stat-card">
-        <div class="label">Con Precio Oculto (WhatsApp)</div>
+        <div class="label">Consulta WhatsApp</div>
         <div class="value" id="statHiddenPrices" style="color: var(--accent);">0</div>
       </div>
       <div class="stat-card">
@@ -657,60 +862,367 @@
       </div>
     </div>
 
-    <!-- NAVEGACIÓN DE PESTAÑAS -->
+    <!-- NAVEGACIÓN PRINCIPAL EN 4 SECCIONES CLARAS -->
     <div class="tabs-nav">
-      <button class="tab-btn active" data-tab="tab-products">👑 Perfumes & Precios</button>
-      <button class="tab-btn" data-tab="tab-site">🎨 Mi Página, Logo & Entregas</button>
-      <button class="tab-btn" data-tab="tab-categories">🗂️ Categorías Olfativas</button>
+      <button class="tab-btn active" data-tab="tab-products">👑 Perfumes</button>
+      <button class="tab-btn" data-tab="tab-categories">🗂️ Categorías e Inicio</button>
+      <button class="tab-btn" data-tab="tab-sales">💬 WhatsApp, Precios & Envíos</button>
+      <button class="tab-btn" data-tab="tab-site">🎨 Diseño, Logo & Textos</button>
     </div>
 
     <!-- ==========================================================
-         PESTAÑA 1: GESTIÓN DE PERFUMES Y CONTROL DE PRECIOS
+         PESTAÑA 1: CATÁLOGO DE PERFUMES
          ========================================================== -->
     <section class="tab-panel active" id="tab-products">
       <div class="toolbar">
-        <div class="toolbar-left">
-          <input type="text" id="adminSearchInput" class="input-field" style="max-width: 280px;" placeholder="🔍 Buscar perfume o marca..." />
-          <select id="adminCatFilter" class="select-field" style="max-width: 200px;">
+        <div class="toolbar-filters">
+          <input type="text" id="adminSearchInput" class="input-field" placeholder="🔍 Buscar perfume, marca o nota..." />
+          <select id="adminCatFilter" class="select-field">
             <option value="all">Todas las categorías</option>
+          </select>
+          <select id="adminStatusFilter" class="select-field">
+            <option value="all">Todos los estados</option>
+            <option value="active">✅ Solo visibles</option>
+            <option value="inactive">🚫 Ocultos en tienda</option>
+            <option value="price_shown">💲 Con precio visible</option>
+            <option value="price_hidden">💬 Precio oculto (WhatsApp)</option>
+            <option value="featured">⭐ Destacados</option>
+            <option value="no_image">🖼️ Sin foto</option>
           </select>
         </div>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-          <button class="btn btn-outline" id="bulkHidePricesBtn" title="Oculta el precio en todos los perfumes para que pregunten por WhatsApp">
-            🙈 Ocultar Todos los Precios
+        <div class="toolbar-actions">
+          <button class="btn btn-outline" id="bulkHidePricesBtn" title="Oculta el precio en todos los perfumes">
+            🙈 Ocultar Precios
           </button>
-          <button class="btn btn-outline" id="bulkShowPricesBtn" title="Muestra el precio en todos los perfumes que tengan precio mayor a 0">
+          <button class="btn btn-outline" id="bulkShowPricesBtn" title="Muestra el precio en todos los perfumes con valor > $0">
             💲 Mostrar Precios
           </button>
           <button class="btn btn-gold" id="newProductBtn">+ Añadir Perfume</button>
         </div>
       </div>
 
-      <div class="admin-products-grid" id="adminProductsGrid">
-        <!-- Renderizado dinámico -->
+      <div class="results-strip">
+        <span id="adminResultsCount">Cargando perfumes...</span>
+        <span style="font-size:0.74rem;">Tip: Puedes cambiar la categoría, precio y visibilidad directo en cada tarjeta.</span>
+      </div>
+
+      <div class="admin-products-grid" id="adminProductsGrid"></div>
+    </section>
+
+    <!-- ==========================================================
+         PESTAÑA 2: CATEGORÍAS & LAS 4 DEL INICIO
+         ========================================================== -->
+    <section class="tab-panel" id="tab-categories">
+      <div class="section-header-bar">
+        <div>
+          <h2>Categorías y Cuadros del Inicio</h2>
+          <p>Administra tus categorías y elige cuáles 4 recuadros principales aparecen primero en la tienda.</p>
+        </div>
+        <button type="button" class="btn btn-gold" id="saveFeaturedCatsQuickBtn">
+          💾 Guardar 4 Cuadros del Inicio
+        </button>
+      </div>
+
+      <div class="subtabs-nav">
+        <button type="button" class="subtab-btn active" data-subtab="cat-list-view">📋 Lista de Categorías</button>
+        <button type="button" class="subtab-btn" data-subtab="cat-featured-view">🖼️ Las 4 Categorías del Inicio</button>
+      </div>
+
+      <!-- Sub-vista A: Lista y creación/edición de categorías -->
+      <div class="subtab-panel active" id="cat-list-view">
+        <div class="settings-box" style="max-width: 860px;">
+          <h3>🗂️ Todas las Categorías</h3>
+          <p class="desc">Crea, edita, oculta o elimina cualquier categoría. Usa el selector de posición para enviarla directo a uno de los 4 cuadros del inicio.</p>
+
+          <form id="addCategoryForm" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
+            <input type="text" id="newCatEmoji" class="input-field" style="width: 72px; text-align: center;" placeholder="🕌" value="👑" required />
+            <input type="text" id="newCatName" class="input-field" style="flex: 1; min-width: 190px;" placeholder="Nombre nueva categoría (ej. Perfumería Árabe)" required />
+            <button type="submit" class="btn btn-gold">+ Crear Categoría</button>
+          </form>
+
+          <div id="adminCategoriesList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+      </div>
+
+      <!-- Sub-vista B: Las 4 Categorías destacadas del Index -->
+      <div class="subtab-panel" id="cat-featured-view">
+        <div class="settings-box" id="featuredCategoriesSettingsBox">
+          <h3>🖼️ Personalizar los 4 Recuadros Principales del Index</h3>
+          <p class="desc">Escoge qué categoría filtra cada cuadro, cambia su título, descripción y foto.</p>
+
+          <div class="form-grid-2">
+            <!-- Cuadro 1 -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_feat_cat_0" src="" alt="Categoría 1" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:var(--accent); font-size:0.9rem;">Recuadro #1 del Inicio</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Categoría, título y foto</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar</label>
+                <select id="set_feat_cat_slug_0" class="select-field feat-cat-slug" data-idx="0"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_0" class="input-field" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_0" class="input-field" />
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_0" data-preview="prev_feat_cat_0" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_feat_cat_img_0" class="input-field cat-img-url" data-preview="prev_feat_cat_0" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Cuadro 2 -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_feat_cat_1" src="" alt="Categoría 2" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:var(--accent); font-size:0.9rem;">Recuadro #2 del Inicio</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Categoría, título y foto</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar</label>
+                <select id="set_feat_cat_slug_1" class="select-field feat-cat-slug" data-idx="1"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_1" class="input-field" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_1" class="input-field" />
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_1" data-preview="prev_feat_cat_1" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_feat_cat_img_1" class="input-field cat-img-url" data-preview="prev_feat_cat_1" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Cuadro 3 -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_feat_cat_2" src="" alt="Categoría 3" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:var(--accent); font-size:0.9rem;">Recuadro #3 del Inicio</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Categoría, título y foto</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar</label>
+                <select id="set_feat_cat_slug_2" class="select-field feat-cat-slug" data-idx="2"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_2" class="input-field" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_2" class="input-field" />
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_2" data-preview="prev_feat_cat_2" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_feat_cat_img_2" class="input-field cat-img-url" data-preview="prev_feat_cat_2" placeholder="https://..." />
+              </div>
+            </div>
+
+            <!-- Cuadro 4 -->
+            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <img id="prev_feat_cat_3" src="" alt="Categoría 4" style="width:58px; height:58px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
+                <div>
+                  <strong style="color:var(--accent); font-size:0.9rem;">Recuadro #4 del Inicio</strong>
+                  <div style="font-size:0.72rem; color:var(--muted);">Categoría, título y foto</div>
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Categoría a filtrar</label>
+                <select id="set_feat_cat_slug_3" class="select-field feat-cat-slug" data-idx="3"></select>
+              </div>
+              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Título visible</label>
+                  <input type="text" id="set_feat_cat_title_3" class="input-field" />
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                  <label>Subtítulo corto</label>
+                  <input type="text" id="set_feat_cat_sub_3" class="input-field" />
+                </div>
+              </div>
+              <div class="field-group" style="margin-bottom:8px;">
+                <label>Subir foto desde dispositivo</label>
+                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_3" data-preview="prev_feat_cat_3" />
+              </div>
+              <div class="field-group" style="margin-bottom:0;">
+                <label>O pegar URL de la foto</label>
+                <input type="url" id="set_feat_cat_img_3" class="input-field cat-img-url" data-preview="prev_feat_cat_3" placeholder="https://..." />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ==========================================================
-         PESTAÑA 2: IDENTIDAD, LOGO, PRECIOS GLOBALES Y ENTREGAS
+         PESTAÑA 3: WHATSAPP, PRECIOS GLOBALES & ENTREGAS
          ========================================================== -->
-    <section class="tab-panel" id="tab-site">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+    <section class="tab-panel" id="tab-sales">
+      <div class="section-header-bar">
         <div>
-          <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem;">Personalización Total de Ilusion Perfumery</h2>
-          <p style="font-size: 0.84rem; color: var(--muted);">Sube tu logo, configura precios, entregas puerta a puerta, WhatsApp y textos del index.</p>
+          <h2>WhatsApp, Precios & Entregas</h2>
+          <p>Configura el número de ventas, cómo se muestran los precios y las tarjetas de domicilio y envíos.</p>
         </div>
-        <button class="btn btn-gold" id="saveSiteSettingsBtn" style="padding: 13px 26px; font-size: 0.95rem;">
-          💾 Guardar Todos los Cambios
+        <button type="button" class="btn btn-gold js-save-all-settings">
+          💾 Guardar Cambios
         </button>
       </div>
 
       <div class="settings-grid">
-        <!-- 1. LOGO E IDENTIDAD -->
         <div class="settings-box">
+          <h3>💲 Precios y Botón de WhatsApp</h3>
+          <p class="desc">Define si los precios se controlan perfume por perfume o globalmente, y el número donde llegan los pedidos.</p>
+
+          <div class="field-group">
+            <label>📱 Número de WhatsApp (con código de país, ej. 573218885945)</label>
+            <input type="text" id="set_whatsapp" class="input-field" placeholder="573000000000" />
+          </div>
+
+          <div class="field-group">
+            <label>Modo de Visualización de Precios en la Tienda</label>
+            <select id="set_price_display_mode" class="select-field">
+              <option value="per_product">🎯 Individual por perfume (usa el switch de cada perfume)</option>
+              <option value="hide_all">🙈 Ocultar TODOS los precios (100% consulta por WhatsApp)</option>
+              <option value="show_all">💲 Mostrar TODOS los precios (en perfumes con valor &gt; $0)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>Etiqueta cuando NO muestra precio</label>
+            <input type="text" id="set_no_price_label" class="input-field" placeholder="Ej: Precio bajo consulta" />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Texto botón (Sin precio)</label>
+              <input type="text" id="set_whatsapp_inquire_btn" class="input-field" placeholder="Consultar por WhatsApp" />
+            </div>
+            <div class="field-group">
+              <label>Texto botón (Con precio)</label>
+              <input type="text" id="set_whatsapp_buy_btn" class="input-field" placeholder="Pedir por WhatsApp" />
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="padding-top:10px; border-top:1px solid var(--border); margin-top:4px;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Título tarjeta Asesoría WhatsApp</label>
+              <input type="text" id="set_whatsapp_sales_title" class="input-field" />
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Descripción tarjeta Asesoría WhatsApp</label>
+              <input type="text" id="set_whatsapp_sales_desc" class="input-field" />
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-box">
+          <h3>🏠 Entregas Puerta a Puerta & Envíos</h3>
+          <p class="desc">Activa o edita las tarjetas informativas de domicilio y envíos nacionales.</p>
+
+          <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+            <label class="switch-label" style="margin-bottom: 10px;">
+              <input type="checkbox" id="set_door_delivery_enabled" class="switch-input" checked />
+              <span>Activar "Entrega en la Puerta de tu Casa"</span>
+            </label>
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label>Título Domicilio</label>
+                <input type="text" id="set_door_delivery_title" class="input-field" />
+              </div>
+              <div class="field-group">
+                <label>Insignia</label>
+                <input type="text" id="set_door_delivery_badge" class="input-field" />
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Descripción Entrega en Casa</label>
+              <input type="text" id="set_door_delivery_desc" class="input-field" />
+            </div>
+          </div>
+
+          <div>
+            <label class="switch-label" style="margin-bottom: 10px;">
+              <input type="checkbox" id="set_national_shipping_enabled" class="switch-input" checked />
+              <span>Activar "Envíos Seguros a Todo el País"</span>
+            </label>
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label>Título Envíos Nacionales</label>
+                <input type="text" id="set_national_shipping_title" class="input-field" />
+              </div>
+              <div class="field-group">
+                <label>Insignia</label>
+                <input type="text" id="set_national_shipping_badge" class="input-field" />
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Descripción Envíos</label>
+              <input type="text" id="set_national_shipping_desc" class="input-field" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         PESTAÑA 4: DISEÑO, LOGO & TEXTOS (ORGANIZADO EN SUB-VISTAS)
+         ========================================================== -->
+    <section class="tab-panel" id="tab-site">
+      <div class="section-header-bar">
+        <div>
+          <h2>Diseño, Logo & Textos</h2>
+          <p>Elige una sección para editar sin abrumarte. Al final guarda tus cambios.</p>
+        </div>
+        <button class="btn btn-gold" id="saveSiteSettingsBtn" style="padding: 11px 22px;">
+          💾 Guardar Todos los Cambios
+        </button>
+      </div>
+
+      <div class="subtabs-nav">
+        <button type="button" class="subtab-btn active" data-subtab="design-brand-view">🖼️ Logo & Colores</button>
+        <button type="button" class="subtab-btn" data-subtab="design-hero-view">⚡ Portada & Catálogo</button>
+        <button type="button" class="subtab-btn" data-subtab="design-promo-view">📣 Banner Promo & Redes</button>
+      </div>
+
+      <!-- Sub-vista 1: Logo, Nombre y Color -->
+      <div class="subtab-panel active" id="design-brand-view">
+        <div class="settings-box" style="max-width: 720px;">
           <h3>🖼️ Logo e Identidad de Marca</h3>
-          <p class="desc">Sube el logo oficial de Ilusion Perfumery (PNG transparente, WebP o SVG recomendado) o pega su URL.</p>
+          <p class="desc">Sube el logo oficial (PNG transparente, WebP o SVG recomendado) o pega su URL.</p>
 
           <div class="logo-preview-stage" id="logoPreviewStage">
             <span style="color: var(--muted); font-size: 0.82rem;">Sin imagen de logo (se muestra emblema dorado IP)</span>
@@ -749,103 +1261,21 @@
             </div>
           </div>
 
-          <div class="field-group">
-            <label>Color Amarillo / Dorado Principal</label>
+          <div class="field-group" style="margin-bottom:0;">
+            <label>Color Dorado / Acento Principal</label>
             <div style="display: flex; gap: 10px; align-items: center;">
               <input type="color" id="set_primary_color_picker" value="#f5c518" style="width: 50px; height: 40px; border: none; background: none; cursor: pointer;" />
               <input type="text" id="set_primary_color" class="input-field" value="#f5c518" />
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- 2. CONTROL GLOBAL DE PRECIOS Y BOTÓN DE WHATSAPP -->
-        <div class="settings-box">
-          <h3>💲 Política de Precios & Consulta por WhatsApp</h3>
-          <p class="desc">Por defecto los perfumes no muestran precio y el cliente pregunta por WhatsApp con 1 clic. Aquí puedes controlar el comportamiento general.</p>
-
-          <div class="field-group">
-            <label>Modo de Visualización de Precios en la Tienda</label>
-            <select id="set_price_display_mode" class="select-field">
-              <option value="per_product">🎯 Individual por perfume (Usa el interruptor de cada perfume)</option>
-              <option value="hide_all">🙈 Ocultar TODOS los precios en la tienda (100% consulta por WhatsApp)</option>
-              <option value="show_all">💲 Mostrar TODOS los precios (en perfumes con valor mayor a $0)</option>
-            </select>
-          </div>
-
-          <div class="field-group">
-            <label>Etiqueta cuando el perfume NO muestra precio</label>
-            <input type="text" id="set_no_price_label" class="input-field" placeholder="Ej: Precio bajo consulta" />
-          </div>
-
-          <div class="form-grid-2">
-            <div class="field-group">
-              <label>Texto botón (Sin precio)</label>
-              <input type="text" id="set_whatsapp_inquire_btn" class="input-field" placeholder="Consultar por WhatsApp" />
-            </div>
-            <div class="field-group">
-              <label>Texto botón (Con precio)</label>
-              <input type="text" id="set_whatsapp_buy_btn" class="input-field" placeholder="Pedir por WhatsApp" />
-            </div>
-          </div>
-
-          <div class="field-group">
-            <label>📱 Número de WhatsApp para Ventas y Consultas (Con código de país, ej. 573001234567)</label>
-            <input type="text" id="set_whatsapp" class="input-field" placeholder="573000000000" />
-          </div>
-        </div>
-
-        <!-- 3. VENTAS PUERTA A PUERTA, ENVÍOS Y WHATSAPP -->
-        <div class="settings-box">
-          <h3>🏠 Ventas en la Puerta de la Casa & Envíos</h3>
-          <p class="desc">Configura las tarjetas informativas de entregas a domicilio puerta a puerta y envíos nacionales.</p>
-
-          <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
-            <label class="switch-label" style="margin-bottom: 10px;">
-              <input type="checkbox" id="set_door_delivery_enabled" class="switch-input" checked />
-              <span>Activar "Entrega en la Puerta de tu Casa"</span>
-            </label>
-            <div class="form-grid-2">
-              <div class="field-group">
-                <label>Título Domicilio Puerta a Puerta</label>
-                <input type="text" id="set_door_delivery_title" class="input-field" />
-              </div>
-              <div class="field-group">
-                <label>Insignia (Badge)</label>
-                <input type="text" id="set_door_delivery_badge" class="input-field" />
-              </div>
-            </div>
-            <div class="field-group">
-              <label>Descripción de Entrega en Casa</label>
-              <input type="text" id="set_door_delivery_desc" class="input-field" />
-            </div>
-          </div>
-
-          <div>
-            <label class="switch-label" style="margin-bottom: 10px;">
-              <input type="checkbox" id="set_national_shipping_enabled" class="switch-input" checked />
-              <span>Activar "Envíos Seguros a Todo el País"</span>
-            </label>
-            <div class="form-grid-2">
-              <div class="field-group">
-                <label>Título Envíos Nacionales</label>
-                <input type="text" id="set_national_shipping_title" class="input-field" />
-              </div>
-              <div class="field-group">
-                <label>Insignia (Badge)</label>
-                <input type="text" id="set_national_shipping_badge" class="input-field" />
-              </div>
-            </div>
-            <div class="field-group">
-              <label>Descripción de Envíos</label>
-              <input type="text" id="set_national_shipping_desc" class="input-field" />
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. HERO DINÁMICO Y TEXTOS DEL INDEX -->
-        <div class="settings-box">
-          <h3>⚡ Hero Dinámico & Textos de Portada</h3>
-          <p class="desc">Edita los textos principales que ven tus clientes al entrar a la página.</p>
+      <!-- Sub-vista 2: Hero y Textos del Catálogo -->
+      <div class="subtab-panel" id="design-hero-view">
+        <div class="settings-box" style="max-width: 820px;">
+          <h3>⚡ Portada (Hero) & Encabezado de Catálogo</h3>
+          <p class="desc">Edita los textos principales que ven tus clientes al entrar.</p>
 
           <div class="field-group">
             <label>Barra Superior de Anuncio</label>
@@ -858,14 +1288,20 @@
               <input type="text" id="set_hero_tag" class="input-field" />
             </div>
             <div class="field-group">
-              <label>Palabra Resaltada en Amarillo</label>
-              <input type="text" id="set_hero_accent" class="input-field" />
+              <label>Botón Principal del Hero</label>
+              <input type="text" id="set_hero_cta" class="input-field" placeholder="Explorar Catálogo 🔥" />
             </div>
           </div>
 
-          <div class="field-group">
-            <label>Título Principal del Hero</label>
-            <input type="text" id="set_hero_title" class="input-field" />
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Título Principal del Hero</label>
+              <input type="text" id="set_hero_title" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Palabra Resaltada en Dorado</label>
+              <input type="text" id="set_hero_accent" class="input-field" />
+            </div>
           </div>
 
           <div class="field-group">
@@ -894,197 +1330,84 @@
             <input type="text" id="set_hero_badge_3" class="input-field" />
           </div>
 
-          <div class="form-grid-2">
-            <div class="field-group">
-              <label>Instagram (usuario sin @)</label>
-              <input type="text" id="set_instagram_handle" class="input-field" />
+          <div class="form-grid-2" style="padding-top:12px; border-top:1px solid var(--border);">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Título de la sección Catálogo</label>
+              <input type="text" id="set_products_title" class="input-field" />
             </div>
-            <div class="field-group">
-              <label>TikTok (usuario sin @)</label>
-              <input type="text" id="set_tiktok_handle" class="input-field" />
-            </div>
-          </div>
-
-          <div class="field-group">
-            <label>Ubicación / Cobertura en Footer</label>
-            <input type="text" id="set_footer_location" class="input-field" />
-          </div>
-        </div>
-
-        <!-- 5. SELECCIÓN Y FOTOS DE LAS 4 CATEGORÍAS PRINCIPALES DEL INDEX -->
-        <div class="settings-box" id="featuredCategoriesSettingsBox" style="grid-column: 1 / -1;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-            <div>
-              <h3>🖼️ Las 4 Categorías Destacadas del Index (Escogibles y Editables)</h3>
-              <p class="desc" style="margin-bottom:0;">Escoge qué 4 categorías quieres mostrar en los 4 recuadros principales del inicio, personaliza su título, descripción y foto.</p>
-            </div>
-            <button type="button" class="btn btn-gold" id="saveFeaturedCatsQuickBtn">
-              💾 Guardar 4 Categorías del Index
-            </button>
-          </div>
-
-          <div class="form-grid-2" style="margin-top: 14px;">
-            <!-- Cuadro 1 -->
-            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                <img id="prev_feat_cat_0" src="" alt="Categoría 1" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
-                <div>
-                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #1 del Index</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Categoría a filtrar al hacer clic</label>
-                <select id="set_feat_cat_slug_0" class="select-field feat-cat-slug" data-idx="0"></select>
-              </div>
-              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Título visible</label>
-                  <input type="text" id="set_feat_cat_title_0" class="input-field" placeholder="Ej: Caballero" />
-                </div>
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Subtítulo corto</label>
-                  <input type="text" id="set_feat_cat_sub_0" class="input-field" placeholder="Fragancias masculinas..." />
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_0" data-preview="prev_feat_cat_0" />
-              </div>
-              <div class="field-group" style="margin-bottom:0;">
-                <label>O pegar URL de la foto</label>
-                <input type="url" id="set_feat_cat_img_0" class="input-field cat-img-url" data-preview="prev_feat_cat_0" placeholder="https://..." />
-              </div>
-            </div>
-
-            <!-- Cuadro 2 -->
-            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                <img id="prev_feat_cat_1" src="" alt="Categoría 2" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
-                <div>
-                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #2 del Index</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Categoría a filtrar al hacer clic</label>
-                <select id="set_feat_cat_slug_1" class="select-field feat-cat-slug" data-idx="1"></select>
-              </div>
-              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Título visible</label>
-                  <input type="text" id="set_feat_cat_title_1" class="input-field" placeholder="Ej: Dama" />
-                </div>
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Subtítulo corto</label>
-                  <input type="text" id="set_feat_cat_sub_1" class="input-field" placeholder="Aromas femeninos..." />
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_1" data-preview="prev_feat_cat_1" />
-              </div>
-              <div class="field-group" style="margin-bottom:0;">
-                <label>O pegar URL de la foto</label>
-                <input type="url" id="set_feat_cat_img_1" class="input-field cat-img-url" data-preview="prev_feat_cat_1" placeholder="https://..." />
-              </div>
-            </div>
-
-            <!-- Cuadro 3 -->
-            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                <img id="prev_feat_cat_2" src="" alt="Categoría 3" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
-                <div>
-                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #3 del Index</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Categoría a filtrar al hacer clic</label>
-                <select id="set_feat_cat_slug_2" class="select-field feat-cat-slug" data-idx="2"></select>
-              </div>
-              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Título visible</label>
-                  <input type="text" id="set_feat_cat_title_2" class="input-field" placeholder="Ej: Nicho" />
-                </div>
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Subtítulo corto</label>
-                  <input type="text" id="set_feat_cat_sub_2" class="input-field" placeholder="Alta perfumería..." />
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_2" data-preview="prev_feat_cat_2" />
-              </div>
-              <div class="field-group" style="margin-bottom:0;">
-                <label>O pegar URL de la foto</label>
-                <input type="url" id="set_feat_cat_img_2" class="input-field cat-img-url" data-preview="prev_feat_cat_2" placeholder="https://..." />
-              </div>
-            </div>
-
-            <!-- Cuadro 4 -->
-            <div style="background: var(--bg-sec); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                <img id="prev_feat_cat_3" src="" alt="Categoría 4" style="width:62px; height:62px; object-fit:cover; border-radius:10px; border:1px solid var(--accent-border);" />
-                <div>
-                  <strong style="color:var(--accent); font-size:0.92rem;">Recuadro #4 del Index</strong>
-                  <div style="font-size:0.72rem; color:var(--muted);">Escoge la categoría, texto e imagen</div>
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Categoría a filtrar al hacer clic</label>
-                <select id="set_feat_cat_slug_3" class="select-field feat-cat-slug" data-idx="3"></select>
-              </div>
-              <div class="form-grid-2" style="gap:8px; margin-bottom:8px;">
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Título visible</label>
-                  <input type="text" id="set_feat_cat_title_3" class="input-field" placeholder="Ej: Splash" />
-                </div>
-                <div class="field-group" style="margin-bottom:0;">
-                  <label>Subtítulo corto</label>
-                  <input type="text" id="set_feat_cat_sub_3" class="input-field" placeholder="Body mists frescos..." />
-                </div>
-              </div>
-              <div class="field-group" style="margin-bottom:8px;">
-                <label>Subir foto desde dispositivo</label>
-                <input type="file" accept="image/*" class="input-field cat-img-file" data-target="set_feat_cat_img_3" data-preview="prev_feat_cat_3" />
-              </div>
-              <div class="field-group" style="margin-bottom:0;">
-                <label>O pegar URL de la foto</label>
-                <input type="url" id="set_feat_cat_img_3" class="input-field cat-img-url" data-preview="prev_feat_cat_3" placeholder="https://..." />
-              </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Subtítulo de la sección Catálogo</label>
+              <input type="text" id="set_products_subtitle" class="input-field" />
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ==========================================================
-         PESTAÑA 3: CATEGORÍAS / FAMILIAS OLFATIVAS
-         ========================================================== -->
-    <section class="tab-panel" id="tab-categories">
-      <div class="settings-box" style="max-width: 820px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
-          <div>
-            <h3>🗂️ Categorías y Familias Olfativas</h3>
-            <p class="desc" style="margin-bottom:0;">Crea, edita o elimina cualquier categoría. También puedes elegir cuáles 4 aparecen destacadas en el inicio.</p>
+      <!-- Sub-vista 3: Banner Promocional, Redes y Pie de Página -->
+      <div class="subtab-panel" id="design-promo-view">
+        <div class="settings-grid">
+          <div class="settings-box">
+            <h3>📣 Banner de Asesoría Final</h3>
+            <p class="desc">El recuadro dorado de invitación a WhatsApp antes del pie de página.</p>
+
+            <label class="switch-label" style="margin-bottom: 12px;">
+              <input type="checkbox" id="set_promo_enabled" class="switch-input" checked />
+              <span>Mostrar Banner Promocional</span>
+            </label>
+
+            <div class="field-group">
+              <label>Etiqueta superior (Tag)</label>
+              <input type="text" id="set_promo_tag" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Título del Banner</label>
+              <input type="text" id="set_promo_title" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Texto descriptivo</label>
+              <textarea id="set_promo_text" class="textarea-field" rows="2"></textarea>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Texto del botón WhatsApp</label>
+              <input type="text" id="set_promo_cta" class="input-field" />
+            </div>
           </div>
-          <button type="button" class="btn btn-outline" id="goToFeaturedCatsBtn">
-            🖼️ Escoger las 4 del Index
-          </button>
+
+          <div class="settings-box">
+            <h3>📲 Redes Sociales & Pie de Página</h3>
+            <p class="desc">Links sociales y textos inferiores de la tienda.</p>
+
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label>Instagram (usuario sin @)</label>
+                <input type="text" id="set_instagram_handle" class="input-field" />
+              </div>
+              <div class="field-group">
+                <label>TikTok (usuario sin @)</label>
+                <input type="text" id="set_tiktok_handle" class="input-field" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Eslogan en Footer</label>
+              <textarea id="set_footer_slogan" class="textarea-field" rows="2"></textarea>
+            </div>
+
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Ubicación / Cobertura en Footer</label>
+              <input type="text" id="set_footer_location" class="input-field" />
+            </div>
+          </div>
         </div>
-
-        <form id="addCategoryForm" style="display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 20px;">
-          <input type="text" id="newCatEmoji" class="input-field" style="width: 70px; text-align: center;" placeholder="🕌" value="👑" required />
-          <input type="text" id="newCatName" class="input-field" style="flex: 1; min-width: 180px;" placeholder="Nombre (ej. Perfumería Árabe)" required />
-          <button type="submit" class="btn btn-gold">+ Crear Categoría</button>
-        </form>
-
-        <div id="adminCategoriesList" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </div>
     </section>
   </main>
+
+  <!-- BARRA FLOTANTE DE GUARDADO EN MÓVIL PARA CONFIGURACIÓN -->
+  <div class="floating-save-bar" id="floatingSaveBar">
+    <span style="font-size:0.76rem; color:#d1d5db; font-weight:600; padding-left:6px;">Cambios en la tienda</span>
+    <button type="button" class="btn btn-gold js-save-all-settings" style="padding:8px 16px;">💾 Guardar Todo</button>
+  </div>
 
   <!-- ============================================================
        MODAL EDITAR CATEGORÍA
@@ -1125,73 +1448,77 @@
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; padding-top: 14px; border-top: 1px solid var(--border);">
           <button type="button" class="btn btn-outline" id="cancelCatModalBtn">Cancelar</button>
-          <button type="submit" class="btn btn-gold">💾 Guardar Categoría</button>
+          <button type="submit" class="btn btn-gold" id="saveCatSubmitBtn">💾 Guardar Categoría</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ============================================================
-       MODAL CREAR / EDITAR PERFUME
+       MODAL CREAR / EDITAR PERFUME (ORDENADO POR BLOQUES)
        ============================================================ -->
   <div class="modal-overlay" id="productModalOverlay">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 id="modalFormTitle" style="font-family: 'Cinzel', serif; color: var(--accent);">Añadir Perfume Masculino</h3>
+        <h3 id="modalFormTitle" style="font-family: 'Cinzel', serif; color: var(--accent);">Añadir Perfume</h3>
         <button type="button" class="btn btn-outline" id="closeProdModalBtn" style="padding: 6px 12px;">✕</button>
       </div>
 
       <form id="productForm">
         <input type="hidden" id="prod_id" />
 
-        <div class="form-grid-2">
-          <div class="field-group">
-            <label>Nombre del Perfume *</label>
-            <input type="text" id="prod_name" class="input-field" required placeholder="Ej: Sauvage Elixir" />
+        <!-- BLOQUE 1: IDENTIDAD -->
+        <div class="modal-step-box">
+          <div class="modal-step-title">1. Información Principal</div>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Nombre del Perfume *</label>
+              <input type="text" id="prod_name" class="input-field" required placeholder="Ej: Sauvage Elixir" />
+            </div>
+            <div class="field-group">
+              <label>Marca / Casa Perfumera *</label>
+              <input type="text" id="prod_brand" class="input-field" required placeholder="Ej: Dior / Lattafa / Creed" />
+            </div>
           </div>
-          <div class="field-group">
-            <label>Marca / Casa Perfumera *</label>
-            <input type="text" id="prod_brand" class="input-field" required placeholder="Ej: Dior / Lattafa / Creed" />
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Categoría *</label>
+              <select id="prod_category" class="select-field" required></select>
+            </div>
+            <div class="field-group">
+              <label>Ocasión Recomendada</label>
+              <select id="prod_occasion" class="select-field">
+                <option value="Noche & Citas">🔥 Noche & Citas</option>
+                <option value="Oficina & Poder">👔 Oficina & Negocios</option>
+                <option value="Fresco Diario">🌊 Fresco & Diario</option>
+                <option value="Eventos VIP">👑 Eventos VIP</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Concentración</label>
+              <input type="text" id="prod_concentration" class="input-field" placeholder="Eau de Parfum (EDP)" value="Eau de Parfum (EDP)" />
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Tamaño / Mililitros</label>
+              <input type="text" id="prod_size_ml" class="input-field" placeholder="100 ml" value="100 ml" />
+            </div>
           </div>
         </div>
 
-        <div class="form-grid-2">
-          <div class="field-group">
-            <label>Categoría *</label>
-            <select id="prod_category" class="select-field" required></select>
-          </div>
-          <div class="field-group">
-            <label>Ocasión Recomendada</label>
-            <select id="prod_occasion" class="select-field">
-              <option value="Noche & Citas">🔥 Noche & Citas</option>
-              <option value="Oficina & Poder">👔 Oficina & Negocios</option>
-              <option value="Fresco Diario">🌊 Fresco & Diario</option>
-              <option value="Eventos VIP">👑 Eventos VIP</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-grid-2">
-          <div class="field-group">
-            <label>Concentración</label>
-            <input type="text" id="prod_concentration" class="input-field" placeholder="Eau de Parfum (EDP) / Elixir / Parfum" value="Eau de Parfum (EDP)" />
-          </div>
-          <div class="field-group">
-            <label>Tamaño / Mililitros Principales</label>
-            <input type="text" id="prod_size_ml" class="input-field" placeholder="100 ml" value="100 ml" />
-          </div>
-        </div>
-
-        <!-- CAJA DE CONTROL DE PRECIO (OCULTO POR DEFECTO O VISIBLE) -->
-        <div style="background: rgba(245, 197, 24, 0.07); border: 1px solid var(--accent-border); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+        <!-- BLOQUE 2: PRECIO Y VISIBILIDAD -->
+        <div class="modal-step-box" style="border-color: var(--accent-border); background: rgba(245, 197, 24, 0.05);">
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
             <div>
-              <strong style="color: var(--accent); font-size: 0.9rem;">💲 Visibilidad del Precio en este Perfume</strong>
-              <p style="font-size: 0.76rem; color: var(--muted);">Si está desactivado, el perfume NO mostrará precio y el cliente preguntará por WhatsApp.</p>
+              <div class="modal-step-title" style="margin-bottom:2px;">2. Precio y Consulta WhatsApp</div>
+              <p style="font-size: 0.74rem; color: var(--muted);">Si está apagado, el cliente consultará el precio por WhatsApp.</p>
             </div>
             <label class="switch-label">
               <input type="checkbox" id="prod_show_price" class="switch-input" />
-              <span id="prodShowPriceStatusText">Precio Oculto (Consultar por WhatsApp)</span>
+              <span id="prodShowPriceStatusText">Precio Oculto (WhatsApp)</span>
             </label>
           </div>
 
@@ -1207,42 +1534,45 @@
           </div>
         </div>
 
-        <div class="field-group">
-          <label>✨ Notas Olfativas (Salida, Corazón, Fondo)</label>
-          <input type="text" id="prod_notes" class="input-field" placeholder="Ej: Bergamota, Canela, Cardamomo, Ámbar y Madera de Oud" />
-        </div>
-
-        <div class="field-group">
-          <label>Descripción del Perfume</label>
-          <textarea id="prod_description" class="textarea-field" rows="3" placeholder="Describe su proyección, duración y estilo..."></textarea>
-        </div>
-
-        <div class="form-grid-2">
+        <!-- BLOQUE 3: NOTAS, DESCRIPCIÓN Y FOTOS -->
+        <div class="modal-step-box">
+          <div class="modal-step-title">3. Aroma, Descripción & Fotos</div>
           <div class="field-group">
-            <label>Insignia / Etiqueta (Opcional)</label>
-            <input type="text" id="prod_badge" class="input-field" placeholder="Ej: Top Ventas, Árabe Exclusivo, Nuevo" />
+            <label>✨ Notas Olfativas (Salida, Corazón, Fondo)</label>
+            <input type="text" id="prod_notes" class="input-field" placeholder="Ej: Bergamota, Canela, Cardamomo, Ámbar y Oud" />
           </div>
+
           <div class="field-group">
-            <label>Presentaciones / Variantes (separadas por coma)</label>
-            <input type="text" id="prod_variants_text" class="input-field" placeholder="Ej: 100 ml Sellado, Decant 10 ml" value="100 ml Sellado" />
+            <label>Descripción del Perfume</label>
+            <textarea id="prod_description" class="textarea-field" rows="3" placeholder="Describe su proyección, duración y estilo..."></textarea>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Insignia / Etiqueta (Opcional)</label>
+              <input type="text" id="prod_badge" class="input-field" placeholder="Ej: Top Ventas, Árabe Exclusivo" />
+            </div>
+            <div class="field-group">
+              <label>Presentaciones (separadas por coma)</label>
+              <input type="text" id="prod_variants_text" class="input-field" placeholder="Ej: 100 ml Sellado, Decant 10 ml" value="100 ml Sellado" />
+            </div>
+          </div>
+
+          <div class="field-group" style="margin-bottom:0;">
+            <label>📸 Fotos (La primera marcada como ★ Portada será la imagen principal)</label>
+            <input type="file" id="prodImageFileInput" accept="image/*" multiple class="input-field" style="margin-bottom: 8px;" />
+            <div style="display: flex; gap: 8px;">
+              <input type="url" id="prodImageUrlInput" class="input-field" placeholder="O pega una URL de imagen https://..." />
+              <button type="button" class="btn btn-outline" id="addImageUrlBtn">+ Añadir</button>
+            </div>
+            <div class="gallery-preview-list" id="modalGalleryList"></div>
           </div>
         </div>
 
-        <!-- IMÁGENES DEL PERFUME -->
-        <div class="field-group" style="background: var(--bg-sec); padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
-          <label>📸 Fotos del Perfume (Sube desde tu dispositivo o pega URL)</label>
-          <input type="file" id="prodImageFileInput" accept="image/*" multiple class="input-field" style="margin-bottom: 8px;" />
-          <div style="display: flex; gap: 8px;">
-            <input type="url" id="prodImageUrlInput" class="input-field" placeholder="O pega una URL de imagen https://..." />
-            <button type="button" class="btn btn-outline" id="addImageUrlBtn">+ Añadir URL</button>
-          </div>
-          <div class="gallery-preview-list" id="modalGalleryList"></div>
-        </div>
-
-        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 16px 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 18px; margin: 12px 0 16px;">
           <label class="switch-label">
             <input type="checkbox" id="prod_featured" class="switch-input" />
-            <span>⭐ Destacar en el Hero Principal</span>
+            <span>⭐ Destacar primero en Catálogo</span>
           </label>
           <label class="switch-label">
             <input type="checkbox" id="prod_active" class="switch-input" checked />
@@ -1296,7 +1626,6 @@
       return '$' + (Number(val) || 0).toLocaleString('es-CO');
     }
 
-    // Verificar autenticación
     async function checkAuth() {
       if (!supabaseClient) {
         showToast('⚠️ Modo demostración local: configura config.js con tu Supabase');
@@ -1315,7 +1644,6 @@
       { name: 'Splash', slug: 'splash', emoji: '🌸', active: true }
     ];
 
-    // Cargar todos los datos en el Admin
     async function loadAdminData() {
       if (!supabaseClient) return;
 
@@ -1342,6 +1670,13 @@
       categories = dbCats;
       products = prodRes.data || [];
 
+      const emblemEl = document.getElementById('topbarBrandEmblem');
+      if (emblemEl && SITE.logo_url && SITE.logo_url.trim()) {
+        emblemEl.innerHTML = `<img src="${esc(SITE.logo_url)}" alt="Logo" />`;
+      } else if (emblemEl) {
+        emblemEl.textContent = 'IP';
+      }
+
       updateStats();
       renderAdminCategories();
       populateSiteSettingsForm();
@@ -1356,38 +1691,58 @@
       document.getElementById('statTotalProducts').textContent = total;
       document.getElementById('statHiddenPrices').textContent = hidden;
       document.getElementById('statShownPrices').textContent = shown;
-      document.getElementById('statCategories').textContent = categories.filter(c => c.active).length;
+      document.getElementById('statCategories').textContent = categories.filter(c => c.active !== false).length;
     }
 
-    // Renderizar lista de productos con switch rápido de Mostrar/Ocultar precio
     function renderAdminProducts() {
       const grid = document.getElementById('adminProductsGrid');
       const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
       const catFilter = document.getElementById('adminCatFilter').value;
+      const statusFilter = document.getElementById('adminStatusFilter').value;
 
       const filtered = products.filter(p => {
         if (catFilter !== 'all' && p.category !== catFilter) return false;
+
+        if (statusFilter === 'active' && p.active === false) return false;
+        if (statusFilter === 'inactive' && p.active !== false) return false;
+        if (statusFilter === 'price_shown' && !(p.show_price && Number(p.price) > 0)) return false;
+        if (statusFilter === 'price_hidden' && (p.show_price && Number(p.price) > 0)) return false;
+        if (statusFilter === 'featured' && !p.featured) return false;
+        if (statusFilter === 'no_image') {
+          const hasImg = Boolean((Array.isArray(p.images) && p.images[0]) || p.image_url);
+          if (hasImg) return false;
+        }
+
         if (q) {
-          const hay = `${p.name} ${p.brand} ${p.notes || ''}`.toLowerCase();
+          const hay = `${p.name} ${p.brand} ${p.notes || ''} ${p.category || ''}`.toLowerCase();
           if (!hay.includes(q)) return false;
         }
         return true;
       });
 
+      const countEl = document.getElementById('adminResultsCount');
+      if (countEl) {
+        countEl.textContent = `Mostrando ${filtered.length} de ${products.length} perfumes`;
+      }
+
       if (!filtered.length) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; padding: 36px; text-align: center; color: var(--muted); background: var(--bg-card); border-radius: 14px;">No hay perfumes que coincidan con el filtro.</div>`;
+        grid.innerHTML = `<div style="grid-column: 1/-1; padding: 36px; text-align: center; color: var(--muted); background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border);">No hay perfumes que coincidan con los filtros seleccionados.</div>`;
         return;
       }
 
       grid.innerHTML = filtered.map(p => {
         const img = (Array.isArray(p.images) && p.images[0]) || p.image_url || '';
         const isPriceShown = Boolean(p.show_price && Number(p.price) > 0);
+        const catOptions = categories.map(c =>
+          `<option value="${esc(c.slug)}" ${c.slug === p.category ? 'selected' : ''}>${esc(c.emoji || '👑')} ${esc(c.name)}</option>`
+        ).join('');
+        const hasMissingCat = p.category && !categories.some(c => c.slug === p.category);
 
         return `
-          <div class="adm-prod-card ${p.active ? '' : 'inactive'}">
+          <div class="adm-prod-card ${p.active !== false ? '' : 'inactive'}">
             <div class="adm-prod-top">
               ${img
-                ? `<img src="${esc(img)}" class="adm-prod-img" alt="${esc(p.name)}" />`
+                ? `<img src="${esc(img)}" class="adm-prod-img" alt="${esc(p.name)}" onerror="this.style.display='none'" />`
                 : `<div class="adm-prod-img" style="display:flex;align-items:center;justify-content:center;font-size:1.8rem;">🖤</div>`
               }
               <div class="adm-prod-info">
@@ -1397,34 +1752,65 @@
                   ${p.featured ? '⭐ Destacado · ' : ''}
                   ${p.badge ? `<span style="color:var(--accent);">${esc(p.badge)}</span>` : 'Catálogo'}
                 </div>
-                <div style="font-size: 0.8rem; font-weight: 800; margin-top: 4px; color: ${isPriceShown ? '#22c55e' : 'var(--accent)'};">
-                  ${isPriceShown ? `Visible: ${formatCOP(p.price)}` : `💬 Oculto (WhatsApp) ${Number(p.price) > 0 ? `[Base: ${formatCOP(p.price)}]` : ''}`}
+                <div style="font-size: 0.78rem; font-weight: 800; margin-top: 4px; color: ${isPriceShown ? '#22c55e' : 'var(--accent)'};">
+                  ${isPriceShown ? `Visible: ${formatCOP(p.price)}` : `💬 WhatsApp ${Number(p.price) > 0 ? `[Base: ${formatCOP(p.price)}]` : ''}`}
                 </div>
               </div>
             </div>
 
+            <div class="adm-quick-cat-row">
+              <span>📂 Cat:</span>
+              <select class="adm-quick-cat-select" onchange="quickChangeCategory(${Number(p.id)}, this.value)">
+                ${hasMissingCat ? `<option value="${esc(p.category)}" selected>⚠️ ${esc(p.category)}</option>` : ''}
+                ${catOptions}
+              </select>
+            </div>
+
             <div class="adm-price-row">
-              <label class="switch-label" title="Activa o desactiva el precio público de este perfume con un clic">
+              <label class="switch-label" title="Activa o desactiva el precio público">
                 <input type="checkbox" class="switch-input" ${p.show_price ? 'checked' : ''} onchange="toggleSingleProductPrice(${Number(p.id)}, this.checked)" />
-                <span>${p.show_price ? 'Mostrar Precio' : 'Precio Oculto'}</span>
+                <span>Precio</span>
+              </label>
+
+              <label class="switch-label" title="Destacar primero en la tienda">
+                <input type="checkbox" class="switch-input" ${p.featured ? 'checked' : ''} onchange="toggleSingleProductFeatured(${Number(p.id)}, this.checked)" />
+                <span>⭐</span>
               </label>
 
               <label class="switch-label" title="Mostrar u ocultar perfume en el catálogo">
-                <input type="checkbox" class="switch-input" ${p.active ? 'checked' : ''} onchange="toggleSingleProductActive(${Number(p.id)}, this.checked)" />
-                <span>Activo</span>
+                <input type="checkbox" class="switch-input" ${p.active !== false ? 'checked' : ''} onchange="toggleSingleProductActive(${Number(p.id)}, this.checked)" />
+                <span>Visible</span>
               </label>
             </div>
 
             <div class="adm-prod-actions">
               <button class="btn btn-outline" style="flex:1;" onclick="openEditProduct(${Number(p.id)})">✏️ Editar</button>
-              <button class="btn btn-danger" onclick="deleteProduct(${Number(p.id)})">🗑️</button>
+              <button class="btn btn-outline" title="Duplicar perfume" onclick="duplicateProduct(${Number(p.id)})">📋</button>
+              <button class="btn btn-danger" title="Eliminar perfume" onclick="deleteProduct(${Number(p.id)})">🗑️</button>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    // Cambiar visibilidad del precio directamente desde la tarjeta
+    window.quickChangeCategory = async function(id, newCat) {
+      const p = products.find(x => Number(x.id) === Number(id));
+      if (!p || !newCat) return;
+      const prevCat = p.category;
+      p.category = newCat;
+      if (supabaseClient) {
+        const { error } = await supabaseClient.from('products').update({ category: newCat }).eq('id', id);
+        if (error) {
+          p.category = prevCat;
+          renderAdminProducts();
+          showToast('❌ Error cambiando categoría: ' + error.message);
+          return;
+        }
+      }
+      renderAdminCategories();
+      showToast(`📂 "${p.name}" movido a ${newCat}`);
+    };
+
     window.toggleSingleProductPrice = async function(id, showPriceVal) {
       const p = products.find(x => Number(x.id) === Number(id));
       if (!p) return;
@@ -1435,10 +1821,10 @@
           renderAdminProducts();
           return;
         }
-        const parsed = Number(String(inputPrice).replace(/\D/g, '')) || 0;
-        p.price = parsed;
+        p.price = Number(String(inputPrice).replace(/\D/g, '')) || 0;
       }
 
+      const prevShow = p.show_price;
       p.show_price = Boolean(showPriceVal);
       if (supabaseClient) {
         const { error } = await supabaseClient
@@ -1446,7 +1832,9 @@
           .update({ show_price: p.show_price, price: p.price })
           .eq('id', id);
         if (error) {
-          showToast('Error al actualizar: ' + error.message);
+          p.show_price = prevShow;
+          renderAdminProducts();
+          showToast('❌ Error al actualizar: ' + error.message);
           return;
         }
       }
@@ -1455,16 +1843,51 @@
       showToast(p.show_price ? `💲 Precio activado en ${p.name}` : `🙈 Precio ocultado en ${p.name}`);
     };
 
+    window.toggleSingleProductFeatured = async function(id, featVal) {
+      const p = products.find(x => Number(x.id) === Number(id));
+      if (!p) return;
+      const prev = p.featured;
+      p.featured = Boolean(featVal);
+      if (supabaseClient) {
+        const { error } = await supabaseClient.from('products').update({ featured: p.featured }).eq('id', id);
+        if (error) {
+          p.featured = prev;
+          renderAdminProducts();
+          showToast('❌ Error actualizando destacado: ' + error.message);
+          return;
+        }
+      }
+      renderAdminProducts();
+      showToast(p.featured ? `⭐ ${p.name} destacado` : `Destacado quitado en ${p.name}`);
+    };
+
     window.toggleSingleProductActive = async function(id, activeVal) {
       const p = products.find(x => Number(x.id) === Number(id));
       if (!p) return;
+      const prev = p.active;
       p.active = Boolean(activeVal);
       if (supabaseClient) {
-        await supabaseClient.from('products').update({ active: p.active }).eq('id', id);
+        const { error } = await supabaseClient.from('products').update({ active: p.active }).eq('id', id);
+        if (error) {
+          p.active = prev;
+          renderAdminProducts();
+          showToast('❌ Error cambiando visibilidad: ' + error.message);
+          return;
+        }
       }
       updateStats();
       renderAdminProducts();
-      showToast(p.active ? 'Perfume visible en tienda' : 'Perfume oculto en tienda');
+      showToast(p.active ? '✅ Perfume visible en tienda' : '🙈 Perfume oculto en tienda');
+    };
+
+    window.duplicateProduct = function(id) {
+      const p = products.find(x => Number(x.id) === Number(id));
+      if (!p) return;
+      openEditProduct(id);
+      document.getElementById('modalFormTitle').textContent = `Duplicar: ${p.name}`;
+      document.getElementById('prod_id').value = '';
+      document.getElementById('prod_name').value = `${p.name} (Copia)`;
+      showToast('📋 Datos copiados. Edita el nombre/foto y pulsa Guardar.');
     };
 
     window.deleteProduct = async function(id) {
@@ -1474,17 +1897,17 @@
       if (supabaseClient) {
         const { error } = await supabaseClient.from('products').delete().eq('id', id);
         if (error) {
-          showToast('Error eliminando: ' + error.message);
+          showToast('❌ Error eliminando: ' + error.message);
           return;
         }
       }
       products = products.filter(x => Number(x.id) !== Number(id));
       updateStats();
+      renderAdminCategories();
       renderAdminProducts();
       showToast('🗑️ Perfume eliminado');
     };
 
-    // Subida de archivos a Supabase Storage (para fotos de perfumes y Logo)
     async function uploadFileToStorage(file, folder = 'perfumes') {
       if (!supabaseClient) {
         return new Promise((resolve) => {
@@ -1501,24 +1924,31 @@
         .from('products')
         .upload(safeName, file, { cacheControl: '3600', upsert: true });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       const { data } = supabaseClient.storage.from('products').getPublicUrl(safeName);
       return data.publicUrl;
     }
 
-    // Modal Crear / Editar Perfume
     function renderModalGallery() {
       const container = document.getElementById('modalGalleryList');
       container.innerHTML = modalImages.map((url, idx) => `
-        <div class="gallery-thumb-item">
+        <div class="gallery-thumb-item ${idx === 0 ? 'is-cover' : ''}">
           <img src="${esc(url)}" alt="Foto ${idx + 1}" />
-          <button type="button" onclick="removeModalImage(${idx})">✕</button>
+          <button type="button" class="gallery-thumb-remove" onclick="removeModalImage(${idx})" title="Quitar">✕</button>
+          <button type="button" class="gallery-thumb-cover-btn" onclick="setModalCoverImage(${idx})">
+            ${idx === 0 ? '★ Portada' : 'Usar portada'}
+          </button>
         </div>
       `).join('');
     }
+
+    window.setModalCoverImage = function(idx) {
+      if (idx <= 0 || idx >= modalImages.length) return;
+      const [chosen] = modalImages.splice(idx, 1);
+      modalImages.unshift(chosen);
+      renderModalGallery();
+    };
 
     window.removeModalImage = function(idx) {
       modalImages.splice(idx, 1);
@@ -1529,8 +1959,8 @@
       document.getElementById('modalFormTitle').textContent = 'Añadir Nuevo Perfume';
       document.getElementById('productForm').reset();
       document.getElementById('prod_id').value = '';
-      document.getElementById('prod_show_price').checked = false; // Oculto por defecto
-      document.getElementById('prodShowPriceStatusText').textContent = 'Precio Oculto (Consultar por WhatsApp)';
+      document.getElementById('prod_show_price').checked = false;
+      document.getElementById('prodShowPriceStatusText').textContent = 'Precio Oculto (WhatsApp)';
       document.getElementById('prod_price').value = 0;
       document.getElementById('prod_active').checked = true;
       modalImages = [];
@@ -1546,14 +1976,24 @@
       document.getElementById('prod_id').value = p.id;
       document.getElementById('prod_name').value = p.name || '';
       document.getElementById('prod_brand').value = p.brand || '';
-      document.getElementById('prod_category').value = p.category || (categories[0] && categories[0].slug) || 'arabes';
+
+      const catSelect = document.getElementById('prod_category');
+      const prodCat = p.category || (categories[0] && categories[0].slug) || 'arabes';
+      if (prodCat && !Array.from(catSelect.options).some(o => o.value === prodCat)) {
+        const tempOpt = document.createElement('option');
+        tempOpt.value = prodCat;
+        tempOpt.textContent = `⚠️ ${prodCat} (categoría no registrada)`;
+        catSelect.prepend(tempOpt);
+      }
+      catSelect.value = prodCat;
+
       document.getElementById('prod_occasion').value = p.occasion || 'Noche & Citas';
       document.getElementById('prod_concentration').value = p.concentration || 'Eau de Parfum (EDP)';
       document.getElementById('prod_size_ml').value = p.size_ml || '100 ml';
       document.getElementById('prod_show_price').checked = Boolean(p.show_price);
       document.getElementById('prodShowPriceStatusText').textContent = p.show_price
         ? 'Precio Visible en la Tienda'
-        : 'Precio Oculto (Consultar por WhatsApp)';
+        : 'Precio Oculto (WhatsApp)';
       document.getElementById('prod_price').value = Number(p.price) || 0;
       document.getElementById('prod_old_price').value = p.old_price || '';
       document.getElementById('prod_notes').value = p.notes || '';
@@ -1579,7 +2019,6 @@
       document.getElementById('productModalOverlay').classList.add('open');
     };
 
-    // Poblar formulario de Ajustes del Sitio y Logo
     function populateSiteSettingsForm() {
       document.getElementById('set_logo_url').value = SITE.logo_url || '';
       document.getElementById('set_logo_height').value = SITE.logo_height || 58;
@@ -1595,6 +2034,8 @@
       document.getElementById('set_whatsapp_inquire_btn').value = SITE.whatsapp_inquire_btn || 'Consultar por WhatsApp';
       document.getElementById('set_whatsapp_buy_btn').value = SITE.whatsapp_buy_btn || 'Pedir por WhatsApp';
       document.getElementById('set_whatsapp').value = SITE.whatsapp || WHATSAPP_NUMBER;
+      document.getElementById('set_whatsapp_sales_title').value = SITE.whatsapp_sales_title || '';
+      document.getElementById('set_whatsapp_sales_desc').value = SITE.whatsapp_sales_desc || '';
 
       document.getElementById('set_door_delivery_enabled').checked = SITE.door_delivery_enabled !== false;
       document.getElementById('set_door_delivery_title').value = SITE.door_delivery_title || '';
@@ -1608,6 +2049,7 @@
 
       document.getElementById('set_announcement').value = SITE.announcement || '';
       document.getElementById('set_hero_tag').value = SITE.hero_tag || '';
+      document.getElementById('set_hero_cta').value = SITE.hero_cta || '';
       document.getElementById('set_hero_title').value = SITE.hero_title || '';
       document.getElementById('set_hero_accent').value = SITE.hero_accent || '';
       document.getElementById('set_hero_words').value = SITE.hero_words || '';
@@ -1615,35 +2057,26 @@
       document.getElementById('set_hero_badge_1').value = SITE.hero_badge_1 || '';
       document.getElementById('set_hero_badge_2').value = SITE.hero_badge_2 || '';
       document.getElementById('set_hero_badge_3').value = SITE.hero_badge_3 || '';
+
+      document.getElementById('set_products_title').value = SITE.products_title || '';
+      document.getElementById('set_products_subtitle').value = SITE.products_subtitle || '';
+
+      document.getElementById('set_promo_enabled').checked = SITE.promo_enabled !== false;
+      document.getElementById('set_promo_tag').value = SITE.promo_tag || '';
+      document.getElementById('set_promo_title').value = SITE.promo_title || '';
+      document.getElementById('set_promo_text').value = SITE.promo_text || '';
+      document.getElementById('set_promo_cta').value = SITE.promo_cta || '';
+
       document.getElementById('set_instagram_handle').value = SITE.instagram_handle || '';
       document.getElementById('set_tiktok_handle').value = SITE.tiktok_handle || '';
+      document.getElementById('set_footer_slogan').value = SITE.footer_slogan || '';
       document.getElementById('set_footer_location').value = SITE.footer_location || '';
 
       const defaultFour = [
-        {
-          slug: 'caballero',
-          title: 'Caballero',
-          subtitle: 'Fragancias masculinas de carácter y seducción',
-          image: SITE.cat_img_caballero || SITE_DEFAULTS.cat_img_caballero
-        },
-        {
-          slug: 'dama',
-          title: 'Dama',
-          subtitle: 'Aromas femeninos elegantes, dulces y envolventes',
-          image: SITE.cat_img_dama || SITE_DEFAULTS.cat_img_dama
-        },
-        {
-          slug: 'nicho',
-          title: 'Nicho',
-          subtitle: 'Alta perfumería de autor y lujo exclusivo',
-          image: SITE.cat_img_nicho || SITE_DEFAULTS.cat_img_nicho
-        },
-        {
-          slug: 'splash',
-          title: 'Splash',
-          subtitle: 'Body mists frescos, ligeros e irresistibles',
-          image: SITE.cat_img_splash || SITE_DEFAULTS.cat_img_splash
-        }
+        { slug: 'caballero', title: 'Caballero', subtitle: 'Fragancias masculinas de carácter y seducción', image: SITE.cat_img_caballero || SITE_DEFAULTS.cat_img_caballero },
+        { slug: 'dama', title: 'Dama', subtitle: 'Aromas femeninos elegantes, dulces y envolventes', image: SITE.cat_img_dama || SITE_DEFAULTS.cat_img_dama },
+        { slug: 'nicho', title: 'Nicho', subtitle: 'Alta perfumería de autor y lujo exclusivo', image: SITE.cat_img_nicho || SITE_DEFAULTS.cat_img_nicho },
+        { slug: 'splash', title: 'Splash', subtitle: 'Body mists frescos, ligeros e irresistibles', image: SITE.cat_img_splash || SITE_DEFAULTS.cat_img_splash }
       ];
 
       const featCats = Array.isArray(SITE.featured_categories) && SITE.featured_categories.length === 4
@@ -1686,13 +2119,16 @@
       }
     }
 
-    // Categorías (Creación, Edición y Eliminación de cualquier categoría)
     function renderAdminCategories() {
       const filterSelect = document.getElementById('adminCatFilter');
       const prodCatSelect = document.getElementById('prod_category');
+      const currentFilter = filterSelect.value || 'all';
 
       filterSelect.innerHTML = `<option value="all">Todas las categorías</option>` +
         categories.map(c => `<option value="${esc(c.slug)}">${esc(c.emoji)} ${esc(c.name)}</option>`).join('');
+      if (Array.from(filterSelect.options).some(o => o.value === currentFilter)) {
+        filterSelect.value = currentFilter;
+      }
 
       prodCatSelect.innerHTML = categories.map(c => `<option value="${esc(c.slug)}">${esc(c.emoji)} ${esc(c.name)}</option>`).join('');
 
@@ -1704,6 +2140,8 @@
       listEl.innerHTML = categories.map(c => {
         const slotIndex = featSlugs.indexOf(c.slug);
         const isFeaturedOnIndex = slotIndex !== -1;
+        const prodCount = products.filter(p => p.category === c.slug).length;
+
         return `
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:var(--bg-sec); padding:12px 16px; border-radius:10px; border:1px solid var(--border); ${c.active === false ? 'opacity:0.6;' : ''}">
           <div style="display:flex; align-items:center; gap:10px;">
@@ -1711,7 +2149,8 @@
             <div>
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <strong style="color:#fff; font-size:0.92rem;">${esc(c.name)}</strong>
-                ${isFeaturedOnIndex ? `<span style="font-size:0.66rem; color:#08080a; background:var(--accent); font-weight:800; padding:2px 8px; border-radius:999px;">⭐ Recuadro #${slotIndex + 1} del Index</span>` : ''}
+                <span style="font-size:0.68rem; color:#cbd5e1; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:999px;">${prodCount} ${prodCount === 1 ? 'perfume' : 'perfumes'}</span>
+                ${isFeaturedOnIndex ? `<span style="font-size:0.66rem; color:#08080a; background:var(--accent); font-weight:800; padding:2px 8px; border-radius:999px;">⭐ Cuadro #${slotIndex + 1}</span>` : ''}
                 ${c.active === false ? `<span style="font-size:0.66rem; color:#fca5a5; border:1px solid rgba(239,68,68,0.4); padding:2px 8px; border-radius:999px;">Oculta</span>` : ''}
               </div>
               <span style="display:block; font-size:0.72rem; color:var(--muted);">slug: ${esc(c.slug)}</span>
@@ -1719,14 +2158,14 @@
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <select class="select-field" style="width:auto; padding:6px 10px; font-size:0.75rem;" onchange="assignCategoryToIndexSlot(${Number(c.id)}, this.value)">
-              <option value="">📌 Posición en Index...</option>
-              <option value="0" ${slotIndex === 0 ? 'selected' : ''}>Recuadro #1 del Index</option>
-              <option value="1" ${slotIndex === 1 ? 'selected' : ''}>Recuadro #2 del Index</option>
-              <option value="2" ${slotIndex === 2 ? 'selected' : ''}>Recuadro #3 del Index</option>
-              <option value="3" ${slotIndex === 3 ? 'selected' : ''}>Recuadro #4 del Index</option>
+              <option value="">📌 Poner en Index...</option>
+              <option value="0" ${slotIndex === 0 ? 'selected' : ''}>Cuadro #1 del Inicio</option>
+              <option value="1" ${slotIndex === 1 ? 'selected' : ''}>Cuadro #2 del Inicio</option>
+              <option value="2" ${slotIndex === 2 ? 'selected' : ''}>Cuadro #3 del Inicio</option>
+              <option value="3" ${slotIndex === 3 ? 'selected' : ''}>Cuadro #4 del Inicio</option>
             </select>
             <button type="button" class="btn btn-outline" style="padding:6px 12px; font-size:0.76rem;" onclick="openEditCategory(${Number(c.id)})">✏️ Editar</button>
-            <button type="button" class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">🗑️ Eliminar</button>
+            <button type="button" class="btn btn-danger" style="padding:6px 12px; font-size:0.76rem;" onclick="deleteCategory(${Number(c.id)})">🗑️</button>
           </div>
         </div>
       `;
@@ -1766,58 +2205,120 @@
     window.deleteCategory = async function(id) {
       const cat = categories.find(c => Number(c.id) === Number(id));
       if (!cat) return;
-      if (!confirm(`¿Eliminar la categoría "${cat.name}"?`)) return;
+
+      const linkedCount = products.filter(p => p.category === cat.slug).length;
+      const warnMsg = linkedCount > 0
+        ? `⚠️ La categoría "${cat.name}" tiene ${linkedCount} perfume(s) asignados.\n¿Seguro que deseas eliminarla?`
+        : `¿Eliminar la categoría "${cat.name}"?`;
+      if (!confirm(warnMsg)) return;
+
       if (supabaseClient) {
         const { error } = await supabaseClient.from('categories').delete().eq('id', id);
         if (error) {
-          alert('Error eliminando categoría: ' + error.message);
+          showToast('❌ Error eliminando categoría: ' + error.message);
           return;
         }
+
+        if (Array.isArray(SITE.featured_categories) && SITE.featured_categories.some(fc => fc.slug === cat.slug)) {
+          const fallbackCat = categories.find(c => c.slug !== cat.slug && c.active !== false);
+          if (fallbackCat) {
+            SITE.featured_categories = SITE.featured_categories.map(fc =>
+              fc.slug === cat.slug
+                ? { ...fc, slug: fallbackCat.slug, title: fallbackCat.name, subtitle: `Explora nuestra colección de ${fallbackCat.name}` }
+                : fc
+            );
+            await supabaseClient.from('site_settings').upsert({ id: 1, settings: SITE });
+          }
+        }
       }
+
       categories = categories.filter(c => Number(c.id) !== Number(id));
       renderAdminCategories();
       populateSiteSettingsForm();
+      renderAdminProducts();
       updateStats();
       showToast('🗑️ Categoría eliminada');
     };
 
-    // Eventos DOM
     document.addEventListener('DOMContentLoaded', async () => {
       await checkAuth();
       await loadAdminData();
 
-      // Cambio de pestañas
+      const floatingSaveBar = document.getElementById('floatingSaveBar');
+      const updateFloatingSaveVisibility = (activeTabId) => {
+        const showBar = activeTabId === 'tab-site' || activeTabId === 'tab-sales';
+        floatingSaveBar.classList.toggle('visible', showBar);
+      };
+
+      // Tabs principales
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
           document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
           btn.classList.add('active');
           document.getElementById(btn.dataset.tab).classList.add('active');
+          updateFloatingSaveVisibility(btn.dataset.tab);
         });
       });
 
-      // Filtros de productos en admin
+      // Sub-tabs internos por cada pestaña
+      document.querySelectorAll('.subtab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panel = btn.closest('.tab-panel');
+          if (!panel) return;
+          panel.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+          panel.querySelectorAll('.subtab-panel').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.dataset.subtab);
+          if (target) target.classList.add('active');
+        });
+      });
+
+      // Filtros de productos
       document.getElementById('adminSearchInput').addEventListener('input', renderAdminProducts);
       document.getElementById('adminCatFilter').addEventListener('change', renderAdminProducts);
+      document.getElementById('adminStatusFilter').addEventListener('change', renderAdminProducts);
 
-      // Botones Nuevo Perfume
+      // Modales: botones cerrar, clic fuera y tecla Escape
+      const closeProdModal = () => document.getElementById('productModalOverlay').classList.remove('open');
+      const closeCatModal = () => document.getElementById('categoryModalOverlay').classList.remove('open');
+
       document.getElementById('newProductBtn').addEventListener('click', openNewProductModal);
       document.getElementById('newProductTopBtn').addEventListener('click', openNewProductModal);
-      document.getElementById('closeProdModalBtn').addEventListener('click', () => document.getElementById('productModalOverlay').classList.remove('open'));
-      document.getElementById('cancelProdModalBtn').addEventListener('click', () => document.getElementById('productModalOverlay').classList.remove('open'));
+      document.getElementById('closeProdModalBtn').addEventListener('click', closeProdModal);
+      document.getElementById('cancelProdModalBtn').addEventListener('click', closeProdModal);
+      document.getElementById('productModalOverlay').addEventListener('click', e => {
+        if (e.target.id === 'productModalOverlay') closeProdModal();
+      });
 
-      // Switch texto mostrar precio en modal
+      document.getElementById('closeCatModalBtn').addEventListener('click', closeCatModal);
+      document.getElementById('cancelCatModalBtn').addEventListener('click', closeCatModal);
+      document.getElementById('categoryModalOverlay').addEventListener('click', e => {
+        if (e.target.id === 'categoryModalOverlay') closeCatModal();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          closeProdModal();
+          closeCatModal();
+        }
+      });
+
       document.getElementById('prod_show_price').addEventListener('change', e => {
         document.getElementById('prodShowPriceStatusText').textContent = e.target.checked
           ? 'Precio Visible en la Tienda'
-          : 'Precio Oculto (Consultar por WhatsApp)';
+          : 'Precio Oculto (WhatsApp)';
       });
 
-      // Ocultar / Mostrar todos los precios en lote
+      // Ocultar / Mostrar precios en lote (verificando error)
       document.getElementById('bulkHidePricesBtn').addEventListener('click', async () => {
         if (!confirm('¿Ocultar el precio en TODOS los perfumes para que los clientes consulten por WhatsApp?')) return;
         if (supabaseClient) {
-          await supabaseClient.from('products').update({ show_price: false }).neq('id', 0);
+          const { error } = await supabaseClient.from('products').update({ show_price: false }).neq('id', 0);
+          if (error) {
+            showToast('❌ Error actualizando precios: ' + error.message);
+            return;
+          }
         }
         products.forEach(p => p.show_price = false);
         updateStats();
@@ -1828,7 +2329,11 @@
       document.getElementById('bulkShowPricesBtn').addEventListener('click', async () => {
         if (!confirm('¿Mostrar el precio en todos los perfumes que tengan un valor mayor a $0?')) return;
         if (supabaseClient) {
-          await supabaseClient.from('products').update({ show_price: true }).gt('price', 0);
+          const { error } = await supabaseClient.from('products').update({ show_price: true }).gt('price', 0);
+          if (error) {
+            showToast('❌ Error actualizando precios: ' + error.message);
+            return;
+          }
         }
         products.forEach(p => { if (Number(p.price) > 0) p.show_price = true; });
         updateStats();
@@ -1840,7 +2345,7 @@
       document.getElementById('prodImageFileInput').addEventListener('change', async (e) => {
         const files = Array.from(e.target.files || []);
         if (!files.length) return;
-        showToast('Subiendo imagen(es)...');
+        showToast('⏳ Subiendo imagen(es)...');
         for (const file of files) {
           try {
             const url = await uploadFileToStorage(file, 'perfumes');
@@ -1863,71 +2368,80 @@
         renderModalGallery();
       });
 
-      // Guardar Perfume (Crear o Actualizar)
+      // Guardar Perfume (con protección contra doble clic)
       document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const idVal = document.getElementById('prod_id').value;
-        const priceNum = Number(document.getElementById('prod_price').value) || 0;
-        const oldPriceRaw = document.getElementById('prod_old_price').value;
-        const oldPriceNum = oldPriceRaw ? Number(oldPriceRaw) : null;
+        const saveBtn = document.getElementById('saveProdSubmitBtn');
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Guardando...';
 
-        let discountPercent = null;
-        if (oldPriceNum && oldPriceNum > priceNum && priceNum > 0) {
-          discountPercent = Math.round((1 - priceNum / oldPriceNum) * 100);
-        }
+        try {
+          const idVal = document.getElementById('prod_id').value;
+          const priceNum = Number(document.getElementById('prod_price').value) || 0;
+          const oldPriceRaw = document.getElementById('prod_old_price').value;
+          const oldPriceNum = oldPriceRaw ? Number(oldPriceRaw) : null;
 
-        const variantsArr = document.getElementById('prod_variants_text').value
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean)
-          .map(name => ({ name }));
-
-        const payload = {
-          name: document.getElementById('prod_name').value.trim(),
-          brand: document.getElementById('prod_brand').value.trim(),
-          category: document.getElementById('prod_category').value,
-          occasion: document.getElementById('prod_occasion').value,
-          concentration: document.getElementById('prod_concentration').value.trim(),
-          size_ml: document.getElementById('prod_size_ml').value.trim(),
-          show_price: document.getElementById('prod_show_price').checked,
-          price: priceNum,
-          old_price: oldPriceNum,
-          discount_percent: discountPercent,
-          notes: document.getElementById('prod_notes').value.trim() || null,
-          description: document.getElementById('prod_description').value.trim() || null,
-          badge: document.getElementById('prod_badge').value.trim() || null,
-          image_url: modalImages[0] || null,
-          images: modalImages,
-          variants: variantsArr,
-          featured: document.getElementById('prod_featured').checked,
-          active: document.getElementById('prod_active').checked
-        };
-
-        if (supabaseClient) {
-          if (idVal) {
-            const { error } = await supabaseClient.from('products').update(payload).eq('id', Number(idVal));
-            if (error) { alert('Error al guardar: ' + error.message); return; }
-          } else {
-            const { error } = await supabaseClient.from('products').insert([payload]);
-            if (error) { alert('Error al crear: ' + error.message); return; }
+          let discountPercent = null;
+          if (oldPriceNum && oldPriceNum > priceNum && priceNum > 0) {
+            discountPercent = Math.round((1 - priceNum / oldPriceNum) * 100);
           }
-          await loadAdminData();
-        }
 
-        document.getElementById('productModalOverlay').classList.remove('open');
-        showToast('✅ Perfume guardado correctamente');
+          const variantsArr = document.getElementById('prod_variants_text').value
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(name => ({ name }));
+
+          const payload = {
+            name: document.getElementById('prod_name').value.trim(),
+            brand: document.getElementById('prod_brand').value.trim(),
+            category: document.getElementById('prod_category').value,
+            occasion: document.getElementById('prod_occasion').value,
+            concentration: document.getElementById('prod_concentration').value.trim(),
+            size_ml: document.getElementById('prod_size_ml').value.trim(),
+            show_price: document.getElementById('prod_show_price').checked,
+            price: priceNum,
+            old_price: oldPriceNum,
+            discount_percent: discountPercent,
+            notes: document.getElementById('prod_notes').value.trim() || null,
+            description: document.getElementById('prod_description').value.trim() || null,
+            badge: document.getElementById('prod_badge').value.trim() || null,
+            image_url: modalImages[0] || null,
+            images: modalImages,
+            variants: variantsArr,
+            featured: document.getElementById('prod_featured').checked,
+            active: document.getElementById('prod_active').checked
+          };
+
+          if (supabaseClient) {
+            if (idVal) {
+              const { error } = await supabaseClient.from('products').update(payload).eq('id', Number(idVal));
+              if (error) { alert('Error al guardar: ' + error.message); return; }
+            } else {
+              const { error } = await supabaseClient.from('products').insert([payload]);
+              if (error) { alert('Error al crear: ' + error.message); return; }
+            }
+            await loadAdminData();
+          }
+
+          closeProdModal();
+          showToast('✅ Perfume guardado correctamente');
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = '💾 Guardar Perfume';
+        }
       });
 
-      // Subir archivo de LOGO desde el panel
+      // Subir Logo
       document.getElementById('logoFileInput').addEventListener('change', async (e) => {
         const file = e.target.files && e.target.files[0];
         if (!file) return;
-        showToast('Subiendo logo...');
+        showToast('⏳ Subiendo logo...');
         try {
           const publicUrl = await uploadFileToStorage(file, 'site');
           document.getElementById('set_logo_url').value = publicUrl;
           updateLogoPreview(publicUrl);
-          showToast('✅ Logo subido. Haz clic en "Guardar Todos los Cambios"');
+          showToast('✅ Logo subido. Pulsa "Guardar Todos los Cambios".');
         } catch (err) {
           alert('Error al subir el logo: ' + err.message);
         }
@@ -1942,19 +2456,19 @@
         updateLogoPreview('');
       });
 
-      // Subir o editar fotos de las 4 categorías principales
+      // Fotos de los 4 cuadros del Index
       document.querySelectorAll('.cat-img-file').forEach(fileInp => {
         fileInp.addEventListener('change', async (e) => {
           const file = e.target.files && e.target.files[0];
           if (!file) return;
-          showToast('Subiendo foto de categoría...');
+          showToast('⏳ Subiendo foto de categoría...');
           try {
             const publicUrl = await uploadFileToStorage(file, 'categories');
             const targetInp = document.getElementById(fileInp.dataset.target);
             const prevImg = document.getElementById(fileInp.dataset.preview);
             if (targetInp) targetInp.value = publicUrl;
             if (prevImg) prevImg.src = publicUrl;
-            showToast('✅ Foto lista. Haz clic en "Guardar Todos los Cambios"');
+            await saveAllSiteSettings();
           } catch (err) {
             alert('Error al subir foto: ' + err.message);
           }
@@ -1971,38 +2485,18 @@
         });
       });
 
-      // Al cambiar la categoría seleccionada en cualquiera de los 4 cuadros del Index, actualizar título/subtítulo y guardar automáticamente
       document.querySelectorAll('.feat-cat-slug').forEach(selEl => {
         selEl.addEventListener('change', async () => {
           const idx = selEl.dataset.idx;
           const chosenCat = categories.find(c => c.slug === selEl.value);
           const titleInp = document.getElementById(`set_feat_cat_title_${idx}`);
           const subInp = document.getElementById(`set_feat_cat_sub_${idx}`);
-          if (chosenCat && titleInp) {
-            titleInp.value = chosenCat.name;
-          }
-          if (chosenCat && subInp) {
-            subInp.value = `Explora nuestra colección de ${chosenCat.name}`;
-          }
+          if (chosenCat && titleInp) titleInp.value = chosenCat.name;
+          if (chosenCat && subInp) subInp.value = `Explora nuestra colección de ${chosenCat.name}`;
           await saveAllSiteSettings();
         });
       });
 
-      // Ir desde la pestaña de Categorías directo al selector de las 4 del Index
-      const goToFeatBtn = document.getElementById('goToFeaturedCatsBtn');
-      if (goToFeatBtn) {
-        goToFeatBtn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-          const siteTabBtn = document.querySelector('.tab-btn[data-tab="tab-site"]');
-          if (siteTabBtn) siteTabBtn.classList.add('active');
-          document.getElementById('tab-site').classList.add('active');
-          const box = document.getElementById('featuredCategoriesSettingsBox');
-          if (box) box.scrollIntoView({ behavior: 'smooth' });
-        });
-      }
-
-      // Sincronizar selector de color amarillo/dorado
       document.getElementById('set_primary_color_picker').addEventListener('input', e => {
         document.getElementById('set_primary_color').value = e.target.value;
       });
@@ -2012,75 +2506,100 @@
         }
       });
 
-      // Guardar Ajustes del Sitio, Logo y las 4 Categorías del Index en Supabase
       async function saveAllSiteSettings() {
-        const featuredCategories = [0, 1, 2, 3].map(i => {
-          const slug = document.getElementById(`set_feat_cat_slug_${i}`).value;
-          const catObj = categories.find(c => c.slug === slug);
-          const title = document.getElementById(`set_feat_cat_title_${i}`).value.trim() || (catObj ? catObj.name : slug);
-          const subtitle = document.getElementById(`set_feat_cat_sub_${i}`).value.trim();
-          const image = document.getElementById(`set_feat_cat_img_${i}`).value.trim()
-            || (SITE_DEFAULTS.featured_categories && SITE_DEFAULTS.featured_categories[i] && SITE_DEFAULTS.featured_categories[i].image)
-            || '';
-          return { slug, title, subtitle, image };
-        });
+        const saveButtons = document.querySelectorAll('#saveSiteSettingsBtn, #saveFeaturedCatsQuickBtn, .js-save-all-settings');
+        saveButtons.forEach(b => b.disabled = true);
 
-        const updatedSettings = {
-          ...SITE,
-          logo_url: document.getElementById('set_logo_url').value.trim(),
-          logo_height: Number(document.getElementById('set_logo_height').value) || 58,
-          site_name: document.getElementById('set_site_name').value.trim(),
-          site_subtitle: document.getElementById('set_site_subtitle').value.trim(),
-          primary_color: document.getElementById('set_primary_color').value.trim() || '#f5c518',
-          price_display_mode: document.getElementById('set_price_display_mode').value,
-          no_price_label: document.getElementById('set_no_price_label').value.trim(),
-          whatsapp_inquire_btn: document.getElementById('set_whatsapp_inquire_btn').value.trim(),
-          whatsapp_buy_btn: document.getElementById('set_whatsapp_buy_btn').value.trim(),
-          whatsapp: document.getElementById('set_whatsapp').value.trim(),
-          door_delivery_enabled: document.getElementById('set_door_delivery_enabled').checked,
-          door_delivery_title: document.getElementById('set_door_delivery_title').value.trim(),
-          door_delivery_badge: document.getElementById('set_door_delivery_badge').value.trim(),
-          door_delivery_desc: document.getElementById('set_door_delivery_desc').value.trim(),
-          national_shipping_enabled: document.getElementById('set_national_shipping_enabled').checked,
-          national_shipping_title: document.getElementById('set_national_shipping_title').value.trim(),
-          national_shipping_badge: document.getElementById('set_national_shipping_badge').value.trim(),
-          national_shipping_desc: document.getElementById('set_national_shipping_desc').value.trim(),
-          announcement: document.getElementById('set_announcement').value.trim(),
-          hero_tag: document.getElementById('set_hero_tag').value.trim(),
-          hero_title: document.getElementById('set_hero_title').value.trim(),
-          hero_accent: document.getElementById('set_hero_accent').value.trim(),
-          hero_words: document.getElementById('set_hero_words').value.trim(),
-          hero_subtitle: document.getElementById('set_hero_subtitle').value.trim(),
-          hero_badge_1: document.getElementById('set_hero_badge_1').value.trim(),
-          hero_badge_2: document.getElementById('set_hero_badge_2').value.trim(),
-          hero_badge_3: document.getElementById('set_hero_badge_3').value.trim(),
-          instagram_handle: document.getElementById('set_instagram_handle').value.trim(),
-          tiktok_handle: document.getElementById('set_tiktok_handle').value.trim(),
-          footer_location: document.getElementById('set_footer_location').value.trim(),
-          featured_categories: featuredCategories
-        };
+        try {
+          const featuredCategories = [0, 1, 2, 3].map(i => {
+            const slug = document.getElementById(`set_feat_cat_slug_${i}`).value;
+            const catObj = categories.find(c => c.slug === slug);
+            const title = document.getElementById(`set_feat_cat_title_${i}`).value.trim() || (catObj ? catObj.name : slug);
+            const subtitle = document.getElementById(`set_feat_cat_sub_${i}`).value.trim();
+            const image = document.getElementById(`set_feat_cat_img_${i}`).value.trim()
+              || (SITE_DEFAULTS.featured_categories && SITE_DEFAULTS.featured_categories[i] && SITE_DEFAULTS.featured_categories[i].image)
+              || '';
+            return { slug, title, subtitle, image };
+          });
 
-        SITE = updatedSettings;
+          const updatedSettings = {
+            ...SITE,
+            logo_url: document.getElementById('set_logo_url').value.trim(),
+            logo_height: Number(document.getElementById('set_logo_height').value) || 58,
+            site_name: document.getElementById('set_site_name').value.trim(),
+            site_subtitle: document.getElementById('set_site_subtitle').value.trim(),
+            primary_color: document.getElementById('set_primary_color').value.trim() || '#f5c518',
+            price_display_mode: document.getElementById('set_price_display_mode').value,
+            no_price_label: document.getElementById('set_no_price_label').value.trim(),
+            whatsapp_inquire_btn: document.getElementById('set_whatsapp_inquire_btn').value.trim(),
+            whatsapp_buy_btn: document.getElementById('set_whatsapp_buy_btn').value.trim(),
+            whatsapp: document.getElementById('set_whatsapp').value.trim(),
+            whatsapp_sales_title: document.getElementById('set_whatsapp_sales_title').value.trim(),
+            whatsapp_sales_desc: document.getElementById('set_whatsapp_sales_desc').value.trim(),
+            door_delivery_enabled: document.getElementById('set_door_delivery_enabled').checked,
+            door_delivery_title: document.getElementById('set_door_delivery_title').value.trim(),
+            door_delivery_badge: document.getElementById('set_door_delivery_badge').value.trim(),
+            door_delivery_desc: document.getElementById('set_door_delivery_desc').value.trim(),
+            national_shipping_enabled: document.getElementById('set_national_shipping_enabled').checked,
+            national_shipping_title: document.getElementById('set_national_shipping_title').value.trim(),
+            national_shipping_badge: document.getElementById('set_national_shipping_badge').value.trim(),
+            national_shipping_desc: document.getElementById('set_national_shipping_desc').value.trim(),
+            announcement: document.getElementById('set_announcement').value.trim(),
+            hero_tag: document.getElementById('set_hero_tag').value.trim(),
+            hero_cta: document.getElementById('set_hero_cta').value.trim(),
+            hero_title: document.getElementById('set_hero_title').value.trim(),
+            hero_accent: document.getElementById('set_hero_accent').value.trim(),
+            hero_words: document.getElementById('set_hero_words').value.trim(),
+            hero_subtitle: document.getElementById('set_hero_subtitle').value.trim(),
+            hero_badge_1: document.getElementById('set_hero_badge_1').value.trim(),
+            hero_badge_2: document.getElementById('set_hero_badge_2').value.trim(),
+            hero_badge_3: document.getElementById('set_hero_badge_3').value.trim(),
+            products_title: document.getElementById('set_products_title').value.trim(),
+            products_subtitle: document.getElementById('set_products_subtitle').value.trim(),
+            promo_enabled: document.getElementById('set_promo_enabled').checked,
+            promo_tag: document.getElementById('set_promo_tag').value.trim(),
+            promo_title: document.getElementById('set_promo_title').value.trim(),
+            promo_text: document.getElementById('set_promo_text').value.trim(),
+            promo_cta: document.getElementById('set_promo_cta').value.trim(),
+            instagram_handle: document.getElementById('set_instagram_handle').value.trim(),
+            tiktok_handle: document.getElementById('set_tiktok_handle').value.trim(),
+            footer_slogan: document.getElementById('set_footer_slogan').value.trim(),
+            footer_location: document.getElementById('set_footer_location').value.trim(),
+            featured_categories: featuredCategories
+          };
 
-        if (supabaseClient) {
-          const { error } = await supabaseClient
-            .from('site_settings')
-            .upsert({ id: 1, settings: updatedSettings });
-          if (error) {
-            alert('Error guardando configuración: ' + error.message);
-            return;
+          SITE = updatedSettings;
+
+          if (supabaseClient) {
+            const { error } = await supabaseClient
+              .from('site_settings')
+              .upsert({ id: 1, settings: updatedSettings });
+            if (error) {
+              alert('Error guardando configuración: ' + error.message);
+              return;
+            }
           }
+
+          const emblemEl = document.getElementById('topbarBrandEmblem');
+          if (emblemEl && SITE.logo_url && SITE.logo_url.trim()) {
+            emblemEl.innerHTML = `<img src="${esc(SITE.logo_url)}" alt="Logo" />`;
+          } else if (emblemEl) {
+            emblemEl.textContent = 'IP';
+          }
+
+          renderAdminCategories();
+          showToast('✅ Cambios guardados en vivo');
+        } finally {
+          saveButtons.forEach(b => b.disabled = false);
         }
-        renderAdminCategories();
-        showToast('✅ Configuración y 4 Categorías guardadas en vivo');
       }
       window.triggerSaveSiteSettings = saveAllSiteSettings;
 
       document.getElementById('saveSiteSettingsBtn').addEventListener('click', saveAllSiteSettings);
-      const saveFeatQuickBtn = document.getElementById('saveFeaturedCatsQuickBtn');
-      if (saveFeatQuickBtn) {
-        saveFeatQuickBtn.addEventListener('click', saveAllSiteSettings);
-      }
+      document.getElementById('saveFeaturedCatsQuickBtn').addEventListener('click', saveAllSiteSettings);
+      document.querySelectorAll('.js-save-all-settings').forEach(btn => {
+        btn.addEventListener('click', saveAllSiteSettings);
+      });
 
       // Crear Categoría
       document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
@@ -2102,57 +2621,61 @@
         showToast('✅ Categoría creada');
       });
 
-      // Modal Editar Categoría
-      document.getElementById('closeCatModalBtn').addEventListener('click', () => document.getElementById('categoryModalOverlay').classList.remove('open'));
-      document.getElementById('cancelCatModalBtn').addEventListener('click', () => document.getElementById('categoryModalOverlay').classList.remove('open'));
-
+      // Guardar Edición de Categoría
       document.getElementById('editCategoryForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const id = Number(document.getElementById('edit_cat_id').value);
-        const oldSlug = document.getElementById('edit_cat_old_slug').value.trim();
-        const emoji = document.getElementById('edit_cat_emoji').value.trim() || '👑';
-        const name = document.getElementById('edit_cat_name').value.trim();
-        const rawSlug = document.getElementById('edit_cat_slug').value.trim() || name;
-        const slug = rawSlug.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        const active = document.getElementById('edit_cat_active').checked;
+        const saveBtn = document.getElementById('saveCatSubmitBtn');
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Guardando...';
 
-        if (!name || !slug) return;
+        try {
+          const id = Number(document.getElementById('edit_cat_id').value);
+          const oldSlug = document.getElementById('edit_cat_old_slug').value.trim();
+          const emoji = document.getElementById('edit_cat_emoji').value.trim() || '👑';
+          const name = document.getElementById('edit_cat_name').value.trim();
+          const rawSlug = document.getElementById('edit_cat_slug').value.trim() || name;
+          const slug = rawSlug.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const active = document.getElementById('edit_cat_active').checked;
 
-        if (supabaseClient) {
-          const { error } = await supabaseClient
-            .from('categories')
-            .update({ name, emoji, slug, active })
-            .eq('id', id);
-          if (error) {
-            alert('Error actualizando categoría: ' + error.message);
-            return;
-          }
+          if (!name || !slug) return;
 
-          // Si el slug cambió, actualizar también los perfumes que usaban el slug anterior
-          if (oldSlug && oldSlug !== slug) {
-            await supabaseClient.from('products').update({ category: slug }).eq('category', oldSlug);
-          }
-
-          // Si esa categoría estaba en las 4 destacadas del Index, sincronizar su slug/título
-          if (Array.isArray(SITE.featured_categories)) {
-            let changedFeat = false;
-            SITE.featured_categories.forEach(fc => {
-              if (fc.slug === oldSlug) {
-                fc.slug = slug;
-                fc.title = name;
-                changedFeat = true;
-              }
-            });
-            if (changedFeat) {
-              await supabaseClient.from('site_settings').upsert({ id: 1, settings: SITE });
+          if (supabaseClient) {
+            const { error } = await supabaseClient
+              .from('categories')
+              .update({ name, emoji, slug, active })
+              .eq('id', id);
+            if (error) {
+              alert('Error actualizando categoría: ' + error.message);
+              return;
             }
+
+            if (oldSlug && oldSlug !== slug) {
+              await supabaseClient.from('products').update({ category: slug }).eq('category', oldSlug);
+            }
+
+            if (Array.isArray(SITE.featured_categories)) {
+              let changedFeat = false;
+              SITE.featured_categories.forEach(fc => {
+                if (fc.slug === oldSlug) {
+                  fc.slug = slug;
+                  fc.title = name;
+                  changedFeat = true;
+                }
+              });
+              if (changedFeat) {
+                await supabaseClient.from('site_settings').upsert({ id: 1, settings: SITE });
+              }
+            }
+
+            await loadAdminData();
           }
 
-          await loadAdminData();
+          closeCatModal();
+          showToast('✅ Categoría actualizada');
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = '💾 Guardar Categoría';
         }
-
-        document.getElementById('categoryModalOverlay').classList.remove('open');
-        showToast('✅ Categoría actualizada');
       });
 
       // Cerrar sesión
