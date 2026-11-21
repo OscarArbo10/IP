@@ -250,7 +250,7 @@
 
     .header-search {
       flex: 1;
-      max-width: 400px;
+      max-width: 440px;
       position: relative;
       display: none;
     }
@@ -266,7 +266,7 @@
       background: var(--bg-secondary);
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      padding: 11px 16px 11px 42px;
+      padding: 11px 38px 11px 42px;
       border-radius: 999px;
       font-size: 0.86rem;
       font-family: var(--font-sans);
@@ -276,7 +276,7 @@
     .header-search input:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 16px rgba(245, 197, 24, 0.18);
+      box-shadow: 0 0 18px rgba(245, 197, 24, 0.22);
     }
 
     .header-search .search-icon {
@@ -285,6 +285,166 @@
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border: none;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, color 0.18s;
+      z-index: 2;
+    }
+
+    .search-clear-btn.visible {
+      display: flex;
+    }
+
+    .search-clear-btn:hover {
+      background: var(--accent);
+      color: #070709;
+    }
+
+    /* Dropdown flotante de resultados instantáneos */
+    .search-suggestions {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #12121a;
+      border: 1px solid var(--accent-border);
+      border-radius: 16px;
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.92);
+      z-index: 95;
+      display: none;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .search-suggestions.open {
+      display: block;
+    }
+
+    .search-sug-header {
+      padding: 9px 14px 6px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-sug-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px 14px 12px;
+    }
+
+    .search-sug-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 9px 14px;
+      color: var(--text-main);
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.16s;
+    }
+
+    .search-sug-item:hover {
+      background: rgba(245, 197, 24, 0.09);
+    }
+
+    .search-sug-item img {
+      width: 40px;
+      height: 46px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #0a0a0f;
+      flex-shrink: 0;
+    }
+
+    .search-sug-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-sug-item-title {
+      font-weight: 700;
+      font-size: 0.84rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-sug-item-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-sug-item-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .search-sug-footer {
+      width: 100%;
+      background: rgba(245, 197, 24, 0.1);
+      color: var(--accent);
+      border: none;
+      padding: 11px 14px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      text-decoration: none;
+      display: block;
+    }
+
+    .search-sug-footer:hover {
+      background: rgba(245, 197, 24, 0.18);
+    }
+
+    mark.search-hl {
+      background: rgba(245, 197, 24, 0.28);
+      color: #ffe57f;
+      padding: 0 2px;
+      border-radius: 3px;
     }
 
     .header-actions {
@@ -403,17 +563,107 @@
       background: var(--bg-secondary);
       border: 1px solid var(--accent);
       color: var(--text-main);
-      padding: 11px 14px 11px 38px;
-      border-radius: 10px;
+      padding: 11px 38px 11px 38px;
+      border-radius: 12px;
       font-size: 0.88rem;
       font-family: var(--font-sans);
     }
 
-    .mobile-search-inner span {
+    .mobile-search-inner input:focus {
+      outline: none;
+      box-shadow: 0 0 14px rgba(245, 197, 24, 0.22);
+    }
+
+    .mobile-search-inner > span.search-icon-mob {
       position: absolute;
       left: 12px;
       top: 50%;
       transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Buscador integrado directo dentro del Catálogo (móvil y escritorio) */
+    .catalog-search-box {
+      background: linear-gradient(145deg, #13131b 0%, #0d0d13 100%);
+      border: 1px solid var(--accent-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .catalog-search-input-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .catalog-search-input-wrap .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      pointer-events: none;
+    }
+
+    .catalog-search-input-wrap input {
+      width: 100%;
+      background: #09090d;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 11px 38px 11px 40px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .catalog-search-input-wrap input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(245, 197, 24, 0.16);
+    }
+
+    .catalog-quick-chips {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 6px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .catalog-quick-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .quick-search-chip {
+      flex-shrink: 0;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: #cbd5e1;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: inherit;
+    }
+
+    .quick-search-chip:hover {
+      border-color: var(--accent-border);
+      color: var(--accent-light);
+    }
+
+    .quick-search-chip.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* ── 3. HERO CINEMATOGRÁFICO "ORO LÍQUIDO & OBSIDIANA" ─────── */
@@ -753,6 +1003,209 @@
     .luxury-marquee-item span.star {
       color: var(--accent);
       font-size: 0.9rem;
+    }
+
+    /* ── 4.5 BANNER EXCLUSIVO DE DESCUENTO WEB (5% OFF) ────────── */
+    .web-discount-section {
+      max-width: 1320px;
+      width: 100%;
+      margin: 20px auto 6px;
+      padding: 0 14px;
+    }
+
+    @media (min-width: 768px) {
+      .web-discount-section {
+        margin: 28px auto 8px;
+        padding: 0 24px;
+      }
+    }
+
+    .web-discount-banner {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 50%, rgba(245, 197, 24, 0.22) 0%, transparent 52%),
+        radial-gradient(circle at 90% 15%, rgba(245, 197, 24, 0.14) 0%, transparent 45%),
+        linear-gradient(135deg, #17140b 0%, #111118 55%, #0b0b10 100%);
+      border: 1px solid rgba(245, 197, 24, 0.45);
+      border-left: 4px solid var(--accent);
+      border-radius: 18px;
+      padding: 16px 15px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items: center;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.78), 0 0 28px rgba(245, 197, 24, 0.09), inset 0 1px 0 rgba(255, 229, 127, 0.14);
+    }
+
+    .web-discount-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 40%;
+      background: linear-gradient(90deg, transparent, rgba(255, 229, 127, 0.08), transparent);
+      transform: translateX(-140%) skewX(-20deg);
+      animation: goldShimmer 7.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @media (min-width: 860px) {
+      .web-discount-banner {
+        grid-template-columns: auto 1fr auto;
+        gap: 24px;
+        padding: 24px 28px;
+        border-radius: 20px;
+      }
+    }
+
+    .discount-medallion {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(245, 197, 24, 0.18) 0%, rgba(184, 134, 11, 0.08) 100%);
+      border: 1px solid rgba(245, 197, 24, 0.48);
+      box-shadow: inset 0 0 18px rgba(245, 197, 24, 0.12);
+      justify-self: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 860px) {
+      .discount-medallion {
+        flex-direction: column;
+        gap: 2px;
+        min-width: 108px;
+        padding: 16px 18px;
+        text-align: center;
+      }
+    }
+
+    .discount-medallion-num {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+      font-weight: 900;
+      line-height: 1;
+      background: var(--gold-text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .discount-medallion-sub {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+    }
+
+    .discount-copy {
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .discount-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245, 197, 24, 0.1);
+      border: 1px solid rgba(245, 197, 24, 0.28);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .discount-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulseDot 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .discount-copy h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.06rem, 2.5vw, 1.48rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .discount-copy p {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      max-width: 66ch;
+    }
+
+    .discount-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 520px) and (max-width: 859px) {
+      .discount-actions {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    @media (min-width: 860px) {
+      .discount-actions {
+        align-items: flex-end;
+        min-width: 245px;
+      }
+    }
+
+    .discount-code-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(245, 197, 24, 0.52);
+      color: var(--text-main);
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .discount-code-chip strong {
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      font-weight: 800;
+    }
+
+    .discount-code-chip:hover {
+      background: rgba(245, 197, 24, 0.12);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .discount-code-hint {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      opacity: 0.9;
     }
 
     /* ── 5. HISTORIAS VIP / COLECCIONES RÁPIDAS (ESTILO INSTAGRAM) ── */
@@ -2443,9 +2896,11 @@
         </div>
       </a>
 
-      <div class="header-search">
+      <div class="header-search" id="desktopSearchWrap">
         <span class="search-icon">🔍</span>
-        <input type="text" id="desktopSearchInput" placeholder="Buscar por nombre, marca o nota (ej. Oud, Dior, Árabe)..." />
+        <input type="text" id="desktopSearchInput" autocomplete="off" placeholder="Buscar perfume, marca o nota (ej. Lattafa, Oud, Vainilla)..." />
+        <button type="button" class="search-clear-btn" id="clearDesktopSearchBtn" aria-label="Limpiar búsqueda">✕</button>
+        <div class="search-suggestions" id="desktopSearchSuggestions"></div>
       </div>
 
       <div class="header-actions">
@@ -2467,11 +2922,13 @@
       </div>
     </div>
 
-    <div class="mobile-search-bar" id="mobileSearchBar">
+    <div class="mobile-search-bar" id="mobileSearchBar" style="position:relative;">
       <div class="mobile-search-inner">
-        <span>🔍</span>
-        <input type="text" id="mobileSearchInput" placeholder="Buscar perfume, marca o familia olfativa..." />
+        <span class="search-icon-mob">🔍</span>
+        <input type="text" id="mobileSearchInput" autocomplete="off" placeholder="Buscar perfume, marca o nota olfativa..." />
+        <button type="button" class="search-clear-btn" id="clearMobileSearchBtn" aria-label="Limpiar búsqueda">✕</button>
       </div>
+      <div class="search-suggestions" id="mobileSearchSuggestions" style="left:14px; right:14px;"></div>
     </div>
   </header>
 
@@ -2530,6 +2987,38 @@
     </div>
   </div>
 
+  <!-- 4.5 BANNER EXCLUSIVO DE DESCUENTO WEB (5% OFF) -->
+  <section class="web-discount-section" id="webDiscountSection" aria-label="Descuento exclusivo desde la página web">
+    <div class="web-discount-banner">
+      <div class="discount-medallion">
+        <span class="discount-medallion-num" id="webDiscountPercent">-5%</span>
+        <span class="discount-medallion-sub">DTO. WEB</span>
+      </div>
+
+      <div class="discount-copy">
+        <span class="discount-tag">
+          <span class="discount-live-dot" aria-hidden="true"></span>
+          <span id="webDiscountTagText">BENEFICIO EXCLUSIVO WEB</span>
+        </span>
+        <h2 id="webDiscountTitle">5% de Descuento por Compras o Consultas desde la Página</h2>
+        <p id="webDiscountText">
+          Cotiza, consulta disponibilidad o realiza tu pedido directamente desde nuestra tienda online y obtén un 5% OFF en tu fragancia.
+        </p>
+      </div>
+
+      <div class="discount-actions">
+        <button type="button" class="discount-code-chip" id="copyDiscountCodeBtn" title="Tocar para copiar el código de descuento">
+          <span>🎟️ Código:</span>
+          <strong id="webDiscountCodeText">WEB5</strong>
+          <span class="discount-code-hint">· Copiar</span>
+        </button>
+        <a href="#" id="webDiscountWaBtn" target="_blank" rel="noopener" class="btn-primary-gold" style="width:100%; justify-content:center;">
+          💬 <span id="webDiscountCtaText">Reclamar 5% OFF por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- 5. CUADRO DE SELECCIÓN DE CATEGORÍAS PRINCIPALES -->
   <section class="main-categories-square-section" id="cuadroCategorias">
     <div class="categories-square-frame">
@@ -2559,6 +3048,27 @@
       </div>
       <div style="font-size: 0.78rem; color: var(--accent); font-weight: 700;" id="resultsCountText">
         Cargando...
+      </div>
+    </div>
+
+    <div class="catalog-search-box">
+      <div class="catalog-search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="catalogSearchInput" autocomplete="off" placeholder="Busca por perfume, casa o nota (ej. Lattafa, Armaf, Oud, Vainilla, Fresco)..." />
+        <button type="button" class="search-clear-btn" id="clearCatalogSearchBtn" aria-label="Limpiar búsqueda">✕</button>
+      </div>
+      <div class="catalog-quick-chips" id="catalogQuickChips">
+        <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700; flex-shrink:0;">Búsquedas rápidas:</span>
+        <button type="button" class="quick-search-chip" data-q="">✨ Todo</button>
+        <button type="button" class="quick-search-chip" data-q="Lattafa">🕌 Lattafa</button>
+        <button type="button" class="quick-search-chip" data-q="Armaf">🖤 Armaf</button>
+        <button type="button" class="quick-search-chip" data-q="Rayhaan">🦁 Rayhaan</button>
+        <button type="button" class="quick-search-chip" data-q="Bharara">👑 Bharara</button>
+        <button type="button" class="quick-search-chip" data-q="Oud">🪵 Oud</button>
+        <button type="button" class="quick-search-chip" data-q="Vainilla">🍯 Vainilla</button>
+        <button type="button" class="quick-search-chip" data-q="Mandarina">🍊 Mandarina</button>
+        <button type="button" class="quick-search-chip" data-q="Fresco">🌊 Fresco</button>
+        <button type="button" class="quick-search-chip" data-q="Elixir">⚡ Elixir</button>
       </div>
     </div>
 
@@ -3702,6 +4212,292 @@
         .replace(/'/g, '&#39;');
     }
 
+    function normalizeSearchText(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function getSearchTokens(rawQuery) {
+      const norm = normalizeSearchText(rawQuery);
+      return norm ? norm.split(' ').filter(Boolean) : [];
+    }
+
+    function getCategoryDisplayName(slug) {
+      if (!slug) return '';
+      if (typeof CATEGORIES !== 'undefined' && Array.isArray(CATEGORIES)) {
+        const found = CATEGORIES.find(c => (c.slug || '').toLowerCase() === String(slug).toLowerCase());
+        if (found && found.name) return found.name;
+      }
+      if (typeof allCategories !== 'undefined' && Array.isArray(allCategories)) {
+        const found = allCategories.find(c => (c.slug || '').toLowerCase() === String(slug).toLowerCase());
+        if (found && found.name) return found.name;
+      }
+      return String(slug);
+    }
+
+    function scoreProductSearch(p, normQ, tokens) {
+      if (!tokens || !tokens.length) return 0;
+      const name = normalizeSearchText(p.name);
+      const brand = normalizeSearchText(p.brand);
+      const notes = normalizeSearchText(p.notes);
+      const desc = normalizeSearchText(p.description);
+      const conc = normalizeSearchText(p.concentration);
+      const occ = normalizeSearchText(p.occasion);
+      const badge = normalizeSearchText(p.badge);
+      const size = normalizeSearchText(p.size_ml);
+      const cat = normalizeSearchText(p.category);
+      const catLabel = normalizeSearchText(getCategoryDisplayName(p.category));
+
+      const fullHay = [name, brand, notes, desc, conc, occ, badge, size, cat, catLabel]
+        .filter(Boolean)
+        .join(' ');
+
+      for (const token of tokens) {
+        if (!fullHay.includes(token)) return 0;
+      }
+
+      let score = 10;
+      if (normQ) {
+        if (name === normQ) score += 120;
+        else if (name.startsWith(normQ)) score += 70;
+        else if (name.includes(normQ)) score += 45;
+
+        if (brand === normQ) score += 80;
+        else if (brand.startsWith(normQ)) score += 50;
+        else if (brand.includes(normQ)) score += 32;
+
+        if (notes.includes(normQ)) score += 24;
+        if (catLabel.includes(normQ) || cat.includes(normQ)) score += 18;
+      }
+
+      for (const t of tokens) {
+        if (name.startsWith(t)) score += 20;
+        else if (name.includes(' ' + t)) score += 16;
+        else if (name.includes(t)) score += 12;
+
+        if (brand.startsWith(t)) score += 15;
+        else if (brand.includes(t)) score += 10;
+
+        if (notes.includes(t)) score += 8;
+        if (conc.includes(t) || occ.includes(t) || badge.includes(t)) score += 6;
+        if (catLabel.includes(t) || cat.includes(t)) score += 5;
+        if (desc.includes(t)) score += 3;
+      }
+
+      if (p.featured) score += 2;
+      return score;
+    }
+
+    function highlightSearchMatch(text, rawQuery) {
+      const raw = text === null || text === undefined ? '' : String(text);
+      if (!raw) return '';
+      const allTokens = getSearchTokens(rawQuery);
+      const tokens = allTokens.filter(t => t.length >= 2);
+      const activeTokens = tokens.length ? tokens : (allTokens.length === 1 && /\d/.test(allTokens[0]) ? allTokens : []);
+      if (!activeTokens.length) return esc(raw);
+
+      let normStr = '';
+      const posMap = [];
+      for (let i = 0; i < raw.length; ) {
+        const code = raw.charCodeAt(i);
+        const step = (code >= 0xD800 && code <= 0xDBFF && i + 1 < raw.length) ? 2 : 1;
+        const cp = raw.slice(i, i + step);
+        const normCp = cp.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        for (let k = 0; k < normCp.length; k++) {
+          normStr += normCp[k];
+          posMap.push({ start: i, end: i + step });
+        }
+        i += step;
+      }
+
+      const ranges = [];
+      const sortedTokens = [...activeTokens].sort((a, b) => b.length - a.length);
+      for (const tok of sortedTokens) {
+        let idx = normStr.indexOf(tok);
+        while (idx !== -1) {
+          const startPos = posMap[idx].start;
+          const endPos = posMap[idx + tok.length - 1].end;
+          ranges.push([startPos, endPos]);
+          idx = normStr.indexOf(tok, idx + tok.length);
+        }
+      }
+
+      if (!ranges.length) return esc(raw);
+      ranges.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+      const merged = [ranges[0].slice()];
+      for (let r = 1; r < ranges.length; r++) {
+        const last = merged[merged.length - 1];
+        if (ranges[r][0] <= last[1]) {
+          if (ranges[r][1] > last[1]) last[1] = ranges[r][1];
+        } else {
+          merged.push(ranges[r].slice());
+        }
+      }
+
+      let out = '';
+      let cursor = 0;
+      for (const [start, end] of merged) {
+        if (start > cursor) out += esc(raw.slice(cursor, start));
+        out += `<mark class="search-hl">${esc(raw.slice(start, end))}</mark>`;
+        cursor = end;
+      }
+      if (cursor < raw.length) out += esc(raw.slice(cursor));
+      return out;
+    }
+
+    function closeAllSearchDropdowns() {
+      ['desktopSearchSuggestions', 'mobileSearchSuggestions'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
+    function renderSearchSuggestions(dropdownEl, rawQuery) {
+      if (!dropdownEl) return;
+      const q = (rawQuery || '').trim();
+      const normQ = normalizeSearchText(q);
+      const tokens = getSearchTokens(q);
+
+      if (!tokens.length) {
+        const quickTerms = ['Árabes', 'Oud', 'Vainilla', 'Fresco', 'Nicho', 'Amaderado'];
+        dropdownEl.innerHTML = `
+          <div class="search-sug-header">
+            <span>Búsquedas sugeridas</span>
+            <span>/ para enfocar</span>
+          </div>
+          <div class="search-sug-chips">
+            ${quickTerms.map(term => `<button type="button" class="quick-search-chip" data-sug-q="${esc(term)}">${esc(term)}</button>`).join('')}
+          </div>
+        `;
+        dropdownEl.classList.add('open');
+        return;
+      }
+
+      const matches = allProducts
+        .map(p => ({ p, score: scoreProductSearch(p, normQ, tokens) }))
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score || (Number(b.p.featured) - Number(a.p.featured)) || (Number(b.p.id) - Number(a.p.id)));
+
+      if (!matches.length) {
+        const waUrl = buildWhatsAppUrl(`¡Hola ${SITE.site_name}! Estoy buscando el perfume "${q}", ¿lo tienen disponible?`);
+        dropdownEl.innerHTML = `
+          <div class="search-sug-header">
+            <span>0 coincidencias para "${esc(q)}"</span>
+          </div>
+          <div style="padding: 14px 12px; text-align: center;">
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">
+              No encontramos ese perfume en el catálogo actual.
+            </p>
+            <a href="${waUrl}" target="_blank" rel="noopener" class="btn-primary-gold" style="padding: 8px 14px; font-size: 0.76rem; display: inline-flex;">
+              💬 Preguntar por "${esc(q)}" en WhatsApp
+            </a>
+          </div>
+        `;
+        dropdownEl.classList.add('open');
+        return;
+      }
+
+      const topMatches = matches.slice(0, 6);
+      const itemsHtml = topMatches.map(({ p }) => {
+        const imgUrl = (Array.isArray(p.images) && p.images[0]) || p.image_url || '';
+        const showPrice = p.show_price && Number(p.price) > 0;
+        const tagLabel = showPrice ? formatCOP(p.price) : (getCategoryDisplayName(p.category) || 'Consultar');
+        const sizeLabel = (p.size_ml || '100 ml').split('/')[0].trim();
+        return `
+          <div class="search-sug-item" data-sug-product-id="${Number(p.id)}" role="button" tabindex="0">
+            ${imgUrl
+              ? `<img src="${esc(imgUrl)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'" />`
+              : `<div style="width:38px;height:46px;border-radius:6px;background:rgba(255,255,255,0.04);display:grid;place-items:center;font-size:0.9rem;">🧴</div>`}
+            <div class="search-sug-item-info">
+              <div class="search-sug-item-title">${highlightSearchMatch(p.name, q)}</div>
+              <div class="search-sug-item-meta">${highlightSearchMatch(p.brand, q)} · ${esc(sizeLabel)}</div>
+            </div>
+            <span class="search-sug-item-tag">${esc(tagLabel)}</span>
+          </div>
+        `;
+      }).join('');
+
+      dropdownEl.innerHTML = `
+        <div class="search-sug-header">
+          <span>${matches.length} ${matches.length === 1 ? 'resultado' : 'resultados'}</span>
+          <span>Enter para ver en catálogo</span>
+        </div>
+        ${itemsHtml}
+        <div class="search-sug-footer">
+          <button type="button" data-sug-commit="1">Ver ${matches.length === 1 ? 'el resultado' : `los ${matches.length} resultados`} en el catálogo →</button>
+        </div>
+      `;
+      dropdownEl.classList.add('open');
+    }
+
+    function syncSearchQuery(val, options = {}) {
+      const nextVal = val === null || val === undefined ? '' : String(val);
+      searchQuery = nextVal;
+
+      const inputIds = ['desktopSearchInput', 'mobileSearchInput', 'catalogSearchInput'];
+      inputIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el !== options.sourceInput && el.value !== nextVal) {
+          el.value = nextVal;
+        }
+      });
+
+      const hasQuery = Boolean(nextVal.trim());
+      ['clearDesktopSearchBtn', 'clearMobileSearchBtn', 'clearCatalogSearchBtn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('visible', hasQuery);
+      });
+
+      const normNext = normalizeSearchText(nextVal);
+      document.querySelectorAll('#catalogQuickChips .quick-search-chip').forEach(chip => {
+        const chipNorm = normalizeSearchText(chip.dataset.q || '');
+        chip.classList.toggle('active', chipNorm === normNext);
+      });
+
+      visibleProductsLimit = PRODUCTS_PER_BATCH;
+      renderProducts();
+    }
+
+    function expandCategoriesIfNeededForQuery(rawQuery) {
+      const q = (rawQuery || '').trim();
+      if (!q) return false;
+      if (activeCategory === 'all' && activeOccasion === 'all') return false;
+      const normQ = normalizeSearchText(q);
+      const tokens = getSearchTokens(q);
+      if (!tokens.length) return false;
+
+      const currentMatches = allProducts.filter(p => {
+        if (activeCategory !== 'all' && (p.category || '').toLowerCase() !== activeCategory.toLowerCase()) return false;
+        if (activeOccasion !== 'all' && (p.occasion || '') !== activeOccasion) return false;
+        return scoreProductSearch(p, normQ, tokens) > 0;
+      }).length;
+
+      if (currentMatches > 0) return false;
+      const globalMatches = allProducts.filter(p => scoreProductSearch(p, normQ, tokens) > 0).length;
+      if (!globalMatches) return false;
+
+      activeCategory = 'all';
+      activeOccasion = 'all';
+      renderCategories();
+      return true;
+    }
+
+    function commitSearchToCatalog(rawQuery) {
+      const q = (rawQuery === undefined || rawQuery === null ? searchQuery : String(rawQuery)).trim();
+      closeAllSearchDropdowns();
+      expandCategoriesIfNeededForQuery(q);
+      syncSearchQuery(q);
+      const mobSearchBar = document.getElementById('mobileSearchBar');
+      if (mobSearchBar) mobSearchBar.classList.remove('open');
+      const catalogEl = document.getElementById('catalogo');
+      if (catalogEl) catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function formatCOP(val) {
       const num = Number(val) || 0;
       return '$' + num.toLocaleString('es-CO');
@@ -3759,15 +4555,26 @@
       return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     }
 
+    function getWebDiscountInfo() {
+      const enabled = SITE.web_discount_enabled !== false;
+      const percent = String(SITE.web_discount_percent || '5%').trim() || '5%';
+      const code = String(SITE.web_discount_code !== undefined ? SITE.web_discount_code : 'WEB5').trim();
+      return { enabled, percent, code };
+    }
+
     function buildProductInquiryMessage(product, variantName = '', deliveryMode = '') {
       const showP = shouldShowPrice(product);
       const variantPart = variantName ? ` (${variantName})` : (product.size_ml ? ` (${product.size_ml})` : '');
       const deliveryPart = deliveryMode ? `\n🚚 *Modalidad preferida:* ${deliveryMode}` : '';
+      const disc = getWebDiscountInfo();
+      const discPart = disc.enabled
+        ? `\n🎟️ *Beneficio Web:* ${disc.percent} OFF por consulta/compra desde la página${disc.code ? ` (Código: ${disc.code})` : ''}`
+        : '';
 
       if (showP) {
-        return `¡Hola *${SITE.site_name}*! 👑\nQuiero pedir el perfume:\n• *${product.name}* de *${product.brand}*${variantPart}\n💰 Precio en web: ${formatCOP(product.price)}${deliveryPart}\n\n¿Me confirmas disponibilidad para coordinar?`;
+        return `¡Hola *${SITE.site_name}*! 👑\nQuiero pedir el perfume:\n• *${product.name}* de *${product.brand}*${variantPart}\n💰 Precio en web: ${formatCOP(product.price)}${deliveryPart}${discPart}\n\n¿Me confirmas disponibilidad para coordinar?`;
       } else {
-        return `¡Hola *${SITE.site_name}*! 👑\nEstoy interesado en el perfume:\n• *${product.name}* de *${product.brand}*${variantPart}${deliveryPart}\n\n¿Me podrías brindar su *precio y disponibilidad* por favor?`;
+        return `¡Hola *${SITE.site_name}*! 👑\nEstoy interesado en el perfume:\n• *${product.name}* de *${product.brand}*${variantPart}${deliveryPart}${discPart}\n\n¿Me podrías brindar su *precio y disponibilidad* por favor?`;
       }
     }
 
@@ -3847,6 +4654,41 @@
       document.getElementById('promoTitle').textContent = SITE.promo_title || '';
       document.getElementById('promoText').textContent = SITE.promo_text || '';
       document.getElementById('promoCtaText').textContent = SITE.promo_cta || 'Hablar con un Asesor Ahora';
+
+      const disc = getWebDiscountInfo();
+      const webDiscSec = document.getElementById('webDiscountSection');
+      if (webDiscSec) {
+        webDiscSec.style.display = disc.enabled ? 'block' : 'none';
+        const pctEl = document.getElementById('webDiscountPercent');
+        if (pctEl) {
+          pctEl.textContent = /^\d/.test(disc.percent) ? `-${disc.percent}` : disc.percent;
+        }
+        const tagEl = document.getElementById('webDiscountTagText');
+        if (tagEl) tagEl.textContent = SITE.web_discount_tag || 'BENEFICIO EXCLUSIVO WEB';
+        const titleEl = document.getElementById('webDiscountTitle');
+        if (titleEl) titleEl.textContent = SITE.web_discount_title || '5% de Descuento por Compras o Consultas desde la Página';
+        const textEl = document.getElementById('webDiscountText');
+        if (textEl) textEl.textContent = SITE.web_discount_text || 'Cotiza, consulta disponibilidad o realiza tu pedido directamente desde nuestra tienda online y obtén un 5% OFF en tu fragancia.';
+        const ctaEl = document.getElementById('webDiscountCtaText');
+        if (ctaEl) ctaEl.textContent = SITE.web_discount_cta || 'Reclamar 5% OFF por WhatsApp';
+
+        const copyCodeBtn = document.getElementById('copyDiscountCodeBtn');
+        const codeTextEl = document.getElementById('webDiscountCodeText');
+        if (copyCodeBtn && codeTextEl) {
+          if (disc.code) {
+            copyCodeBtn.style.display = 'inline-flex';
+            codeTextEl.textContent = disc.code;
+          } else {
+            copyCodeBtn.style.display = 'none';
+          }
+        }
+
+        const discWaBtn = document.getElementById('webDiscountWaBtn');
+        if (discWaBtn) {
+          const discWaMsg = `¡Hola *${SITE.site_name}*! 👑 Vengo desde su página web para aprovechar el *${disc.percent} de descuento* en mi compra o consulta${disc.code ? ` (Código: *${disc.code}*)` : ''}. ¿Me ayudan?`;
+          discWaBtn.href = buildWhatsAppUrl(discWaMsg);
+        }
+      }
 
       document.getElementById('footerBrandTitle').textContent = SITE.site_name || 'ILUSION PERFUMERY';
       document.getElementById('footerCopyrightName').textContent = SITE.site_name || 'Ilusion Perfumery';
@@ -3998,7 +4840,10 @@
 
     function renderProducts() {
       const grid = document.getElementById('productsGrid');
-      const q = searchQuery.trim().toLowerCase();
+      const q = searchQuery.trim();
+      const normQ = normalizeSearchText(q);
+      const tokens = getSearchTokens(q);
+      const searchScores = new Map();
 
       let filtered = allProducts.filter(p => {
         if (activeCategory !== 'all') {
@@ -4008,14 +4853,19 @@
           }
         }
         if (activeOccasion !== 'all' && (p.occasion || '') !== activeOccasion) return false;
-        if (q) {
-          const hay = `${p.name} ${p.brand} ${p.notes || ''} ${p.description || ''} ${p.category || ''}`.toLowerCase();
-          if (!hay.includes(q)) return false;
+        if (tokens.length) {
+          const score = scoreProductSearch(p, normQ, tokens);
+          if (!score) return false;
+          searchScores.set(p.id, score);
         }
         return true;
       });
 
       filtered.sort((a, b) => {
+        if (tokens.length && sortMode === 'featured') {
+          const diff = (searchScores.get(b.id) || 0) - (searchScores.get(a.id) || 0);
+          if (diff !== 0) return diff;
+        }
         if (sortMode === 'featured') return (Number(b.featured) - Number(a.featured)) || (b.id - a.id);
         if (sortMode === 'newest') return b.id - a.id;
         if (sortMode === 'name_asc') return a.name.localeCompare(b.name);
@@ -4027,24 +4877,79 @@
       const totalFiltered = filtered.length;
       const visibleList = filtered.slice(0, visibleProductsLimit);
       const loadMoreWrap = document.getElementById('catalogLoadMoreWrap');
+      const countEl = document.getElementById('resultsCountText');
 
       if (totalFiltered > visibleList.length) {
-        document.getElementById('resultsCountText').textContent = `Mostrando ${visibleList.length} de ${totalFiltered} fragancias`;
+        countEl.textContent = tokens.length
+          ? `Mostrando ${visibleList.length} de ${totalFiltered} resultados para "${q}"`
+          : `Mostrando ${visibleList.length} de ${totalFiltered} fragancias`;
       } else {
-        document.getElementById('resultsCountText').textContent = `${totalFiltered} ${totalFiltered === 1 ? 'fragancia' : 'fragancias'}`;
+        countEl.textContent = tokens.length
+          ? `${totalFiltered} ${totalFiltered === 1 ? 'resultado' : 'resultados'} para "${q}"`
+          : `${totalFiltered} ${totalFiltered === 1 ? 'fragancia' : 'fragancias'}`;
       }
 
       if (!totalFiltered) {
+        const globalMatches = tokens.length
+          ? allProducts.filter(p => scoreProductSearch(p, normQ, tokens) > 0).length
+          : 0;
+        const canExpandAllCats = (activeCategory !== 'all' || activeOccasion !== 'all') && globalMatches > 0;
+        const waMsg = q
+          ? `¡Hola ${SITE.site_name}! Estoy buscando "${q}", ¿lo tienen disponible?`
+          : `¡Hola ${SITE.site_name}! Busco un perfume en especial, ¿me ayudan?`;
+
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 38px 16px; background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border-subtle);">
             <div style="font-size: 2.2rem; margin-bottom: 8px;">🖤</div>
-            <h3 style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 6px;">No encontramos ese perfume en este filtro</h3>
-            <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px;">Pregúntanos directo por WhatsApp si buscas una referencia especial.</p>
-            <a href="${buildWhatsAppUrl(`¡Hola ${SITE.site_name}! Busco un perfume en especial, ¿me ayudan?`)}" target="_blank" rel="noopener" class="btn-primary-gold">
-              💬 Preguntar por WhatsApp
-            </a>
+            <h3 style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 6px;">${
+              canExpandAllCats
+                ? `No está en esta categoría, pero hay ${globalMatches} ${globalMatches === 1 ? 'coincidencia' : 'coincidencias'} en el catálogo`
+                : 'No encontramos ese perfume en este filtro'
+            }</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 14px;">${
+              q
+                ? `Sin resultados exactos para "${esc(q)}" con los filtros actuales. Prueba otra palabra clave o consúltanos directo.`
+                : 'Pregúntanos directo por WhatsApp si buscas una referencia especial.'
+            }</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;">
+              ${canExpandAllCats ? `
+                <button type="button" id="searchAllCatsEmptyBtn" class="btn-primary-gold">
+                  🌐 Ver ${globalMatches} ${globalMatches === 1 ? 'resultado' : 'resultados'} en todo el catálogo
+                </button>
+              ` : ''}
+              ${q ? `
+                <button type="button" id="clearSearchEmptyBtn" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 11px 16px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+                  ✕ Limpiar búsqueda
+                </button>
+              ` : ''}
+              <a href="${buildWhatsAppUrl(waMsg)}" target="_blank" rel="noopener" class="${canExpandAllCats ? '' : 'btn-primary-gold'}" style="${canExpandAllCats ? 'background: rgba(37, 211, 102, 0.14); border: 1px solid rgba(37, 211, 102, 0.35); color: #86efac; padding: 11px 16px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;' : ''}">
+                💬 Preguntar por WhatsApp
+              </a>
+            </div>
           </div>
         `;
+        const expandBtn = document.getElementById('searchAllCatsEmptyBtn');
+        if (expandBtn) {
+          expandBtn.addEventListener('click', () => {
+            activeCategory = 'all';
+            activeOccasion = 'all';
+            visibleProductsLimit = PRODUCTS_PER_BATCH;
+            renderCategories();
+            renderProducts();
+          });
+        }
+        const clearEmptyBtn = document.getElementById('clearSearchEmptyBtn');
+        if (clearEmptyBtn) {
+          clearEmptyBtn.addEventListener('click', () => {
+            if (typeof syncSearchQuery === 'function') {
+              syncSearchQuery('');
+            } else {
+              searchQuery = '';
+              visibleProductsLimit = PRODUCTS_PER_BATCH;
+              renderProducts();
+            }
+          });
+        }
         if (loadMoreWrap) loadMoreWrap.innerHTML = '';
         return;
       }
@@ -4091,11 +4996,11 @@
 
             <div class="product-body">
               <div class="product-meta-top">
-                <span class="product-meta-brand">${esc(p.brand)}</span>
+                <span class="product-meta-brand">${highlightSearchMatch(p.brand, q)}</span>
                 <span class="product-size-tag">${esc((p.size_ml || '100 ml').split('/')[0].trim())}</span>
               </div>
-              <h3 class="product-name" onclick="openProductModal(${Number(p.id)})">${esc(p.name)}</h3>
-              <p class="product-notes-preview">${esc(p.notes || p.description || 'Fragancia masculina exclusiva.')}</p>
+              <h3 class="product-name" onclick="openProductModal(${Number(p.id)})">${highlightSearchMatch(p.name, q)}</h3>
+              <p class="product-notes-preview">${highlightSearchMatch(p.notes || p.description || 'Fragancia masculina exclusiva.', q)}</p>
 
               <div class="card-power-bar">
                 <span><span class="stock-dot"></span>Entrega Hoy</span>
@@ -4564,21 +5469,140 @@
         }
       });
 
-      // Buscador móvil
+      // Buscadores sincronizados (header desktop, barra móvil y catálogo) + sugerencias en vivo
+      const desktopSearchWrap = document.getElementById('desktopSearchWrap');
+      const desktopSearchInput = document.getElementById('desktopSearchInput');
+      const clearDesktopSearchBtn = document.getElementById('clearDesktopSearchBtn');
+      const desktopSearchSuggestions = document.getElementById('desktopSearchSuggestions');
+
       const mobSearchBar = document.getElementById('mobileSearchBar');
       const mobSearchInput = document.getElementById('mobileSearchInput');
-      document.getElementById('toggleMobileSearchBtn').addEventListener('click', () => {
-        const isOpen = mobSearchBar.classList.toggle('open');
-        if (isOpen) mobSearchInput.focus();
-      });
+      const clearMobileSearchBtn = document.getElementById('clearMobileSearchBtn');
+      const mobileSearchSuggestions = document.getElementById('mobileSearchSuggestions');
+      const toggleMobBtn = document.getElementById('toggleMobileSearchBtn');
 
-      const onSearch = (val) => {
-        searchQuery = val;
-        visibleProductsLimit = PRODUCTS_PER_BATCH;
-        renderProducts();
+      const catalogSearchInput = document.getElementById('catalogSearchInput');
+      const clearCatalogSearchBtn = document.getElementById('clearCatalogSearchBtn');
+      const catalogQuickChips = document.getElementById('catalogQuickChips');
+
+      if (toggleMobBtn && mobSearchBar && mobSearchInput) {
+        toggleMobBtn.addEventListener('click', () => {
+          const isOpen = mobSearchBar.classList.toggle('open');
+          if (isOpen) {
+            mobSearchInput.focus();
+            renderSearchSuggestions(mobileSearchSuggestions, mobSearchInput.value);
+          } else {
+            closeAllSearchDropdowns();
+          }
+        });
+      }
+
+      const wireSearchInput = (inputEl, dropdownEl) => {
+        if (!inputEl) return;
+        inputEl.addEventListener('input', e => {
+          const val = e.target.value;
+          syncSearchQuery(val, { sourceInput: inputEl });
+          if (dropdownEl) renderSearchSuggestions(dropdownEl, val);
+          else closeAllSearchDropdowns();
+        });
+        inputEl.addEventListener('focus', () => {
+          if (dropdownEl) renderSearchSuggestions(dropdownEl, inputEl.value);
+          else closeAllSearchDropdowns();
+        });
+        inputEl.addEventListener('keydown', e => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            commitSearchToCatalog(inputEl.value);
+            inputEl.blur();
+          } else if (e.key === 'Escape') {
+            closeAllSearchDropdowns();
+            inputEl.blur();
+          }
+        });
       };
-      document.getElementById('desktopSearchInput').addEventListener('input', e => onSearch(e.target.value));
-      mobSearchInput.addEventListener('input', e => onSearch(e.target.value));
+
+      wireSearchInput(desktopSearchInput, desktopSearchSuggestions);
+      wireSearchInput(mobSearchInput, mobileSearchSuggestions);
+      wireSearchInput(catalogSearchInput, null);
+
+      const wireClearButton = (btnEl, inputEl, dropdownEl) => {
+        if (!btnEl) return;
+        btnEl.addEventListener('click', () => {
+          syncSearchQuery('');
+          if (inputEl) inputEl.focus();
+          if (dropdownEl) renderSearchSuggestions(dropdownEl, '');
+          else closeAllSearchDropdowns();
+        });
+      };
+
+      wireClearButton(clearDesktopSearchBtn, desktopSearchInput, desktopSearchSuggestions);
+      wireClearButton(clearMobileSearchBtn, mobSearchInput, mobileSearchSuggestions);
+      wireClearButton(clearCatalogSearchBtn, catalogSearchInput, null);
+
+      const wireSuggestionsDropdown = (dropdownEl, inputEl) => {
+        if (!dropdownEl) return;
+        const handleActivate = target => {
+          const prodItem = target.closest('[data-sug-product-id]');
+          if (prodItem) {
+            const id = Number(prodItem.dataset.sugProductId);
+            closeAllSearchDropdowns();
+            if (!Number.isNaN(id)) openProductModal(id);
+            return;
+          }
+          const chipBtn = target.closest('[data-sug-q]');
+          if (chipBtn) {
+            const qVal = chipBtn.dataset.sugQ || '';
+            expandCategoriesIfNeededForQuery(qVal);
+            syncSearchQuery(qVal);
+            renderSearchSuggestions(dropdownEl, qVal);
+            if (inputEl) inputEl.focus();
+            return;
+          }
+          if (target.closest('[data-sug-commit]')) {
+            commitSearchToCatalog(searchQuery);
+          }
+        };
+
+        dropdownEl.addEventListener('click', e => handleActivate(e.target));
+        dropdownEl.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const prodItem = e.target.closest('[data-sug-product-id]');
+            if (prodItem) {
+              e.preventDefault();
+              handleActivate(prodItem);
+            }
+          }
+        });
+      };
+
+      wireSuggestionsDropdown(desktopSearchSuggestions, desktopSearchInput);
+      wireSuggestionsDropdown(mobileSearchSuggestions, mobSearchInput);
+
+      if (catalogQuickChips) {
+        catalogQuickChips.querySelectorAll('.quick-search-chip').forEach(chip => {
+          chip.classList.toggle('active', normalizeSearchText(chip.dataset.q || '') === normalizeSearchText(searchQuery));
+        });
+        catalogQuickChips.addEventListener('click', e => {
+          const chip = e.target.closest('.quick-search-chip');
+          if (!chip) return;
+          const qVal = chip.dataset.q || '';
+          if (!qVal || normalizeSearchText(searchQuery) === normalizeSearchText(qVal)) {
+            syncSearchQuery('');
+            return;
+          }
+          expandCategoriesIfNeededForQuery(qVal);
+          syncSearchQuery(qVal);
+        });
+      }
+
+      document.addEventListener('click', e => {
+        const inDesktop = desktopSearchWrap && desktopSearchWrap.contains(e.target);
+        const inMobileBar = mobSearchBar && mobSearchBar.contains(e.target);
+        const inToggleBtn = toggleMobBtn && toggleMobBtn.contains(e.target);
+        if (!inDesktop && !inMobileBar && !inToggleBtn) {
+          closeAllSearchDropdowns();
+        }
+      });
 
       // Cuadro de Selección de las 4 Categorías Principales (Caballero, Dama, Nicho, Splash)
       document.querySelectorAll('#fourCategoriesGrid .quad-cat-card').forEach(card => {
@@ -4681,10 +5705,63 @@
       };
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
+          closeAllSearchDropdowns();
           closeProductModal();
           toggleBag(false);
+          return;
+        }
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          const active = document.activeElement;
+          const tag = active ? active.tagName : '';
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (active && active.isContentEditable)) {
+            return;
+          }
+          const desktopInput = document.getElementById('desktopSearchInput');
+          const catInput = document.getElementById('catalogSearchInput');
+          const mobileInput = document.getElementById('mobileSearchInput');
+          const mobileBar = document.getElementById('mobileSearchBar');
+          const desktopSug = document.getElementById('desktopSearchSuggestions');
+
+          e.preventDefault();
+          if (desktopInput && desktopInput.offsetParent !== null) {
+            desktopInput.focus();
+            desktopInput.select();
+            if (desktopSug) renderSearchSuggestions(desktopSug, desktopInput.value);
+          } else if (catInput && catInput.offsetParent !== null) {
+            catInput.focus();
+            catInput.select();
+          } else if (mobileBar && mobileInput) {
+            mobileBar.classList.add('open');
+            mobileInput.focus();
+          }
         }
       });
+      const copyDiscBtn = document.getElementById('copyDiscountCodeBtn');
+      if (copyDiscBtn) {
+        copyDiscBtn.addEventListener('click', async () => {
+          const { percent, code } = getWebDiscountInfo();
+          if (!code) return;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(code);
+            } else {
+              throw new Error('fallback');
+            }
+          } catch (_) {
+            const ta = document.createElement('textarea');
+            ta.value = code;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showToast(`✅ Código ${code} (${percent} OFF) copiado`);
+        });
+      }
+
       document.getElementById('openBagBtn').addEventListener('click', () => toggleBag(true));
       document.getElementById('mobileBagBtn').addEventListener('click', () => toggleBag(true));
       document.getElementById('closeBagBtn').addEventListener('click', () => toggleBag(false));
@@ -4711,6 +5788,10 @@
         msg += `🚚 *Modalidad:* ${deliveryMode}\n`;
         if (custName) msg += `👤 *Nombre:* ${custName}\n`;
         if (custAddress) msg += `📍 *Ubicación/Dirección:* ${custAddress}\n`;
+        const disc = getWebDiscountInfo();
+        if (disc.enabled) {
+          msg += `🎟️ *Beneficio Web:* ${disc.percent} OFF por compra/consulta desde la página${disc.code ? ` (Código: ${disc.code})` : ''}\n`;
+        }
         msg += `\n¿Me confirman precios y disponibilidad por favor?`;
 
         window.open(buildWhatsAppUrl(msg), '_blank');

@@ -370,6 +370,49 @@
       }
     }
 
+    .admin-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .admin-search-wrap .input-field {
+      padding-right: 36px;
+    }
+
+    .admin-search-clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .admin-search-clear.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .admin-search-clear:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     .toolbar-actions {
       display: flex;
       flex-wrap: wrap;
@@ -876,7 +919,10 @@
     <section class="tab-panel active" id="tab-products">
       <div class="toolbar">
         <div class="toolbar-filters">
-          <input type="text" id="adminSearchInput" class="input-field" placeholder="🔍 Buscar perfume, marca o nota..." />
+          <div class="admin-search-wrap">
+            <input type="text" id="adminSearchInput" class="input-field" placeholder="🔍 Buscar nombre, marca, notas, categoría..." autocomplete="off" />
+            <button type="button" id="clearAdminSearchBtn" class="admin-search-clear" aria-label="Limpiar búsqueda" title="Limpiar búsqueda">✕</button>
+          </div>
           <select id="adminCatFilter" class="select-field">
             <option value="all">Todas las categorías</option>
           </select>
@@ -1347,6 +1393,44 @@
       <div class="subtab-panel" id="design-promo-view">
         <div class="settings-grid">
           <div class="settings-box">
+            <h3>🏷️ Banner Descuento Web (5% OFF)</h3>
+            <p class="desc">Anuncio destacado en el inicio para compras o consultas desde la página.</p>
+
+            <label class="switch-label" style="margin-bottom: 12px;">
+              <input type="checkbox" id="set_web_discount_enabled" class="switch-input" checked />
+              <span>Mostrar Banner de Descuento Web</span>
+            </label>
+
+            <div class="form-grid-2">
+              <div class="field-group">
+                <label>Porcentaje mostrado</label>
+                <input type="text" id="set_web_discount_percent" class="input-field" placeholder="5%" />
+              </div>
+              <div class="field-group">
+                <label>Código promocional (Opcional)</label>
+                <input type="text" id="set_web_discount_code" class="input-field" placeholder="WEB5" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Etiqueta superior</label>
+              <input type="text" id="set_web_discount_tag" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Título principal</label>
+              <input type="text" id="set_web_discount_title" class="input-field" />
+            </div>
+            <div class="field-group">
+              <label>Texto descriptivo</label>
+              <textarea id="set_web_discount_text" class="textarea-field" rows="2"></textarea>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label>Texto del botón WhatsApp</label>
+              <input type="text" id="set_web_discount_cta" class="input-field" />
+            </div>
+          </div>
+
+          <div class="settings-box">
             <h3>📣 Banner de Asesoría Final</h3>
             <p class="desc">El recuadro dorado de invitación a WhatsApp antes del pie de página.</p>
 
@@ -1694,9 +1778,32 @@
       document.getElementById('statCategories').textContent = categories.filter(c => c.active !== false).length;
     }
 
+    function normalizeAdminSearch(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function getAdminCategoryLabel(slug) {
+      if (!slug) return '';
+      const found = Array.isArray(categories)
+        ? categories.find(c => (c.slug || '').toLowerCase() === String(slug).toLowerCase())
+        : null;
+      return (found && found.name) ? found.name : String(slug);
+    }
+
     function renderAdminProducts() {
       const grid = document.getElementById('adminProductsGrid');
-      const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const searchEl = document.getElementById('adminSearchInput');
+      const clearBtn = document.getElementById('clearAdminSearchBtn');
+      const rawQ = searchEl ? searchEl.value.trim() : '';
+      const tokens = normalizeAdminSearch(rawQ).split(' ').filter(Boolean);
+      if (clearBtn) clearBtn.classList.toggle('visible', Boolean(rawQ));
+
       const catFilter = document.getElementById('adminCatFilter').value;
       const statusFilter = document.getElementById('adminStatusFilter').value;
 
@@ -1713,9 +1820,23 @@
           if (hasImg) return false;
         }
 
-        if (q) {
-          const hay = `${p.name} ${p.brand} ${p.notes || ''} ${p.category || ''}`.toLowerCase();
-          if (!hay.includes(q)) return false;
+        if (tokens.length) {
+          const catLabel = getAdminCategoryLabel(p.category);
+          const hay = normalizeAdminSearch([
+            p.name,
+            p.brand,
+            p.notes,
+            p.description,
+            p.concentration,
+            p.occasion,
+            p.badge,
+            p.size_ml,
+            p.category,
+            catLabel
+          ].filter(Boolean).join(' '));
+          for (const t of tokens) {
+            if (!hay.includes(t)) return false;
+          }
         }
         return true;
       });
@@ -2061,6 +2182,14 @@
       document.getElementById('set_products_title').value = SITE.products_title || '';
       document.getElementById('set_products_subtitle').value = SITE.products_subtitle || '';
 
+      document.getElementById('set_web_discount_enabled').checked = SITE.web_discount_enabled !== false;
+      document.getElementById('set_web_discount_percent').value = SITE.web_discount_percent || '5%';
+      document.getElementById('set_web_discount_code').value = SITE.web_discount_code !== undefined ? SITE.web_discount_code : 'WEB5';
+      document.getElementById('set_web_discount_tag').value = SITE.web_discount_tag || '';
+      document.getElementById('set_web_discount_title').value = SITE.web_discount_title || '';
+      document.getElementById('set_web_discount_text').value = SITE.web_discount_text || '';
+      document.getElementById('set_web_discount_cta').value = SITE.web_discount_cta || '';
+
       document.getElementById('set_promo_enabled').checked = SITE.promo_enabled !== false;
       document.getElementById('set_promo_tag').value = SITE.promo_tag || '';
       document.getElementById('set_promo_title').value = SITE.promo_title || '';
@@ -2275,7 +2404,24 @@
       });
 
       // Filtros de productos
-      document.getElementById('adminSearchInput').addEventListener('input', renderAdminProducts);
+      const adminSearchInputEl = document.getElementById('adminSearchInput');
+      const clearAdminSearchBtnEl = document.getElementById('clearAdminSearchBtn');
+      if (adminSearchInputEl) {
+        adminSearchInputEl.addEventListener('input', renderAdminProducts);
+        adminSearchInputEl.addEventListener('keydown', e => {
+          if (e.key === 'Escape' && adminSearchInputEl.value) {
+            adminSearchInputEl.value = '';
+            renderAdminProducts();
+          }
+        });
+      }
+      if (clearAdminSearchBtnEl && adminSearchInputEl) {
+        clearAdminSearchBtnEl.addEventListener('click', () => {
+          adminSearchInputEl.value = '';
+          adminSearchInputEl.focus();
+          renderAdminProducts();
+        });
+      }
       document.getElementById('adminCatFilter').addEventListener('change', renderAdminProducts);
       document.getElementById('adminStatusFilter').addEventListener('change', renderAdminProducts);
 
@@ -2556,6 +2702,13 @@
             hero_badge_3: document.getElementById('set_hero_badge_3').value.trim(),
             products_title: document.getElementById('set_products_title').value.trim(),
             products_subtitle: document.getElementById('set_products_subtitle').value.trim(),
+            web_discount_enabled: document.getElementById('set_web_discount_enabled').checked,
+            web_discount_percent: document.getElementById('set_web_discount_percent').value.trim(),
+            web_discount_code: document.getElementById('set_web_discount_code').value.trim(),
+            web_discount_tag: document.getElementById('set_web_discount_tag').value.trim(),
+            web_discount_title: document.getElementById('set_web_discount_title').value.trim(),
+            web_discount_text: document.getElementById('set_web_discount_text').value.trim(),
+            web_discount_cta: document.getElementById('set_web_discount_cta').value.trim(),
             promo_enabled: document.getElementById('set_promo_enabled').checked,
             promo_tag: document.getElementById('set_promo_tag').value.trim(),
             promo_title: document.getElementById('set_promo_title').value.trim(),

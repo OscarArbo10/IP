@@ -103,6 +103,15 @@ const SITE_DEFAULTS = {
   promo_text: 'Escríbenos directamente a nuestro WhatsApp. Te ayudamos a elegir la fragancia ideal para tu estilo y te la llevamos hasta la puerta de tu casa.',
   promo_cta: 'Hablar con un Asesor Ahora',
 
+  // Banner Exclusivo de Descuento Web (5%)
+  web_discount_enabled: true,
+  web_discount_tag: 'BENEFICIO EXCLUSIVO WEB',
+  web_discount_percent: '5%',
+  web_discount_title: '5% de Descuento por Compras o Consultas desde la Página',
+  web_discount_text: 'Cotiza, consulta disponibilidad o realiza tu pedido directamente desde nuestra tienda online y obtén un 5% OFF en tu fragancia.',
+  web_discount_code: 'WEB5',
+  web_discount_cta: 'Reclamar 5% OFF por WhatsApp',
+
   // Testimonios de Clientes
   testimonials_title: 'Hombres que ya dejan huella',
   testimonials_subtitle: 'Experiencias reales de clientes con Ilusion Perfumery',
